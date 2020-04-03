@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @ApiModel
 @Data
@@ -33,10 +34,16 @@ public class Goods {
 
     @ApiModelProperty
     @Column(name = "COST_ONE_HOUR_RENTAL")
-    private String сostOneHourRental;
+    private double сostOneHourRental;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "typeGoods_id")
-    @JsonIgnoreProperties("typeGoods")
+    //Соединение с TypeOfGoods
+    @ManyToOne(cascade = CascadeType.ALL) //Многие к одному, значит что таблица слабая
+    @JoinColumn(name = "TYPE_GOODS_ID") //имя поля, которое будет храниться в БД
+    @JsonIgnoreProperties("typeGoods") //Имя поля которое отвечает за связь (какая-то хуйня)
     private TypeOfGoods typeOfGoods;
+
+    //Соединение с GoodsCopy
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "goods")
+    @JsonIgnoreProperties("goods")
+    private List<GoodsСopy> product;
 }

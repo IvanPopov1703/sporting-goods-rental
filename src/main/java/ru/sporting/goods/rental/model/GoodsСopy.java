@@ -8,28 +8,32 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @ApiModel
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "TYPE_OF_GOODS")
-public class TypeOfGoods {
+@Table(name = "GOODS_COPY")
+public class GoodsСopy {
 
     @ApiModelProperty
     @Id
     @GeneratedValue
-    @Column(name = "ID_TYPE", unique = true, nullable = false, updatable = false)
+    @Column(name = "ID_COPY", unique = true, nullable = false, updatable = false)
     private Long id;
 
     @ApiModelProperty
-    @Column(name = "NAME")
-    private String name;
+    @Column(name = "HOURS_OF_USE")
+    private int hoursOfUse;
+
+    @ApiModelProperty
+    @Column(name = "PURCHASE_PRICE")
+    private double purchasePrice;
 
     //Соединение с Goods
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeOfGoods") //один ко многим (Сильная таблица)
-    @JsonIgnoreProperties("typeOfGoods") //какая-то хуйня
-    private List<Goods> typeGoods; //имя по которому связывается
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "GOODS_ID")
+    @JsonIgnoreProperties("product")
+    private Goods goods;
 }
