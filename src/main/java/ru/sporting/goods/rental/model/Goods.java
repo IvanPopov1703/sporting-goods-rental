@@ -46,4 +46,10 @@ public class Goods {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "goods")
     @JsonIgnoreProperties("goods")
     private List<GoodsСopy> product;
+
+    //Соединение с ProductType
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "TYPE_PRODUCT_ID")
+    @JsonIgnoreProperties("typeProduct")
+    private TypeOfGoods typeOfProduct;
 }
