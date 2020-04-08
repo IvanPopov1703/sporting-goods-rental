@@ -29,7 +29,7 @@ public class TypeOfGoods {
     private String name;
 
     //Соединение с Goods
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeOfGoods") //один ко многим (Сильная таблица)
-    @JsonIgnoreProperties("typeOfGoods") //какая-то хуйня
-    private List<Goods> typeGoods; //имя по которому связывается
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeOfGoods")
+    @JsonIgnoreProperties("typeOfGoods")
+    private List<Goods> typeGoods;
 }

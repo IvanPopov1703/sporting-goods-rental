@@ -37,9 +37,9 @@ public class Goods {
     private double сostOneHourRental;
 
     //Соединение с TypeOfGoods
-    @ManyToOne(cascade = CascadeType.ALL) //Многие к одному, значит что таблица слабая
-    @JoinColumn(name = "TYPE_GOODS_ID") //имя поля, которое будет храниться в БД
-    @JsonIgnoreProperties("typeGoods") //Имя поля которое отвечает за связь (какая-то хуйня)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "TYPE_GOODS_ID")
+    @JsonIgnoreProperties("typeGoods")
     private TypeOfGoods typeOfGoods;
 
     //Соединение с GoodsCopy
