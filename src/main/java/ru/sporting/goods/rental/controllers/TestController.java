@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.sporting.goods.rental.services.ProductTypeService;
 
-@Api(value = "Работа с товарами", tags = {"Товар"})
 @Controller
 public class TestController {
 

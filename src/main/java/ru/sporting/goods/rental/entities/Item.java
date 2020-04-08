@@ -1,4 +1,4 @@
-package ru.sporting.goods.rental.model;
+package ru.sporting.goods.rental.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "GOODS")
-public class Goods {
+public class Item {
 
     @ApiModelProperty
     @Id
@@ -36,20 +36,20 @@ public class Goods {
     @Column(name = "COST_ONE_HOUR_RENTAL")
     private double сostOneHourRental;
 
-    //Соединение с TypeOfGoods
+    //Соединение с ViewOfItem
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "TYPE_GOODS_ID")
     @JsonIgnoreProperties("typeGoods")
-    private TypeOfGoods typeOfGoods;
+    private ViewOfItem viewOfItem;
 
     //Соединение с GoodsCopy
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "goods")
-    @JsonIgnoreProperties("goods")
-    private List<GoodsСopy> product;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
+    @JsonIgnoreProperties("item")
+    private List<InstanceOfItem> product;
 
-    //Соединение с ProductType
+    //Соединение с TypeOfItem
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "TYPE_PRODUCT_ID")
     @JsonIgnoreProperties("typeProduct")
-    private TypeOfGoods typeOfProduct;
+    private ViewOfItem typeOfProduct;
 }

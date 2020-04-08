@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.sporting.goods.rental.model.ProductType;
+import ru.sporting.goods.rental.entities.TypeOfItem;
 import ru.sporting.goods.rental.services.ProductTypeService;
 
 import java.util.List;
@@ -19,26 +19,26 @@ public class ProductTypeController {
 
     @ApiOperation("Получение списка всех типов товара")
     @GetMapping("/productType")
-    public ResponseEntity<List<ProductType>> getProductType(){
+    public ResponseEntity<List<TypeOfItem>> getProductType(){
         return ResponseEntity.ok(productTypeService.getAll());
     }
 
     @ApiOperation("Получение одного товара по id")
     @GetMapping("/productType/{id}")
-    public ResponseEntity<ProductType> getProductTypeOne(@PathVariable Long id){
+    public ResponseEntity<TypeOfItem> getProductTypeOne(@PathVariable Long id){
         return ResponseEntity.ok(productTypeService.getOne(id));
     }
 
     @ApiOperation("Добавление нового типа товара")
     @PostMapping("/productType")
-    public ResponseEntity<Object> addProductType(@RequestBody ProductType product){
+    public ResponseEntity<Object> addProductType(@RequestBody TypeOfItem product){
         productTypeService.addProductType(product);
         return ResponseEntity.ok(product);
     }
 
     @ApiOperation("Редактирование типа товара")
     @PutMapping("/productType")
-    public ResponseEntity updateTypeProduct(@RequestBody ProductType product){
+    public ResponseEntity updateTypeProduct(@RequestBody TypeOfItem product){
         try{
             productTypeService.updateTypeProduct(product);
             return ResponseEntity.ok().build();

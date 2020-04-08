@@ -1,4 +1,4 @@
-package ru.sporting.goods.rental.model;
+package ru.sporting.goods.rental.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
@@ -15,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "GOODS_COPY")
-public class GoodsСopy {
+public class InstanceOfItem {
 
     @ApiModelProperty
     @Id
@@ -31,9 +31,9 @@ public class GoodsСopy {
     @Column(name = "PURCHASE_PRICE")
     private double purchasePrice;
 
-    //Соединение с Goods
+    //Соединение с Item
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "GOODS_ID")
     @JsonIgnoreProperties("product")
-    private Goods goods;
+    private Item item;
 }

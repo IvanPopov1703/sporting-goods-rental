@@ -1,4 +1,4 @@
-package ru.sporting.goods.rental.model;
+package ru.sporting.goods.rental.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
@@ -15,21 +15,21 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "PRODUCT_TYPE")
-public class ProductType {
+@Table(name = "TYPE_OF_GOODS")
+public class ViewOfItem {
 
     @ApiModelProperty
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID_PRODUCT", unique = true, nullable = false, updatable = false)
+    @GeneratedValue
+    @Column(name = "ID_TYPE", unique = true, nullable = false, updatable = false)
     private Long id;
 
     @ApiModelProperty
     @Column(name = "NAME")
     private String name;
 
-    //Соединение с Goods
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeOfProduct")
-    @JsonIgnoreProperties("typeOfProduct")
-    private List<Goods> typeProduct;
+    //Соединение с Item
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "viewOfItem")
+    @JsonIgnoreProperties("viewOfItem")
+    private List<Item> typeGoods;
 }
