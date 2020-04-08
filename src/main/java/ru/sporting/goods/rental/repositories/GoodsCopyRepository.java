@@ -1,7 +1,7 @@
 package ru.sporting.goods.rental.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.sporting.goods.rental.model.GoodsСopy;
+import ru.sporting.goods.rental.entities.InstanceOfItem;
 
-public interface GoodsCopyRepository extends JpaRepository<GoodsСopy, Long> {
+public interface GoodsCopyRepository extends JpaRepository<InstanceOfItem, Long> {
 }

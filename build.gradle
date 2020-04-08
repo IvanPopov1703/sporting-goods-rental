@@ -4,7 +4,7 @@ plugins {
 	id 'java'
 }
 
-group = 'ru.sporting.goods.rental'
+group = 'ru.sporting.item.rental'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 

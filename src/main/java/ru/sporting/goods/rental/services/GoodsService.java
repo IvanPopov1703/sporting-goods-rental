@@ -2,7 +2,7 @@ package ru.sporting.goods.rental.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.sporting.goods.rental.model.Goods;
+import ru.sporting.goods.rental.entities.Item;
 import ru.sporting.goods.rental.repositories.GoodsRepository;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class GoodsService {
     GoodsRepository goodsRepository;
 
     //Получение всех товаров
-    public List<Goods> getAll(){
+    public List<Item> getAll(){
         return goodsRepository.findAll();
     }
 }
