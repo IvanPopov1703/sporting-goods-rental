@@ -20,7 +20,7 @@ public class TypeOfItem {
 
     @ApiModelProperty
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(name = "ID_PRODUCT", unique = true, nullable = false, updatable = false)
     private Long id;
 
