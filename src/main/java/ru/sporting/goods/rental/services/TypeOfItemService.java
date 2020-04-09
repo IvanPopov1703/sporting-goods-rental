@@ -2,45 +2,49 @@ package ru.sporting.goods.rental.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.sporting.goods.rental.Exceptions.ProductTypeNotFoundException;
+import ru.sporting.goods.rental.exceptions.TypeOfItemNotFoundException;
 import ru.sporting.goods.rental.entities.TypeOfItem;
-import ru.sporting.goods.rental.repositories.ProductTypeRepository;
+import ru.sporting.goods.rental.repositories.TypeOfItemRepository;
 
 import java.util.List;
 
 @Service
-public class ProductTypeService {
+public class TypeOfItemService {
     @Autowired
-    ProductTypeRepository productTypeRepository;
+    TypeOfItemRepository typeOfItemRepository;
 
     //Получение всех типов товара
     public List<TypeOfItem> getAll(){
-        return productTypeRepository.findAll();
+        return typeOfItemRepository.findAll();
     }
 
     //Получение одного продукта по id
     public TypeOfItem getOne(Long id){
-        return productTypeRepository.findById(id)
-                .orElseThrow(() -> new ProductTypeNotFoundException(id));
+        return typeOfItemRepository.findById(id)
+                .orElseThrow(() -> new TypeOfItemNotFoundException(id));
     }
 
     //Добавление нового типа товара
     public void addProductType(TypeOfItem product){
-        productTypeRepository.save(product);
+        typeOfItemRepository.save(product);
     }
 
     //Редактирование типа товара
     public void updateTypeProduct(TypeOfItem product){
-        boolean exists = productTypeRepository.existsById(product.getId());
+        boolean exists = typeOfItemRepository.existsById(product.getId());
         if (exists){
-            productTypeRepository.save(product);
+            typeOfItemRepository.save(product);
         } else{
-            throw new ProductTypeNotFoundException(product.getId());
+            throw new TypeOfItemNotFoundException(product.getId());
         }
     }
 
     //Удаление типа продукта по id
     public void deleteProductTypeById(Long id) {
-        productTypeRepository.deleteById(id);
+        try {
+            typeOfItemRepository.deleteById(id);
+        } catch (IllegalArgumentException e) {
+            throw new TypeOfItemNotFoundException(id);
+        }
     }
 }
