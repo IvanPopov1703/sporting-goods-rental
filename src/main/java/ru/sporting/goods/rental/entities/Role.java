@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,21 +16,22 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "VIEW_OF_ITEM")
-public class ViewOfItem {
+@Table(name = "ROLE")
+public class Role {
 
     @ApiModelProperty
     @Id
     @GeneratedValue
-    @Column(name = "ID_VIEW_OF_ITEM", unique = true, nullable = false, updatable = false)
+    @Column(name = "ID_ROLE", unique = true, nullable = false, updatable = false)
     private Long id;
 
     @ApiModelProperty
     @Column(name = "NAME")
     private String name;
 
-    //Соединение с Item
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "viewOfItem")
-    @JsonIgnoreProperties("viewOfItem")
-    private List<Item> items;
+    //Соединение с User
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
+    @JoinColumn(name = "USER_ID")
+    @JsonIgnoreProperties("user")
+    private List<User> users;
 }
