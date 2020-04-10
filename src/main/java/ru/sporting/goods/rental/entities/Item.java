@@ -15,13 +15,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "GOODS")
+@Table(name = "ITEM")
 public class Item {
 
     @ApiModelProperty
     @Id
     @GeneratedValue
-    @Column(name = "ID_GOODS", unique = true, nullable = false, updatable = false)
+    @Column(name = "ID_ITEM", unique = true, nullable = false, updatable = false)
     private Long id;
 
     @ApiModelProperty
@@ -38,18 +38,18 @@ public class Item {
 
     //Соединение с ViewOfItem
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "TYPE_GOODS_ID")
-    @JsonIgnoreProperties("typeGoods")
+    @JoinColumn(name = "VIEW_OF_ITEM_ID")
+    @JsonIgnoreProperties("viewOfItem")
     private ViewOfItem viewOfItem;
 
-    //Соединение с GoodsCopy
+    //Соединение с InstanceOfItem
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
     @JsonIgnoreProperties("item")
-    private List<InstanceOfItem> product;
+    private List<InstanceOfItem> items;
 
     //Соединение с TypeOfItem
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "TYPE_PRODUCT_ID")
-    @JsonIgnoreProperties("typeProduct")
-    private ViewOfItem typeOfProduct;
+    @JoinColumn(name = "TYPE_OF_ITEM_ID")
+    @JsonIgnoreProperties("typeOfItem")
+    private TypeOfItem typeOfItem;
 }

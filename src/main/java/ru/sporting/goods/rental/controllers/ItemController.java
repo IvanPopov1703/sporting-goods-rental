@@ -12,7 +12,7 @@ import java.util.List;
 
 @Api(value = "Работа с товарами", tags = {"Товар"})
 @RestController
-public class GoodsController {
+public class ItemController {
 
     @Autowired
     private ItemService itemService;
