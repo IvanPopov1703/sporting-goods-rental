@@ -8,16 +8,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Time;
-import java.util.Date;
 
 @ApiModel
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "ORDER")
-public class Order {
+@Table(name = "ORDERS")
+public class Orders {
 
     @ApiModelProperty
     @Id
@@ -27,25 +27,25 @@ public class Order {
 
     //Соединение с User
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("user")
     @JoinColumn(name = "ID_USER")
+    @JsonIgnoreProperties("orders")
     private User user;
 
     //Соединение с InstanceOfItem
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("instance")
     @JoinColumn(name = "ID_INSTANCE_OF_ITEM")
+    @JsonIgnoreProperties("orders")
     private InstanceOfItem instance;
 
     //Соединение с OrderStatus
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ORDER_STATUS")
-    @JsonIgnoreProperties("orderStatus")
+    @JoinColumn(name = "ORDER_STATUS_ID")
+    @JsonIgnoreProperties("orders")
     private OrderStatus orderStatus;
 
     @ApiModelProperty
     @Column(name = "DATE_OF_RECEIPT_OF_ITEM")
-    private Time timeOfReceiptOfItem;
+    private Date timeOfReceiptOfItem;
 
     @ApiModelProperty
     @Column(name = "COUNT_ITEMS")
@@ -57,11 +57,11 @@ public class Order {
 
     @ApiModelProperty
     @Column(name = "PLANNED_TIME_OF_RETURNING_PRODUCT")
-    private Time plannedTimeOfReturningProduct;
+    private Date plannedTimeOfReturningProduct;
 
     @ApiModelProperty
     @Column(name = "REAL_TIME_OF_RETURNING_PRODUCT")
-    private Time realTimeOfReturningProduct;
+    private Date realTimeOfReturningProduct;
 
     @ApiModelProperty
     @Column(name = "ORDER_COST")

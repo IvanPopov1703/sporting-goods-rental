@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "ITEM")
-public class Item {
+public class Items {
 
     @ApiModelProperty
     @Id
@@ -39,7 +39,7 @@ public class Item {
     //Соединение с ViewOfItem
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "VIEW_OF_ITEM_ID")
-    @JsonIgnoreProperties("viewOfItem")
+    @JsonIgnoreProperties("items")
     private ViewOfItem viewOfItem;
 
     //Соединение с InstanceOfItem
@@ -50,6 +50,6 @@ public class Item {
     //Соединение с TypeOfItem
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "TYPE_OF_ITEM_ID")
-    @JsonIgnoreProperties("typeOfItem")
+    @JsonIgnoreProperties("items")
     private TypeOfItem typeOfItem;
 }

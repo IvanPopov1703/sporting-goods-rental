@@ -28,8 +28,8 @@ public class TypeOfItem {
     @Column(name = "NAME")
     private String name;
 
-    //Соединение с Item
+    //Соединение с Items
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeOfItem")
     @JsonIgnoreProperties("typeOfItem")
-    private List<Item> items;
+    private List<Items> items;
 }

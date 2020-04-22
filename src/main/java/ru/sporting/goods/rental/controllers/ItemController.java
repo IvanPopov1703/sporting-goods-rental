@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.sporting.goods.rental.entities.Item;
+import ru.sporting.goods.rental.entities.Items;
 import ru.sporting.goods.rental.services.ItemService;
 
 import java.util.List;
@@ -19,26 +19,26 @@ public class ItemController {
 
     @ApiOperation("Получение списка товаров")
     @GetMapping("/item")
-    public ResponseEntity<List<Item>> getAllItem(){
+    public ResponseEntity<List<Items>> getAllItem(){
         return ResponseEntity.ok(itemService.getAll());
     }
 
     @ApiOperation("Получение товаров по id")
     @GetMapping("/item/{id}")
-    public  ResponseEntity<Item> getItem(@PathVariable Long id){
+    public  ResponseEntity<Items> getItem(@PathVariable Long id){
         return ResponseEntity.ok(itemService.getOne(id));
     }
 
     @ApiOperation("Добавление товара")
     @PostMapping("/item")
-    public ResponseEntity<Object> addItem(@RequestBody Item item){
+    public ResponseEntity<Object> addItem(@RequestBody Items item){
         itemService.addItem(item);
         return ResponseEntity.ok(item);
     }
 
     @ApiOperation("Изменение товара")
     @PutMapping("/item")
-    public ResponseEntity updateItem(@RequestBody Item item){
+    public ResponseEntity updateItem(@RequestBody Items item){
         try {
             itemService.updateItem(item);
             return ResponseEntity.ok().build();

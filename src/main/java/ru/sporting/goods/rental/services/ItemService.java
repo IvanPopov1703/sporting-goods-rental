@@ -2,7 +2,7 @@ package ru.sporting.goods.rental.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.sporting.goods.rental.entities.Item;
+import ru.sporting.goods.rental.entities.Items;
 import ru.sporting.goods.rental.exceptions.ItemNotFoundException;
 import ru.sporting.goods.rental.repositories.ItemRepository;
 
@@ -14,23 +14,23 @@ public class ItemService {
     ItemRepository itemRepository;
 
     //Получение всех товаров
-    public List<Item> getAll(){
+    public List<Items> getAll(){
         return itemRepository.findAll();
     }
 
     //Получение товара по id
-    public Item getOne(Long id){
+    public Items getOne(Long id){
         return itemRepository.findById(id)
                 .orElseThrow(()-> new ItemNotFoundException(id));
     }
 
     //Добавление товара
-    public void addItem(Item item){
+    public void addItem(Items item){
         itemRepository.save(item);
     }
 
     //Изменение товара
-    public void updateItem(Item item){
+    public void updateItem(Items item){
         boolean exists = itemRepository.existsById(item.getId());
         if (exists){
             itemRepository.save(item);

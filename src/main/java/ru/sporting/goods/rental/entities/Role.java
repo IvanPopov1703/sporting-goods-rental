@@ -31,7 +31,6 @@ public class Role {
 
     //Соединение с User
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    @JoinColumn(name = "USER_ID")
-    @JsonIgnoreProperties("user")
+    @JsonIgnoreProperties("role")
     private List<User> users;
 }

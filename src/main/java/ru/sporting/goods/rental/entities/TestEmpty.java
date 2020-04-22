@@ -15,21 +15,21 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "ORDER_STATUS")
-public class OrderStatus {
+@Table(name = "TEST_EMPTY")
+public class TestEmpty {
 
     @ApiModelProperty
     @Id
     @GeneratedValue
-    @Column(name = "ID_ORDER_STATUS", unique = true, nullable = false, updatable = false)
+    @Column(name = "ID_EMPTY", unique = true, nullable = false, updatable = false)
     private Long id;
 
     @ApiModelProperty
     @Column(name = "NAME")
     private String name;
 
-    //Соединение с Orders
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orderStatus")
-    @JsonIgnoreProperties("orderStatus")
-    private List<Orders> orders;
+    //Соединение с User
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "testEmpty")
+    @JsonIgnoreProperties("testEmpty")
+    private List<User> users;
 }

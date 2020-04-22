@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "USER")
+@Table(name = "USERS")
 public class User {
 
     @ApiModelProperty
@@ -23,18 +23,6 @@ public class User {
     @GeneratedValue
     @Column(name = "ID_USER", unique = true, nullable = false, updatable = false)
     private Long id;
-
-    //Соединение с Role
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ROLE_ID")
-    @JsonIgnoreProperties("role")
-    private Role role;
-
-    //Соединение с Order
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    @JoinColumn(name = "ORDER_ID")
-    @JsonIgnoreProperties("user")
-    private List<Order> orders;
 
     @ApiModelProperty
     @Column(name = "LOGIN")
@@ -55,4 +43,21 @@ public class User {
     @ApiModelProperty
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
+
+    //Соединение с Role
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ROLE_ID")
+    @JsonIgnoreProperties("users")
+    private Role role;
+
+    //Соединение с Orders
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnoreProperties("user")
+    private List<Orders> orders;
+
+    //Соединение с Тестовой сущностью
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Test_Empty_ID")
+    @JsonIgnoreProperties("users")
+    private TestEmpty testEmpty;
 }

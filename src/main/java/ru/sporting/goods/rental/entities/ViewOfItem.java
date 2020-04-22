@@ -28,8 +28,8 @@ public class ViewOfItem {
     @Column(name = "NAME")
     private String name;
 
-    //Соединение с Item
+    //Соединение с Items
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "viewOfItem")
     @JsonIgnoreProperties("viewOfItem")
-    private List<Item> items;
+    private List<Items> items;
 }

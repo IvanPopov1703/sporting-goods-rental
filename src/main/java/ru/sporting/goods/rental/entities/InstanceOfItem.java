@@ -32,15 +32,14 @@ public class InstanceOfItem {
     @Column(name = "PURCHASE_PRICE")
     private double purchasePrice;
 
-    //Соединение с Item
+    //Соединение с Items
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("item")
     @JoinColumn(name = "ID_ITEM")
-    private Item item;
+    @JsonIgnoreProperties("items")
+    private Items item;
 
-    //Соединение с Order
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "instanceOfItem")
-    @JoinColumn(name = "INSTANCE_OF_ITEM_ID")
-    @JsonIgnoreProperties("order")
-    private List<Order>  orders;
+    //Соединение с Orders
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "instance")
+    @JsonIgnoreProperties("instance")
+    private List<Orders>  orders;
 }
