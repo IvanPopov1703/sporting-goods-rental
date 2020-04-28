@@ -6,15 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.sporting.goods.rental.entities.Items;
+import ru.sporting.goods.rental.repositories.ItemRepository;
 import ru.sporting.goods.rental.services.ItemService;
 
 import java.util.List;
 
 @Api(value = "Работа с товарами", tags = {"Товар"})
 @RestController
+@RequestMapping("/api")
 public class ItemController {
 
-    @Autowired
     private ItemService itemService;
 
     @ApiOperation("Получение списка товаров")
@@ -31,7 +32,7 @@ public class ItemController {
 
     @ApiOperation("Добавление товара")
     @PostMapping("/item")
-    public ResponseEntity<Object> addItem(@RequestBody Items item){
+    public ResponseEntity<Items> addItem(@RequestBody Items item){
         itemService.addItem(item);
         return ResponseEntity.ok(item);
     }
@@ -48,10 +49,15 @@ public class ItemController {
     }
 
     @ApiOperation("Удаление товара")
-    @PutMapping("/item/{id}")
+    @DeleteMapping("/item/{id}")
     public ResponseEntity deleteItem(@PathVariable Long id){
         itemService.deleteItem(id);
         return ResponseEntity.ok().build();
+    }
+
+    @Autowired
+    public void setItemService(ItemService itemService){
+        this.itemService = itemService;
     }
 
 }

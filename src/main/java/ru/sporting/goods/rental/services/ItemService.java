@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sporting.goods.rental.entities.Items;
 import ru.sporting.goods.rental.exceptions.ItemNotFoundException;
+import ru.sporting.goods.rental.exceptions.RecordNotFound;
 import ru.sporting.goods.rental.repositories.ItemRepository;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class ItemService {
     //Получение товара по id
     public Items getOne(Long id){
         return itemRepository.findById(id)
-                .orElseThrow(()-> new ItemNotFoundException(id));
+                .orElseThrow(()-> new RecordNotFound(id));
     }
 
     //Добавление товара
@@ -29,22 +30,26 @@ public class ItemService {
         itemRepository.save(item);
     }
 
+    //Метод для проверки наличия типа товара в базе
+    private boolean checkRecordToBase(Long id){
+        return itemRepository.existsById(id);
+    }
+
     //Изменение товара
     public void updateItem(Items item){
-        boolean exists = itemRepository.existsById(item.getId());
-        if (exists){
+        if(checkRecordToBase(item.getId())){
             itemRepository.save(item);
         } else {
-            throw new ItemNotFoundException(item.getId());
+            throw new RecordNotFound(item.getId());
         }
     }
 
     //Удаление товара
     public void deleteItem(Long id){
-        try {
+        if(checkRecordToBase(id)){
             itemRepository.deleteById(id);
-        } catch (IllegalArgumentException e){
-            throw new ItemNotFoundException(id);
+        } else {
+            throw new RecordNotFound(id);
         }
     }
 }

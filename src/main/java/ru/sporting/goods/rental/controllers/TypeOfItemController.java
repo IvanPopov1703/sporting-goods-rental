@@ -12,9 +12,9 @@ import java.util.List;
 
 @Api(value = "Работа с типом товара", tags = {"Тип товара"})
 @RestController
+@RequestMapping("/api")
 public class TypeOfItemController {
 
-    @Autowired
     private TypeOfItemService typeOfItemService;
 
     @ApiOperation("Получение списка всех типов товара")
@@ -31,7 +31,7 @@ public class TypeOfItemController {
 
     @ApiOperation("Добавление нового типа товара")
     @PostMapping("/productType")
-    public ResponseEntity<Object> addProductType(@RequestBody TypeOfItem product){
+    public ResponseEntity<TypeOfItem> addProductType(@RequestBody TypeOfItem product){
         typeOfItemService.addProductType(product);
         return ResponseEntity.ok(product);
     }
@@ -54,4 +54,8 @@ public class TypeOfItemController {
         return ResponseEntity.ok().build();
     }
 
+    @Autowired
+    public void setTypeOfItemService(TypeOfItemService typeOfItemService){
+        this.typeOfItemService = typeOfItemService;
+    }
 }
