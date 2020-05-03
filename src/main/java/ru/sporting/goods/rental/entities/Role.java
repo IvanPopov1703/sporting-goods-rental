@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @ApiModel
@@ -25,6 +28,7 @@ public class Role {
     @Column(name = "ID_ROLE", unique = true, nullable = false, updatable = false)
     private Long id;
 
+    @NotEmpty
     @ApiModelProperty
     @Column(name = "NAME")
     private String name;

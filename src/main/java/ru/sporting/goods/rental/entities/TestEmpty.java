@@ -27,9 +27,4 @@ public class TestEmpty {
     @ApiModelProperty
     @Column(name = "NAME")
     private String name;
-
-    //Соединение с User
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "testEmpty")
-    @JsonIgnoreProperties("testEmpty")
-    private List<User> users;
 }

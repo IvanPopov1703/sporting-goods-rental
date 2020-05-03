@@ -17,7 +17,7 @@
         <div class="leftHeadOneFilter">
             <h3>Вид товара</h3>
             <#list viewItem as viewOfItem>
-                <p><input type="checkbox" name="checkViewOfItem" value="Test">${viewOfItem.name}</p>
+                <p><input type="checkbox" name="checkViewOfItem" value="${viewOfItem.id}">${viewOfItem.name}</p>
             </#list>
             <h3>Тип товара</h3>
             <#list typeItem as typeOfItem>

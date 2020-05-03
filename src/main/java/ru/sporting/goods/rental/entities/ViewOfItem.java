@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @ApiModel
@@ -24,6 +26,8 @@ public class ViewOfItem {
     @Column(name = "ID_VIEW_OF_ITEM", unique = true, nullable = false, updatable = false)
     private Long id;
 
+    @NotBlank
+    @Size(min = 3, max = 30)
     @ApiModelProperty
     @Column(name = "NAME")
     private String name;

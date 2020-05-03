@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @ApiModel
@@ -24,6 +26,7 @@ public class OrderStatus {
     @Column(name = "ID_ORDER_STATUS", unique = true, nullable = false, updatable = false)
     private Long id;
 
+    @Size(min = 3, max = 30)
     @ApiModelProperty
     @Column(name = "NAME")
     private String name;

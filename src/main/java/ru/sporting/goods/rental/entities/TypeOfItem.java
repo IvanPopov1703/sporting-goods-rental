@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @ApiModel
@@ -24,6 +25,7 @@ public class TypeOfItem {
     @Column(name = "ID_TYPE_OF_ITEM", unique = true, nullable = false, updatable = false)
     private Long id;
 
+    @Size(min = 5)
     @ApiModelProperty
     @Column(name = "NAME")
     private String name;
