@@ -22,7 +22,7 @@ public class ViewOfItemService {
     }
 
     //Получение всех товаров
-    public List<ViewOfItem> getAll(){
+    public List<ViewOfItem> findAll(){
         return viewOfItemRepository.findAll();
     }
 

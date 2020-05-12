@@ -1,11 +1,10 @@
-package ru.sporting.goods.rental.controllers;
+package ru.sporting.goods.rental.controllers.api;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.sporting.goods.rental.entities.TypeOfItem;
 import ru.sporting.goods.rental.entities.ViewOfItem;
 import ru.sporting.goods.rental.services.ViewOfItemService;
 
@@ -20,7 +19,7 @@ public class ViewOfItemController {
     @ApiOperation("Получение списка всех типов товара")
     @GetMapping("/viewItem")
     public ResponseEntity<List<ViewOfItem>> getProductView() {
-        return ResponseEntity.ok(viewOfItemService.getAll());
+        return ResponseEntity.ok(viewOfItemService.findAll());
     }
 
     @ApiOperation("Получение одного товара по id")

@@ -3,6 +3,7 @@ package ru.sporting.goods.rental.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sporting.goods.rental.entities.Items;
+import ru.sporting.goods.rental.entities.TypeOfItem;
 import ru.sporting.goods.rental.exceptions.ItemNotFoundException;
 import ru.sporting.goods.rental.exceptions.RecordNotFound;
 import ru.sporting.goods.rental.repositories.ItemRepository;
@@ -14,42 +15,52 @@ public class ItemService {
     @Autowired
     ItemRepository itemRepository;
 
+    //Проверка наличия записи в базе
+    private boolean existsById(Long id){
+        return itemRepository.existsById(id);
+    }
+
     //Получение всех товаров
-    public List<Items> getAll(){
+    public List<Items> findAll(){
         return itemRepository.findAll();
     }
 
     //Получение товара по id
-    public Items getOne(Long id){
+    public Items findById(Long id){
         return itemRepository.findById(id)
                 .orElseThrow(()-> new RecordNotFound(id));
     }
 
     //Добавление товара
-    public void addItem(Items item){
-        itemRepository.save(item);
+    public Items save(Items item){
+        return itemRepository.save(item);
     }
 
-    //Метод для проверки наличия типа товара в базе
-    private boolean checkRecordToBase(Long id){
-        return itemRepository.existsById(id);
-    }
-
-    //Изменение товара
-    public void updateItem(Items item){
-        if(checkRecordToBase(item.getId())){
-            itemRepository.save(item);
-        } else {
-            throw new RecordNotFound(item.getId());
+    //Редактирование записи
+    public Items update(Items item) throws Exception{
+        if (item.getId() != null && !existsById(item.getId())){
+            throw new Exception("Запись с номером " + item.getId() + " не найдена!");
         }
+        return itemRepository.save(item);
     }
 
-    //Удаление товара
-    public void deleteItem(Long id){
-        if(checkRecordToBase(id)){
+    //Удаление записи
+    public void deleteById(Long id) throws Exception{
+        if (!existsById(id)){
+            throw new Exception("Запись с номером " + id + " не найдена!");
+        }
+        else {
             itemRepository.deleteById(id);
-        } else {
-            throw new RecordNotFound(id);
         }
+    }
+
+    //Получение всех товаров, где вместо id типа и вида товара, их название
+    public List<Items> findAllItemsAndTypeAndView(){
+        return itemRepository.findAllItemsAndTypeAndView();
+    }
+
+    //Получение одного товара по id, где вместо id типа и вида, их наименование
+    public Items findItemById(Long id){
+        return itemRepository.findItemById(id);
     }
 }

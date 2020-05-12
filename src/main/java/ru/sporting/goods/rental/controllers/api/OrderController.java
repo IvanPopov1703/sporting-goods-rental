@@ -1,4 +1,4 @@
-package ru.sporting.goods.rental.controllers;
+package ru.sporting.goods.rental.controllers.api;
 
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;

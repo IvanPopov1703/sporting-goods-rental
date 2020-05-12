@@ -21,7 +21,7 @@ public class PageAdminViewOfItemController extends BaseController{
 
     @GetMapping("/res")
     public String getRes(Model model){
-        model.addAttribute("viewOfItem", viewOfItemService.getAll());
+        model.addAttribute("viewOfItem", viewOfItemService.findAll());
         return "result";
     }
 

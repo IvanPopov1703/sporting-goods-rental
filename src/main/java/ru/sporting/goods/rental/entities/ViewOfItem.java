@@ -33,7 +33,7 @@ public class ViewOfItem {
     private String name;
 
     //Соединение с Items
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "viewOfItem")
+    @OneToMany(mappedBy = "viewOfItem")
     @JsonIgnoreProperties("viewOfItem")
     private List<Items> items;
 }

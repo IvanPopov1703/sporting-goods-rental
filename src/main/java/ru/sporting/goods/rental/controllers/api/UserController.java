@@ -1,4 +1,4 @@
-package ru.sporting.goods.rental.controllers;
+package ru.sporting.goods.rental.controllers.api;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +30,7 @@ public class UserController {
     @ApiOperation("Добавление нового user")
     @PostMapping("/users")
     public ResponseEntity<Object> addUser(@RequestBody User user){
-        userService.addUsers(user);
+        //userService.addUsers(user);
         return ResponseEntity.ok(user);
     }
 

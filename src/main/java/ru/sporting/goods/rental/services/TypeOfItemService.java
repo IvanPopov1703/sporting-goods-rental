@@ -2,8 +2,6 @@ package ru.sporting.goods.rental.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.sporting.goods.rental.exceptions.RecordNotFound;
-import ru.sporting.goods.rental.exceptions.TypeOfItemNotFoundException;
 import ru.sporting.goods.rental.entities.TypeOfItem;
 import ru.sporting.goods.rental.repositories.TypeOfItemRepository;
 
@@ -11,45 +9,70 @@ import java.util.List;
 
 @Service
 public class TypeOfItemService {
+
     @Autowired
     TypeOfItemRepository typeOfItemRepository;
 
-    //Получение всех типов товара
-    public List<TypeOfItem> getAll(){
-        return typeOfItemRepository.findAll();
-    }
-
-    //Получение одного продукта по id
-    public TypeOfItem getOne(Long id){
-        return typeOfItemRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFound(id));
-    }
-
-    //Добавление нового типа товара
-    public void addProductType(TypeOfItem product){
-        typeOfItemRepository.save(product);
-    }
-
-    //Метод для проверки наличия типа товара в базе
-    private boolean checkRecordToBase(Long id){
+    //Проверка наличия записи в базе
+    private boolean existsById(Long id){
         return typeOfItemRepository.existsById(id);
     }
 
-    //Редактирование типа товара
-    public void updateTypeProduct(TypeOfItem product){
-        if (checkRecordToBase(product.getId())){
-            typeOfItemRepository.save(product);
-        } else{
-            throw new RecordNotFound(product.getId());
-        }
+    //Получение записи по id, иначе null
+    public TypeOfItem findById(Long id){
+        return typeOfItemRepository.findById(id)
+                .orElse(null);
     }
 
-    //Удаление типа продукта по id
-    public void deleteProductTypeById(Long id) {
-        if (checkRecordToBase(id)){
+    //Получение всех записей
+    public List<TypeOfItem> findAll(){
+        return typeOfItemRepository.findAll();
+    }
+
+    //Добавление новой записи
+    public TypeOfItem save(TypeOfItem typeOfItem){
+        return typeOfItemRepository.save(typeOfItem);
+    }
+
+    //Редактирование записи
+    public TypeOfItem update(TypeOfItem typeOfItem) throws Exception{
+        if (typeOfItem.getId() != null && !existsById(typeOfItem.getId())){
+            throw new Exception("Записи с номером " + typeOfItem.getId() + " не найдена!");
+        }
+        return typeOfItemRepository.save(typeOfItem);
+    }
+
+    //Удаление записи
+    public void deleteById(Long id) throws Exception{
+        if (!existsById(id)){
+            throw new Exception("Запись с номером " + id + " не найдена!");
+        }
+        else {
             typeOfItemRepository.deleteById(id);
-        } else{
-            throw new RecordNotFound(id);
         }
     }
 }
+
+
+/*//Редактирование записи
+    public TypeOfItem update(TypeOfItem typeOfItem) throws Exception{
+        if (StringUtils.isEmpty(typeOfItem.getName())){
+            throw new Exception("Обязательное поле");
+        }
+        if (typeOfItem.getId() != null && !existsById(typeOfItem.getId())){
+            throw new Exception("Записи с номером " + typeOfItem.getId() + " не найдена!");
+        }
+        return typeOfItemRepository.save(typeOfItem);
+    }*/
+
+
+    /*//Добавление новой записи
+    public TypeOfItem save(TypeOfItem typeOfItem) throws Exception{
+        if(StringUtils.isEmpty(typeOfItem.getName()) || typeOfItem.getName().equals("")){
+            throw new Exception("Обязательное поле!");
+        }
+        if (typeOfItem.getId() != null && existsById(typeOfItem.getId())){
+            throw new Exception("Тип товара с номером " + typeOfItem.getId() + " уже сущевствует!");
+        }
+        return typeOfItemRepository.save(typeOfItem);
+    }*/

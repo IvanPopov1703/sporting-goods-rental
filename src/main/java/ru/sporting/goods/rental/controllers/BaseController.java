@@ -20,7 +20,7 @@ abstract public class BaseController {
     //Метод для добавления всех ошибок валидаций во FlashAttribute
     protected void addValidationMessage(RedirectAttributes redirectAttributes, BindingResult bindingResult){
         for(FieldError error : bindingResult.getFieldErrors()){
-            redirectAttributes.addFlashAttribute("validation." + error.getField(), error.getCode());
+            redirectAttributes.addFlashAttribute("validation." + error.getField(), error.getDefaultMessage());
         }
     }
 

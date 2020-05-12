@@ -1,4 +1,4 @@
-package ru.sporting.goods.rental.controllers;
+package ru.sporting.goods.rental.controllers.api;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,19 +21,19 @@ public class ItemController {
     @ApiOperation("Получение списка товаров")
     @GetMapping("/item")
     public ResponseEntity<List<Items>> getAllItem(){
-        return ResponseEntity.ok(itemService.getAll());
+        return ResponseEntity.ok(itemService.findAll());
     }
 
     @ApiOperation("Получение товаров по id")
     @GetMapping("/item/{id}")
     public  ResponseEntity<Items> getItem(@PathVariable Long id){
-        return ResponseEntity.ok(itemService.getOne(id));
+        return ResponseEntity.ok(itemService.findById(id));
     }
 
     @ApiOperation("Добавление товара")
     @PostMapping("/item")
     public ResponseEntity<Items> addItem(@RequestBody Items item){
-        itemService.addItem(item);
+        itemService.save(item);
         return ResponseEntity.ok(item);
     }
 
@@ -41,7 +41,7 @@ public class ItemController {
     @PutMapping("/item")
     public ResponseEntity updateItem(@RequestBody Items item){
         try {
-            itemService.updateItem(item);
+            //itemService.update(item);
             return ResponseEntity.ok().build();
         } catch (IllegalArgumentException e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -51,7 +51,7 @@ public class ItemController {
     @ApiOperation("Удаление товара")
     @DeleteMapping("/item/{id}")
     public ResponseEntity deleteItem(@PathVariable Long id){
-        itemService.deleteItem(id);
+        //itemService.deleteById(id);
         return ResponseEntity.ok().build();
     }
 

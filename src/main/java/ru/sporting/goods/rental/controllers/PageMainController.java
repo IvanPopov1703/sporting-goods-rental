@@ -9,7 +9,7 @@ import ru.sporting.goods.rental.services.TypeOfItemService;
 import ru.sporting.goods.rental.services.ViewOfItemService;
 
 @Controller
-public class PagesController {
+public class PageMainController {
 
     private TypeOfItemService typeOfItemService;
     private ViewOfItemService viewOfItemService;
@@ -25,11 +25,11 @@ public class PagesController {
     @GetMapping("/goodsPage")
     public String initTypeItem(Model modelTypeItem, Model modelViewItem, Model modelItem){
         //Подгрузка на страницу видов товаров
-        modelViewItem.addAttribute("viewItem", viewOfItemService.getAll());
+        modelViewItem.addAttribute("viewItem", viewOfItemService.findAll());
         //Подгрузка на страницу типов товаров
-        modelTypeItem.addAttribute("typeItem", typeOfItemService.getAll());
+        modelTypeItem.addAttribute("typeItem", typeOfItemService.findAll());
         //Подгрузка на страницу экземпляров товара
-        modelItem.addAttribute("itemPage", itemService.getAll());
+        modelItem.addAttribute("itemPage", itemService.findAll());
         return "goods";
     }
 

@@ -8,13 +8,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
 
 @ApiModel
 @Data
 @AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "TYPE_OF_ITEM")
 public class TypeOfItem {
@@ -25,7 +26,7 @@ public class TypeOfItem {
     @Column(name = "ID_TYPE_OF_ITEM", unique = true, nullable = false, updatable = false)
     private Long id;
 
-    @Size(min = 5)
+    @NotBlank(message = "Поле не может быть путым!")
     @ApiModelProperty
     @Column(name = "NAME")
     private String name;
@@ -34,19 +35,4 @@ public class TypeOfItem {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeOfItem")
     @JsonIgnoreProperties("typeOfItem")
     private List<Items> items;
-
-    public TypeOfItem() {
-    }
-
-    public TypeOfItem(String name){
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

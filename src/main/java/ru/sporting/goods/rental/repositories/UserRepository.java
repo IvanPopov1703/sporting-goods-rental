@@ -4,4 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ru.sporting.goods.rental.entities.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    User getUserByLogin(String login);
 }
