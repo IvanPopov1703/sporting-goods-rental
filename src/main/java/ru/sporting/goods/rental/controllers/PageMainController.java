@@ -8,6 +8,8 @@ import ru.sporting.goods.rental.services.ItemService;
 import ru.sporting.goods.rental.services.TypeOfItemService;
 import ru.sporting.goods.rental.services.ViewOfItemService;
 
+import javax.annotation.security.RolesAllowed;
+
 @Controller
 public class PageMainController {
 
@@ -33,6 +35,7 @@ public class PageMainController {
         return "goods";
     }
 
+    @RolesAllowed("BUYER")
     //Запуск страницы одного товара
     @GetMapping("/goodOnePage")
     public String goodsOnePage(){

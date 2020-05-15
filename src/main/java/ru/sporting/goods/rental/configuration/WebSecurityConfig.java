@@ -19,25 +19,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/static/**", "/goodsPage", "/goodOnePage").permitAll()
-                .anyRequest().authenticated() //Не одна страничка недоступна не авториз польз
+        http.csrf().disable();
+        http.authorizeRequests()
+                .antMatchers("**/static/**", "/goodsPage").permitAll()
+                .anyRequest().authenticated()
                 .and()
-                //Пробрасывает на форму авторизации
-                .exceptionHandling().accessDeniedPage("/login")
+                .formLogin().permitAll()
                 .and()
-                //указываем где находится форма логина
-                .formLogin()
-                //вот по такому урлу
-                .loginPage("/authoriz")
-                //мы для логина разрешаем вход всем
-                .permitAll()
-                .and()
-                //и на выход тоже разрешаем всем
-                .logout()
-                .permitAll();
+                .logout().permitAll();
+
+//        http
+//                .csrf().disable()
+//                .authorizeRequests()
+//                .antMatchers("**/static/**", "/goodsPage", "/goodOnePage").permitAll()
+//                .anyRequest().authenticated() //Не одна страничка недоступна не авториз польз
+//                .and()
+//                //Пробрасывает на форму авторизации
+//                .exceptionHandling().accessDeniedPage("/login")
+//                .and()
+//                //указываем где находится форма логина
+//                .formLogin()
+//                //вот по такому урлу
+//                .loginPage("/authoriz")
+//                //мы для логина разрешаем вход всем
+//                .permitAll()
+//                .and()
+//                //и на выход тоже разрешаем всем
+//                .logout()
+//                .permitAll();
     }
 
     private UserService userService;
