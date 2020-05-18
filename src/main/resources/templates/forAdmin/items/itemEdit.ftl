@@ -127,6 +127,16 @@
                 </#if>
                 <td><span>${(Request['validation.сostOneHourRental'])!}</span></td>
             </tr>
+            <tr>
+                <td>Описание товара:</td>
+                <#if add = false>
+                    <td><input type="text" placeholder="Введите описание" name="description"
+                               value="${items.description}"/></td>
+                <#else>
+                    <td><input type="text" placeholder="Введите описание" name="description"/></td>
+                </#if>
+                <td><span>${(Request['validation.description'])!}</span></td>
+            </tr>
         </table>
         <br>
         <button type="submit">${submitTitle}</button>&nbsp;&nbsp;&nbsp;&nbsp;

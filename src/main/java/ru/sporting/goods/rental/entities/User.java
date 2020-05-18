@@ -13,11 +13,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-@ApiModel
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,43 +32,54 @@ public class User implements UserDetails {
     public static final String ROLE_BUYER = "BUYER"; //Покупатель
     public static final String ROLE_SELLER = "SELLER"; //Продавец
 
-    @ApiModelProperty
     @Id
     @GeneratedValue
     @Column(name = "ID_USER", unique = true, nullable = false, updatable = false)
     private Long id;
 
-    @ApiModelProperty
+    @Size(min = 4, message = "Поле должно содержать, минимум 4 символа")
     @Column(name = "LOGIN")
     private String login;
 
-    @ApiModelProperty
+    @Size(min = 4, message = "Поле должно содержать, минимум 4 символа")
     @Column(name = "PASSWORD")
     private String password;
 
-    @ApiModelProperty
+    @Size(min = 3, message = "Поле должно содержать, минимум 3 символа")
     @Column(name = "SURNAME")
     private String surname;
 
-    @ApiModelProperty
+    @Size(min = 2, message = "Поле должно содержать, минимум 2 символа")
     @Column(name = "NAME")
     private String name;
 
-    @ApiModelProperty
+    @Size(min = 4, message = "Поле должно содержать, минимум 4 символа")
     @Column(name = "PATRONYMIC")
     private String patronymic;
 
-    @ApiModelProperty
     @Column(name = "ROLE")
     private String role;
 
-    @ApiModelProperty
+    @Size(min = 6, message = "Поле должно содержать, минимум 6 символов")
     @Column(name = "EMAIL")
     private String email;
 
-    @ApiModelProperty
+    @Size(min = 6, message = "Поле должно содержать, минимум 6 символов")
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
+
+    @Size(min = 10, message = "Поле должно содержать, минимум 10 символов")
+    @Column(name = "PASSPORT_DATA")
+    private String passportData;
+
+    //Валидация
+    @Min(value = 0, message = "Поле не может содержать отрицательное значение")
+    @Column(name = "PURSE")
+    private double purse;
+
+    @Min(value = 0, message = "Поле не может содержать отрицательное значение")
+    @Column(name = "AMOUNT_OF_RENTED_GOODS")
+    private int amountOfRentedGoods;
 
     //Соединение с Orders
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")

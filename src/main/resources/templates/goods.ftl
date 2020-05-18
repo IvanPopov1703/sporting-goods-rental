@@ -9,6 +9,26 @@
 <main>
     <header>
         <img class="imgHead" src="imege/GoodsHead.png" alt="Зоголовок">
+        <div class="login">
+            <#if isAut?has_content>
+                <a href="/user/users">
+                    Моя страница
+                </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a style="font-size: 20px;">Кошелёк: ${users.purse} руб.</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="/logout">
+                    <button>Выйти</button>
+                </a>
+            <#else >
+                <a href="/login">
+                    <button>Войти</button>
+                </a>
+                &nbsp;&nbsp;
+                <a href="/registr">
+                    <button>Регистрация</button>
+                </a>
+            </#if>
+        </div>
     </header>
     <div class="leftSort">
         <div class="leftHead">
@@ -36,7 +56,7 @@
                     <img class="imgOneGood" src="imege/imageOneGood.jpg" alt="Картинка товара">
                 </div>
                 <div class="textOneGood">
-                    <h2><span class="titleOneGood"><a href="oneGood.ftl">${item.name}</a></span></h2>
+                    <h2><span class="titleOneGood"><a href="/goodOnePage">${item.name}</a></span></h2>
                     <p class="descriptGood">Двухслойная дуговая палатка с полуавтоматическим каркасом идеальна для
                         похода.
                         <br>

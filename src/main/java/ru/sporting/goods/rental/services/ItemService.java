@@ -3,8 +3,6 @@ package ru.sporting.goods.rental.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sporting.goods.rental.entities.Items;
-import ru.sporting.goods.rental.entities.TypeOfItem;
-import ru.sporting.goods.rental.exceptions.ItemNotFoundException;
 import ru.sporting.goods.rental.exceptions.RecordNotFound;
 import ru.sporting.goods.rental.repositories.ItemRepository;
 

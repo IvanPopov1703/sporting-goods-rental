@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.sporting.goods.rental.entities.Items;
 import ru.sporting.goods.rental.entities.User;
 import ru.sporting.goods.rental.repositories.UserRepository;
 
@@ -26,7 +27,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = getUserDataByLogin(username);
+        User user = getUserByLogin(username);
         if (user == null){
             throw new UsernameNotFoundException("Пользователь с логином " + username + " не найден!");
         }
@@ -39,18 +40,26 @@ public class UserService implements UserDetailsService {
     }
 
     //Регистрация пользователя
-    public User registerUser(User user) throws Exception{
+    public void registerUser(User user) throws Exception{
         if (userRepository.getUserByLogin(user.getLogin()) != null){
-            //throw new ValidationException("global", "registration.login.used");
             throw new Exception("Пользователь с таким логином уже существует!");
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        //user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 
     //Получение пользователя по логину
-    public User getUserDataByLogin(String login){
+    public User getUserByLogin(String login) throws UsernameNotFoundException{
+        if (userRepository.getUserByLogin(login) == null){
+            throw new UsernameNotFoundException("Введенные данные некорректны!");
+        }
         return userRepository.getUserByLogin(login);
+    }
+
+    public void checkPass(String pass1, String pass2) throws UsernameNotFoundException{
+        if (!pass1.equals(pass2)) {
+            throw new UsernameNotFoundException("Введенные данные некорректны!");
+        }
     }
 
     //Получение всех пользователей
@@ -65,13 +74,21 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    @Autowired
-    public void setUserRepository(UserRepository userRepository){
-        this.userRepository = userRepository;
+    //Проверка наличия записи в базе
+    private boolean existsById(Long id){
+        return userRepository.existsById(id);
+    }
+
+    //Редактирование записи
+    public User update(User user) throws Exception{
+        if (user.getId() != null && !existsById(user.getId())){
+            throw new Exception("Запись с номером " + user.getId() + " не найдена!");
+        }
+        return userRepository.save(user);
     }
 
     @Autowired
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder){
-        this.passwordEncoder = passwordEncoder;
+    public void setUserRepository(UserRepository userRepository){
+        this.userRepository = userRepository;
     }
 }

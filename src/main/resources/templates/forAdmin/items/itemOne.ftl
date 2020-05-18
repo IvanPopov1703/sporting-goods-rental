@@ -74,6 +74,12 @@
                 <td>:</td>
                 <td>${items.сostOneHourRental}</td>
             </tr>
+            <tr>
+                <td>Описание товара</td>
+                <td>:</td>
+                <td>${items.description}</td>
+            </tr>
+
         </table>
         <br/>
         <#if allowDelete>

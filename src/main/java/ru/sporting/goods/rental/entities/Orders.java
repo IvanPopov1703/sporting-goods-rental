@@ -49,7 +49,6 @@ public class Orders {
     @Column(name = "DATE_OF_RECEIPT_OF_ITEM")
     private Date timeOfReceiptOfItem;*/
 
-    @ApiModelProperty
     @Column(name = "ORDER_COST")
     private double orderCost;
 

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @ApiModel
@@ -30,16 +31,21 @@ public class Items {
     @Column(name = "NAME_ITEM")
     private String name;
 
-    @Digits(integer=6, fraction=2, message="Не может быть пустым!")
     @Positive(message = "Не может быть отрицательным!")
     @ApiModelProperty
     @Column(name = "NUMBER_OF_COPIES")
     private int numberOfCopies;
 
-    @Positive(message = "Не может быть отрицательным!")
+    //@Positive(message = "Не может быть отрицательным!")
+    @DecimalMin(value = "1", message = "Не может быть пустым или быть < 1")
     @ApiModelProperty
     @Column(name = "COST_ONE_HOUR_RENTAL")
     private double сostOneHourRental;
+
+    @NotBlank(message = "Поле не может быть путым!")
+    @ApiModelProperty
+    @Column(name = "DESCRIPTION")
+    private String description;
 
     //Соединение с ViewOfItem
     @ManyToOne//(cascade = CascadeType.ALL)

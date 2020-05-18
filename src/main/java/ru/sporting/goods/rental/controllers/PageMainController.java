@@ -17,13 +17,6 @@ public class PageMainController {
     private ViewOfItemService viewOfItemService;
     private ItemService itemService;
 
-    //Запуск стартовой страницы
-    @GetMapping("/")
-    public String mainPage(){
-        return "index";
-    }
-
-    //Запуск страницы всех товаров
     @GetMapping("/goodsPage")
     public String initTypeItem(Model modelTypeItem, Model modelViewItem, Model modelItem){
         //Подгрузка на страницу видов товаров
@@ -35,7 +28,6 @@ public class PageMainController {
         return "goods";
     }
 
-    @RolesAllowed("BUYER")
     //Запуск страницы одного товара
     @GetMapping("/goodOnePage")
     public String goodsOnePage(){

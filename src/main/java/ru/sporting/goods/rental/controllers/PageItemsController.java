@@ -7,7 +7,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.sporting.goods.rental.entities.Items;
-import ru.sporting.goods.rental.entities.TypeOfItem;
 import ru.sporting.goods.rental.services.ItemService;
 import ru.sporting.goods.rental.services.TypeOfItemService;
 import ru.sporting.goods.rental.services.ViewOfItemService;
