@@ -11,7 +11,6 @@
     <div>
         <table border="1">
             <tr>
-                <th>Id</th>
                 <th>Название товара</th>
                 <th>Вид товара</th>
                 <th>Тип товара</th>
@@ -20,7 +19,6 @@
             </tr>
             <#list items as item>
                 <tr>
-                    <td>${item.id}</td>
                     <td><a href="${'/admin/items/' + item.id}">${item.name}</a></td>
                     <td>${item.viewOfItem.name}</td>
                     <td>${item.typeOfItem.name}</td>

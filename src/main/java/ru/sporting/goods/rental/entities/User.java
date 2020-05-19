@@ -30,7 +30,7 @@ public class User implements UserDetails {
 
     public static final String ROLE_ADMIN = "ADMIN"; //админ
     public static final String ROLE_BUYER = "BUYER"; //Покупатель
-    public static final String ROLE_SELLER = "SELLER"; //Продавец
+    //public static final String ROLE_SELLER = "SELLER"; //Продавец
 
     @Id
     @GeneratedValue

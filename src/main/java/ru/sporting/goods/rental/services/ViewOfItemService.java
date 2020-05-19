@@ -3,7 +3,9 @@ package ru.sporting.goods.rental.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sporting.goods.rental.entities.ViewOfItem;
+import ru.sporting.goods.rental.entities.ViewOfItem;
 import ru.sporting.goods.rental.exceptions.RecordNotFound;
+import ru.sporting.goods.rental.repositories.ViewOfItemRepository;
 import ru.sporting.goods.rental.repositories.ViewOfItemRepository;
 
 import java.util.List;
@@ -11,47 +13,49 @@ import java.util.List;
 @Service
 public class ViewOfItemService {
 
-    @Autowired
-    ViewOfItemRepository viewOfItemRepository;
+    private ViewOfItemRepository viewOfItemRepository;
 
-    //Добавление вида товара
-    public void addViewOfItem(ViewOfItem viewOfItem){
-        viewOfItemRepository.save(viewOfItem);
+    //Проверка наличия записи в базе
+    private boolean existsById(Long id){
+        return viewOfItemRepository.existsById(id);
     }
 
-    //Получение всех товаров
+    //Получение записи по id, иначе null
+    public ViewOfItem findById(Long id){
+        return viewOfItemRepository.findById(id)
+                .orElse(null);
+    }
+
+    //Получение всех записей
     public List<ViewOfItem> findAll(){
         return viewOfItemRepository.findAll();
     }
 
-    //Получение одного товара
-    public ViewOfItem getOne(Long id){
-        return viewOfItemRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFound(id));
+    //Добавление новой записи
+    public ViewOfItem save(ViewOfItem viewOfItem){
+        return viewOfItemRepository.save(viewOfItem);
     }
 
-    //Метод для проверки наличия типа товара в базе
-    private boolean checkRecordToBase(Long id){
-        return viewOfItemRepository.existsById(id);
+    //Редактирование записи
+    public ViewOfItem update(ViewOfItem viewOfItem) throws Exception{
+        if (viewOfItem.getId() != null && !existsById(viewOfItem.getId())){
+            throw new Exception("Записи с номером " + viewOfItem.getId() + " не найдена!");
+        }
+        return viewOfItemRepository.save(viewOfItem);
     }
 
-    //Редактирование товара
-    public void update(ViewOfItem item){
-        if(checkRecordToBase(item.getId())){
-            viewOfItemRepository.save(item);
+    //Удаление записи
+    public void deleteById(Long id) throws Exception{
+        if (!existsById(id)){
+            throw new Exception("Запись с номером " + id + " не найдена!");
         }
         else {
-            throw new RecordNotFound(item.getId());
-        }
-    }
-
-    //Удаление вида
-    public void delete(Long id){
-        if(checkRecordToBase(id)){
             viewOfItemRepository.deleteById(id);
         }
-        else {
-            throw new RecordNotFound(id);
-        }
+    }
+
+    @Autowired
+    public void setViewOfItemRepository(ViewOfItemRepository viewOfItemRepository){
+        this.viewOfItemRepository = viewOfItemRepository;
     }
 }

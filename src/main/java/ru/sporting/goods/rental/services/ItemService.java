@@ -10,8 +10,8 @@ import java.util.List;
 
 @Service
 public class ItemService {
-    @Autowired
-    ItemRepository itemRepository;
+
+    private ItemRepository itemRepository;
 
     //Проверка наличия записи в базе
     private boolean existsById(Long id){
@@ -60,5 +60,10 @@ public class ItemService {
     //Получение одного товара по id, где вместо id типа и вида, их наименование
     public Items findItemById(Long id){
         return itemRepository.findItemById(id);
+    }
+
+    @Autowired
+    public void setItemRepository(ItemRepository itemRepository){
+        this.itemRepository = itemRepository;
     }
 }

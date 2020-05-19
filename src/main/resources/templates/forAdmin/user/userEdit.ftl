@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title><#if add>Добавить тип товара<#else>Редактировать тип товара</#if></title>
+    <title><#if add>Добавить вид товара<#else>Редактировать вид товара</#if></title>
     <style>
         body {
             margin: 0;
@@ -41,20 +41,20 @@
 </head>
 <body>
 <main>
-    <h1><#if add>Создать новый тип товара<#else>Изменить тип товара</#if></h1>
+    <h1><#if add>Создать новый вид товара<#else>Изменить вид товара</#if></h1>
     <#if add>
-        <#assign urlAction>${'/admin/typeOfItem/add'}</#assign>
+        <#assign urlAction>${'/admin/viewOfItem/add'}</#assign>
         <#assign submitTitle>Создать</#assign>
     <#else>
-        <#assign urlAction>${'/admin/typeOfItem/' + typeOfItem.id + '/edit'}</#assign>
+        <#assign urlAction>${'/admin/viewOfItem/' + viewOfItem.id + '/edit'}</#assign>
         <#assign submitTitle>Редактировать</#assign>
     </#if>
-    <form action="${urlAction}" name="typeOfItem" method="POST">
+    <form action="${urlAction}" name="viewOfItem" method="POST">
         <table border="0">
             <tr>
-                <td>Название типа:</td>
+                <td>Название вида:</td>
                 <#if add == false>
-                    <td><input type="text" placeholder="Введите название" name="name" value="${typeOfItem.name}"/></td>
+                    <td><input type="text" placeholder="Введите название" name="name" value="${viewOfItem.name}"/></td>
                 <#else>
                     <td><input type="text" placeholder="Введите название" name="name" /></td>
                 </#if>
@@ -67,7 +67,7 @@
         </table>
         <br>
         <button type="submit">${submitTitle}</button>&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="/admin/typeOfItem">
+        <a href="/admin/viewOfItem">
             <button type="button">Назад к списку</button>
         </a>
     </form>

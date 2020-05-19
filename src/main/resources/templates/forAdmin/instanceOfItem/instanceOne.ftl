@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title>Описание выбранного товара</title>
+    <title>Описание выбранного экземпляра</title>
     <style>
         body {
             margin: 0;
@@ -41,56 +41,55 @@
 </head>
 <body>
 <main>
-    <h1>Описание выбранного товара</h1>
-    <#if items??>
+    <h1>Описание выбранного экземпляра</h1>
+    <#if instance??>
         <table border="0">
             <tr>
-                <td>Название</td>
+                <td>Инвентарный номер</td>
                 <td>:</td>
-                <td>${items.name}</td>
+                <td>${instance.id}</td>
+            </tr>
+            <tr>
+                <td>Название товара</td>
+                <td>:</td>
+                <td>${instance.items.name}</td>
             </tr>
             <tr>
                 <td>Вид товара</td>
                 <td>:</td>
-                <td>${items.viewOfItem.name}</td>
+                <td>${instance.items.viewOfItem.name}</td>
             </tr>
             <tr>
                 <td>Тип товара</td>
                 <td>:</td>
-                <td>${items.typeOfItem.name}</td>
+                <td>${instance.items.typeOfItem.name}</td>
             </tr>
             <tr>
-                <td>Количество</td>
+                <td>Часы пользования</td>
                 <td>:</td>
-                <td>${items.numberOfCopies}</td>
+                <td>${instance.hoursOfUse}</td>
             </tr>
             <tr>
-                <td>Цена 1ч</td>
+                <td>Закупочная стоимость</td>
                 <td>:</td>
-                <td>${items.сostOneHourRental}</td>
+                <td>${instance.purchasePrice}</td>
             </tr>
-            <tr>
-                <td>Описание товара</td>
-                <td>:</td>
-                <td>${items.description}</td>
-            </tr>
-
         </table>
         <br/>
         <#if allowDelete>
-            <form action="${'/admin/items/' + items.id + '/delete'}" method="POST" style="font-size: 18px;">
+            <form action="${'/admin/instance/' + instance.id + '/delete'}" method="POST" style="font-size: 18px;">
                 Удалить запись? <input style="font-size: 15px;" type="submit" value="Да"/>
             </form>
         <#else>
             <div>
-                <a href="${'/admin/items/' + items.id + '/edit'}">
+                <a href="${'/admin/instance/' + instance.id + '/edit'}">
                     <button type="submit">Редактировать</button>
                 </a>
                 &nbsp;&nbsp;
-                <a href="${'/admin/items/' + items.id + '/delete'}">
+                <a href="${'/admin/instance/' + instance.id + '/delete'}">
                     <button type="submit">Удалить</button>
                 </a><br><br>
-                <a href="/admin/items">
+                <a href="/admin/instance">
                     <button type="submit" style="width: 210px">Вернуться к списку типов</button>
                 </a>
             </div>

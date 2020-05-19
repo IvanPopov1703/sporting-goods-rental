@@ -33,10 +33,10 @@ public class InstanceOfItem {
     private double purchasePrice;
 
     //Соединение с Items
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "ID_ITEM")
-    @JsonIgnoreProperties("items")
-    private Items item;
+    @JsonIgnoreProperties("instance")
+    private Items items;
 
     //Соединение с Orders
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "instance")

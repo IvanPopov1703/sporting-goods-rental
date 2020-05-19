@@ -18,13 +18,10 @@ public class PageMainController {
     private ItemService itemService;
 
     @GetMapping("/goodsPage")
-    public String initTypeItem(Model modelTypeItem, Model modelViewItem, Model modelItem){
-        //Подгрузка на страницу видов товаров
-        modelViewItem.addAttribute("viewItem", viewOfItemService.findAll());
-        //Подгрузка на страницу типов товаров
-        modelTypeItem.addAttribute("typeItem", typeOfItemService.findAll());
-        //Подгрузка на страницу экземпляров товара
-        modelItem.addAttribute("itemPage", itemService.findAll());
+    public String initTypeItem(Model modelTypeItem, Model modelViewItem, Model modelItem, Model model){
+        model.addAttribute("viewItem", viewOfItemService.findAll());
+        model.addAttribute("typeItem", typeOfItemService.findAll());
+        model.addAttribute("items", itemService.findAll());
         return "goods";
     }
 

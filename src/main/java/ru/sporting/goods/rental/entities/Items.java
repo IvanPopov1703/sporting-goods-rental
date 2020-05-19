@@ -54,9 +54,9 @@ public class Items {
     private ViewOfItem viewOfItem;
 
     //Соединение с InstanceOfItem
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
-    @JsonIgnoreProperties("item")
-    private List<InstanceOfItem> items;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "items")
+    @JsonIgnoreProperties("items")
+    private List<InstanceOfItem> instance;
 
     //Соединение с TypeOfItem
     @ManyToOne

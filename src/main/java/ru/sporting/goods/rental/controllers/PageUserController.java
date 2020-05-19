@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.sporting.goods.rental.entities.User;
 import ru.sporting.goods.rental.services.UserService;
 
+import javax.annotation.security.RolesAllowed;
+
 @Controller
 @RequestMapping("/user")
 public class PageUserController extends BaseController {

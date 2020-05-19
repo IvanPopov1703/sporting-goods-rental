@@ -42,12 +42,19 @@ public class PageItemsController extends BaseController {
         return "forAdmin/items/itemOne";
     }
 
+
+
     //Добавление нового товара
     @GetMapping("/items/add")
-    public String showAddItem(Model model) {
-        Items item = null;
+    public String showAddItem(Model model, @ModelAttribute Items items) {
+        if(items.getName() == null){
+            Items item = null;
+            model.addAttribute("items", item);
+        } else {
+            model.addAttribute("items", items);
+            model.addAttribute("err", true);
+        }
         model.addAttribute("add", true);
-        model.addAttribute("items", item);
         model.addAttribute("typeOfItem", typeOfItemService.findAll());
         model.addAttribute("viewOfItem", viewOfItemService.findAll());
         return "forAdmin/items/itemEdit";

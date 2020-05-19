@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.sporting.goods.rental.entities.TypeOfItem;
 import ru.sporting.goods.rental.services.TypeOfItemService;
@@ -15,6 +12,7 @@ import ru.sporting.goods.rental.services.TypeOfItemService;
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping("/admin")
 public class PageTypeOfItemController extends BaseController {
 
     private TypeOfItemService typeOfItemService;
@@ -59,11 +57,11 @@ public class PageTypeOfItemController extends BaseController {
             redirectAttributes.addFlashAttribute("typeOfItem", typeOfItem);
             addValidationMessage(redirectAttributes, bindingResult);
             model.addAttribute("add", true);
-            return "redirect:/typeOfItem/add";
+            return "redirect:/admin/typeOfItem/add";
         } else {
 
             TypeOfItem newTypeOfItem = typeOfItemService.save(typeOfItem);
-            return "redirect:/typeOfItem/" + String.valueOf(newTypeOfItem.getId());
+            return "redirect:/admin/typeOfItem/" + String.valueOf(newTypeOfItem.getId());
         }
     }
 
@@ -90,11 +88,11 @@ public class PageTypeOfItemController extends BaseController {
             redirectAttributes.addFlashAttribute("typeOfItem", typeOfItem);
             addValidationMessage(redirectAttributes, bindingResult);
             model.addAttribute("add", false);
-            return "redirect:/typeOfItem/" + id + "/edit";
+            return "redirect:/admin/typeOfItem/" + id + "/edit";
         } else {
             try {
                 typeOfItemService.update(typeOfItem);
-                return "redirect:/typeOfItem/" + String.valueOf(typeOfItem.getId());
+                return "redirect:/admin/typeOfItem/" + String.valueOf(typeOfItem.getId());
             } catch (Exception ex) {
                 model.addAttribute("errorMessage", ex.getMessage());
                 model.addAttribute("add", false);
@@ -122,7 +120,7 @@ public class PageTypeOfItemController extends BaseController {
     public String deleteTypeOfItemById(Model model, @PathVariable Long id) {
         try {
             typeOfItemService.deleteById(id);
-            return "redirect:/typeOfItem";
+            return "redirect:/admin/typeOfItem";
         } catch (Exception ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "forAdmin/typeOfItem/typeOfItemOne";

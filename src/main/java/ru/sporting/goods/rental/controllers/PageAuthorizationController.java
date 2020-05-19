@@ -8,28 +8,32 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.sporting.goods.rental.entities.Items;
 import ru.sporting.goods.rental.entities.User;
 import ru.sporting.goods.rental.services.UserService;
 
 import javax.validation.Valid;
 
 @Controller
-public class PageAuthorization extends BaseController{
+public class PageAuthorizationController extends BaseController {
 
     private UserService userService;
 
+    //Переход к главной странице админа
+    @GetMapping("/admin")
+    public String getAdminPage() {
+        return "forAdmin/allAdmin";
+    }
+
     @GetMapping("/")
-    public String test(Model model){
+    public String test(Model model) {
         try {
             User user = userService.getCurrentUser();
-            if (user.getRole().equals(User.ROLE_BUYER))
-            {
+            if (user.getRole().equals(User.ROLE_BUYER)) {
                 model.addAttribute("isAut", true);
                 model.addAttribute("users", user);
                 return "goodsPage";
-            } else{
-                if (user.getRole().equals(User.ROLE_ADMIN)){
+            } else {
+                if (user.getRole().equals(User.ROLE_ADMIN)) {
                     return "redirect:/admin";
                 }
             }
@@ -40,7 +44,7 @@ public class PageAuthorization extends BaseController{
     }
 
     @GetMapping("/registr")
-    public String getPageRegist(Model model){
+    public String getPageRegist(Model model) {
         User user = null;
         model.addAttribute("reg", true);
         model.addAttribute("users", user);
@@ -52,18 +56,17 @@ public class PageAuthorization extends BaseController{
     public String addUser(Model model, @ModelAttribute("users") @Valid User user,
                           BindingResult bindingResult,
                           RedirectAttributes redirectAttributes) {
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("users", user);
             addValidationMessage(redirectAttributes, bindingResult);
             model.addAttribute("reg", true);
             return "redirect:/registr";
-        }
-        else{
+        } else {
             try {
                 user.setRole(User.ROLE_BUYER);
                 userService.registerUser(user);
                 return "redirect:/goodsPage";
-            }catch (Exception ex){
+            } catch (Exception ex) {
                 model.addAttribute("errorMessage", ex.getMessage());
                 return "redirect:/registr";
             }
@@ -71,7 +74,8 @@ public class PageAuthorization extends BaseController{
     }
 
     @Autowired
-    public void setUserService(UserService userService){
+    public void setUserService(UserService userService) {
         this.userService = userService;
     }
+
 }

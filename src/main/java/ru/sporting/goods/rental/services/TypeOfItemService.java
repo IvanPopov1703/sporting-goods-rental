@@ -10,8 +10,7 @@ import java.util.List;
 @Service
 public class TypeOfItemService {
 
-    @Autowired
-    TypeOfItemRepository typeOfItemRepository;
+    private TypeOfItemRepository typeOfItemRepository;
 
     //Проверка наличия записи в базе
     private boolean existsById(Long id){
@@ -50,6 +49,11 @@ public class TypeOfItemService {
         else {
             typeOfItemRepository.deleteById(id);
         }
+    }
+
+    @Autowired
+    public void setTypeOfItemRepository(TypeOfItemRepository typeOfItemRepository){
+        this.typeOfItemRepository = typeOfItemRepository;
     }
 }
 

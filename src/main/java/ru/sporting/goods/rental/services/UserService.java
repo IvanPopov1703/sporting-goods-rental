@@ -56,12 +56,6 @@ public class UserService implements UserDetailsService {
         return userRepository.getUserByLogin(login);
     }
 
-    public void checkPass(String pass1, String pass2) throws UsernameNotFoundException{
-        if (!pass1.equals(pass2)) {
-            throw new UsernameNotFoundException("Введенные данные некорректны!");
-        }
-    }
-
     //Получение всех пользователей
     public List<User> getAllUsers() {
         return userRepository.findAll();

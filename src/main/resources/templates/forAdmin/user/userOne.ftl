@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title>Тип определённого товара</title>
+    <title>Вид определённого товара</title>
     <style>
         body {
             margin: 0;
@@ -41,26 +41,26 @@
 </head>
 <body>
 <main>
-    <h1>Тип товара</h1>
-    <#if typeOfItem??>
+    <h1>Вид товара</h1>
+    <#if viewOfItem??>
         <table border="0">
             <tr>
                 <td>Название</td>
                 <td>:</td>
-                <td>${typeOfItem.name}</td>
+                <td>${viewOfItem.name}</td>
             </tr>
         </table>
         <br/>
         <#if allowDelete>
-            <form action="${'/admin/typeOfItem/' + typeOfItem.id + '/delete'}" method="POST" style="font-size: 18px;">
+            <form action="${'/admin/viewOfItem/' + viewOfItem.id + '/delete'}" method="POST" style="font-size: 18px;">
                 Удалить запись? <input style="font-size: 15px;" type="submit" value="Да"/>
             </form>
         <#else>
             <div>
-                <a href="${'/admin/typeOfItem/' + typeOfItem.id + '/edit'}"><button type="submit">Редактировать</button></a>
+                <a href="${'/admin/viewOfItem/' + viewOfItem.id + '/edit'}"><button type="submit">Редактировать</button></a>
                 &nbsp;&nbsp;
-                <a href="${'/admin/typeOfItem/' + typeOfItem.id + '/delete'}"><button type="submit">Удалить</button></a><br><br>
-                <a href="/admin/typeOfItem"><button type="submit" style="width: 210px">Вернуться к списку типов</button></a>
+                <a href="${'/admin/viewOfItem/' + viewOfItem.id + '/delete'}"><button type="submit">Удалить</button></a><br><br>
+                <a href="/admin/viewOfItem"><button type="submit" style="width: 210px">Вернуться к списку видов</button></a>
             </div>
         </#if>
     </#if>

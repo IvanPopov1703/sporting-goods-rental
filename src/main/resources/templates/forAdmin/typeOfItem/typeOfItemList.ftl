@@ -11,12 +11,12 @@
     <div>
         <ol>
             <#list typeOfItem as type>
-                <h4><li class="adminLi"><a href="${'typeOfItem/' + type.id}">${type.name}</a></li></h4>
+                <h4><li class="adminLi"><a href="${'/admin/typeOfItem/' + type.id}">${type.name}</a></li></h4>
             </#list>
         </ol>
     </div>
     <div>
-        <a href="/typeOfItem/add"><button type="submit">Добавить новый тип</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/admin/typeOfItem/add"><button type="submit">Добавить новый тип</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="/admin"><button type="submit">Вернуться назад</button></a>
     </div>
 </main>

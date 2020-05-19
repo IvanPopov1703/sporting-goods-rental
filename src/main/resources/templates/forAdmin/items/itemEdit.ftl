@@ -70,7 +70,7 @@
             </#if>
             <tr>
                 <td>Название товара:</td>
-                <#if add = false>
+                <#if add = false || err?has_content>
                     <td><input type="text" placeholder="Введите название" name="name" value="${items.name}"/></td>
                 <#else>
                     <td><input type="text" placeholder="Введите название" name="name"/></td>
@@ -109,7 +109,7 @@
             </tr>
             <tr>
                 <td>Количество:</td>
-                <#if add = false>
+                <#if add = false || err?has_content>
                     <td><input type="text" placeholder="Введите количество" name="numberOfCopies"
                                value="${items.numberOfCopies}"/></td>
                 <#else>
@@ -119,7 +119,7 @@
             </tr>
             <tr>
                 <td>Стоимость 1ч:</td>
-                <#if add = false>
+                <#if add = false || err?has_content>
                     <td><input type="text" placeholder="Введите стоимость" name="сostOneHourRental"
                                value="${items.сostOneHourRental}"/></td>
                 <#else>
@@ -129,7 +129,7 @@
             </tr>
             <tr>
                 <td>Описание товара:</td>
-                <#if add = false>
+                <#if add = false || err?has_content>
                     <td><input type="text" placeholder="Введите описание" name="description"
                                value="${items.description}"/></td>
                 <#else>
