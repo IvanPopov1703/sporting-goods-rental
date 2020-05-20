@@ -20,6 +20,8 @@ import java.util.List;
 @Table(name = "ITEM")
 public class Items {
 
+    public static final int AMOUNT_OF_GUARANTEE = 2000;
+
     @ApiModelProperty
     @Id
     @GeneratedValue
@@ -63,4 +65,9 @@ public class Items {
     @JoinColumn(name = "TYPE_OF_ITEM_ID")
     @JsonIgnoreProperties("items")
     private TypeOfItem typeOfItem;
+
+    //Получение суммы залога
+    public int getAmountOfGuarantee(){
+        return AMOUNT_OF_GUARANTEE;
+    }
 }

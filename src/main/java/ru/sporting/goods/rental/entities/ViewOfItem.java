@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.sql.Date;
 import java.util.List;
 
-@ApiModel
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,7 +20,6 @@ import java.util.List;
 @Table(name = "VIEW_OF_ITEM")
 public class ViewOfItem {
 
-    @ApiModelProperty
     @Id
     @GeneratedValue
     @Column(name = "ID_VIEW_OF_ITEM", unique = true, nullable = false, updatable = false)
@@ -28,9 +27,11 @@ public class ViewOfItem {
 
     @NotBlank
     @Size(min = 3, max = 30)
-    @ApiModelProperty
     @Column(name = "NAME")
     private String name;
+
+    @Column(name = "BIRCH_DAY")
+    private Date birchDay;
 
     //Соединение с Items
     @OneToMany(mappedBy = "viewOfItem")

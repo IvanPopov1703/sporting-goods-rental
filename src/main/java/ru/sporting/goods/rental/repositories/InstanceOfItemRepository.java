@@ -33,4 +33,19 @@ public interface InstanceOfItemRepository extends JpaRepository<InstanceOfItem, 
             "INNER JOIN instance_of_item ON instance_of_item.id_item = item.id_item " +
             "WHERE instance_of_item.id_instance_of_item = :id", nativeQuery = true)
     InstanceOfItem findInstancesOfItemById(@Param("id") Long id);
+
+    //Получение количества копий товара по id товара
+    @Query(value = "SELECT COUNT(*) as numberOfCopies FROM instance_of_item " +
+            "WHERE instance_of_item.id_item = :id", nativeQuery = true)
+    int getNumberOfCopiesByIdItem(@Param("id") Long id);
+
+    //Получение всех экземпляров по id товара
+    @Query(value = "SELECT instance_of_item.id_instance_of_item, instance_of_item." +
+            "hours_of_use, instance_of_item.purchase_price, instance_of_item.id_item, " +
+            "item.id_item, item.name_item, item.description, item.number_of_copies, " +
+            "item.cost_one_hour_rental, item.type_of_item_id, item.view_of_item_id " +
+            "FROM instance_of_item INNER JOIN item " +
+            "ON instance_of_item.id_item = item.id_item " +
+            "WHERE instance_of_item.id_item = :id", nativeQuery = true)
+    List<InstanceOfItem> findInstancesOfItemByIdItems(@Param("id") Long id);
 }

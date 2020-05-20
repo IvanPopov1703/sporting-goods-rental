@@ -19,7 +19,7 @@
     <h3>Текущий баланс: ${users.purse}</h3>
     <form name="upPurse" method="POST" action="${urlAction}">
         <input type="text" placeholder="Введите сумму" name="purse"/>
-        <br><button type="submit">${submitTitle}</button>
+        <br><br><button type="submit">${submitTitle}</button>
     </form>
 </body>
 </html>

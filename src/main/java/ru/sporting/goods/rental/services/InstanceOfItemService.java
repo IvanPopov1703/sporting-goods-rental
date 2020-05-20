@@ -1,6 +1,7 @@
 package ru.sporting.goods.rental.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import ru.sporting.goods.rental.entities.InstanceOfItem;
 import ru.sporting.goods.rental.entities.InstanceOfItem;
@@ -61,6 +62,16 @@ public class InstanceOfItemService {
     //Получение получение экземпляра по id
     public InstanceOfItem findInstanceOfItemById(Long id){
         return instanceOfItemRepository.findInstancesOfItemById(id);
+    }
+
+    //Получение количества копий товара по id товара
+    public int getNumberOfCopiesByIdItem(Long id){
+        return instanceOfItemRepository.getNumberOfCopiesByIdItem(id);
+    }
+
+    //Получение всех экземпляров по id товара
+    public List<InstanceOfItem> findInstancesOfItemByIdItems(Long id){
+        return instanceOfItemRepository.findInstancesOfItemByIdItems(id);
     }
 
     @Autowired

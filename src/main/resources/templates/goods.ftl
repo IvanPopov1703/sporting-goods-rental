@@ -56,7 +56,7 @@
                     <img class="imgOneGood" src="imege/imageOneGood.jpg" alt="Картинка товара">
                 </div>
                 <div class="textOneGood">
-                    <h2><span class="titleOneGood"><a href="">${item.name}</a></span></h2>
+                    <h2><span class="titleOneGood"><a href="${'/goodOnePage/items/' + item.id}">${item.name}</a></span></h2>
                     <p class="descriptGood">${item.description}</p>
                     <p class="costGood">${item.сostOneHourRental} в час</p>
                 </div>

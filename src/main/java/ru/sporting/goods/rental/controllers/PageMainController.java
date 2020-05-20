@@ -4,9 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.sporting.goods.rental.services.ItemService;
-import ru.sporting.goods.rental.services.TypeOfItemService;
-import ru.sporting.goods.rental.services.ViewOfItemService;
+import org.springframework.web.bind.annotation.PathVariable;
+import ru.sporting.goods.rental.entities.Items;
+import ru.sporting.goods.rental.entities.User;
+import ru.sporting.goods.rental.services.*;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -16,9 +17,11 @@ public class PageMainController {
     private TypeOfItemService typeOfItemService;
     private ViewOfItemService viewOfItemService;
     private ItemService itemService;
+    private InstanceOfItemService instanceOfItemService;
+    private UserService userService;
 
     @GetMapping("/goodsPage")
-    public String initTypeItem(Model modelTypeItem, Model modelViewItem, Model modelItem, Model model){
+    public String initTypeItem(Model model){
         model.addAttribute("viewItem", viewOfItemService.findAll());
         model.addAttribute("typeItem", typeOfItemService.findAll());
         model.addAttribute("items", itemService.findAll());
@@ -28,6 +31,28 @@ public class PageMainController {
     //Запуск страницы одного товара
     @GetMapping("/goodOnePage")
     public String goodsOnePage(){
+        return "oneGood";
+    }
+
+    //Переход к определённому товару
+    @GetMapping("/goodOnePage/items/{id}")
+    public String getItemById(Model model, @PathVariable Long id) {
+        Items items = null;
+        int count = 0;
+        try {
+            try{
+                User user = userService.getCurrentUser();
+                model.addAttribute("autoriz", true);
+            }catch (Exception ex) {
+                model.addAttribute("autoriz", false);
+            }
+            items = itemService.findItemById(id);
+            items.setNumberOfCopies(instanceOfItemService.getNumberOfCopiesByIdItem(items.getId()));
+            model.addAttribute("allowDelete", false);
+        } catch (Exception ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+        }
+        model.addAttribute("items", items);
         return "oneGood";
     }
 
@@ -44,5 +69,15 @@ public class PageMainController {
     @Autowired
     public void setItemService(ItemService itemService){
         this.itemService = itemService;
+    }
+
+    @Autowired
+    public void setInstanceOfItemService(InstanceOfItemService instanceOfItemService){
+        this.instanceOfItemService = instanceOfItemService;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService){
+        this.userService = userService;
     }
 }

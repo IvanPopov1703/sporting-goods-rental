@@ -74,7 +74,6 @@
                 <td>:</td>
                 <td>${items.description}</td>
             </tr>
-
         </table>
         <br/>
         <#if allowDelete>
