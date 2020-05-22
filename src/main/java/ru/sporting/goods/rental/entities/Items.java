@@ -42,7 +42,7 @@ public class Items {
     @DecimalMin(value = "1", message = "Не может быть пустым или быть < 1")
     @ApiModelProperty
     @Column(name = "COST_ONE_HOUR_RENTAL")
-    private double сostOneHourRental;
+    private double сostOneDayRental;
 
     @NotBlank(message = "Поле не может быть путым!")
     @ApiModelProperty

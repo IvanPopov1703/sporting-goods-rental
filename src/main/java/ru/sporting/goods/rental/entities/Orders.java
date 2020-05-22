@@ -1,18 +1,14 @@
 package ru.sporting.goods.rental.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
 import java.sql.Date;
-import java.sql.Time;
 
-@ApiModel
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,34 +16,25 @@ import java.sql.Time;
 @Table(name = "ORDERS")
 public class Orders {
 
-    @ApiModelProperty
     @Id
     @GeneratedValue
     @Column(name = "ID_ORDER", unique = true, nullable = false, updatable = false)
     private Long id;
 
-    @ApiModelProperty
     @Column(name = "COUNT_ITEMS")
     private int countItems;
 
-    @ApiModelProperty
     @Column(name = "AMOUNT_OF_GUARANTEE")
     private double amountOfGuarantee;
 
-    /*@ApiModelProperty
-    @Temporal(TemporalType.DATE)
     @Column(name = "PLANNED_TIME_OF_RETURNING_PRODUCT")
     private Date plannedTimeOfReturningProduct;
 
-    @ApiModelProperty
     @Column(name = "REAL_TIME_OF_RETURNING_PRODUCT")
     private Date realTimeOfReturningProduct;
 
-
-    @ApiModelProperty
-    @JsonFormat(pattern="yyyy-MM-dd")
     @Column(name = "DATE_OF_RECEIPT_OF_ITEM")
-    private Date timeOfReceiptOfItem;*/
+    private Date timeOfReceiptOfItem;
 
     @Column(name = "ORDER_COST")
     private double orderCost;

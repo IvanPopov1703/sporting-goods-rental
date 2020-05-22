@@ -64,19 +64,6 @@
                     </#if>
                 </td>
             </tr>
-            <tr>
-                <td>День рождения:</td>
-                <#if add == false>
-                    <td><input type="date" placeholder="Введите название" name="birchDay" value="${viewOfItem.birchDay}"/></td>
-                <#else>
-                    <td><input type="date" placeholder="Введите название" name="birchDay" /></td>
-                </#if>
-                <td><span>${(Request['validation.birchDay'])!}</span>
-                    <#if errorMessage?has_content>
-                        <div class="error">${errorMessage}</div>
-                    </#if>
-                </td>
-            </tr>
         </table>
         <br>
         <button type="submit">${submitTitle}</button>&nbsp;&nbsp;&nbsp;&nbsp;

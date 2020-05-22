@@ -49,11 +49,6 @@
                 <td>:</td>
                 <td>${viewOfItem.name}</td>
             </tr>
-            <tr>
-                <td>День рождения</td>
-                <td>:</td>
-                <td>${viewOfItem.birchDay}</td>
-            </tr>
         </table>
         <br/>
         <#if allowDelete>
