@@ -16,7 +16,7 @@ import javax.validation.Valid;
 @Controller
 public class PageAuthorizationController extends BaseController {
 
-    private UserService userService;
+    /*private UserService userService;
 
     //Переход к главной странице админа
     @GetMapping("/admin")
@@ -76,6 +76,6 @@ public class PageAuthorizationController extends BaseController {
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
-    }
+    }*/
 
 }

@@ -53,8 +53,6 @@ public class PageInstanceOfItemController extends BaseController {
         }
         model.addAttribute("add", true);
         model.addAttribute("items", itemService.findAllItemsAndTypeAndView());
-//        model.addAttribute("typeOfItem", typeOfItemService.findAll());
-//        model.addAttribute("viewOfItem", viewOfItemService.findAll());
         return "forAdmin/instanceOfItem/instanceEdit";
     }
 
@@ -70,6 +68,7 @@ public class PageInstanceOfItemController extends BaseController {
             model.addAttribute("add", true);
             return "redirect:/admin/instance/add";
         } else {
+            instance.setOrder_status(InstanceOfItem.STATUS_ORDER_HAND_OVER);
             InstanceOfItem newInstance = instanceOfItemService.save(instance);
             return "redirect:/admin/instance/" + String.valueOf(newInstance.getId());
         }
@@ -87,8 +86,6 @@ public class PageInstanceOfItemController extends BaseController {
         model.addAttribute("add", false);
         model.addAttribute("instance", instance);
         model.addAttribute("items", itemService.findAllItemsAndTypeAndView());
-//        model.addAttribute("typeOfItem", typeOfItemService.findAll());
-//        model.addAttribute("viewOfItem", viewOfItemService.findAll());
         return "forAdmin/instanceOfItem/instanceEdit";
     }
 

@@ -17,6 +17,7 @@
                 <th>Тип товара</th>
                 <th>Часы пользования</th>
                 <th>Закупочная стоимость</th>
+                <th>Статус заказа</th>
             </tr>
             <#list instance as inst>
                 <tr>
@@ -26,6 +27,7 @@
                     <td>${inst.items.typeOfItem.name}</td>
                     <td>${inst.hoursOfUse}</td>
                     <td>${inst.purchasePrice}</td>
+                    <td>${inst.getStatusOrder(inst)}</td>
                 </tr>
             </#list>
         </table>

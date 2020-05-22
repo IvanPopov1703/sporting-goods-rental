@@ -12,7 +12,7 @@
     <h3><a href="/admin/instance">Экземпляр товара</a></h3>
     <h3>Заказ</h3>
     <h3><a href="/admin/statusOrder">Статус заказа</a></h3>
-    <h3>Пользователь</h3>
+    <h3><a href="/admin/users">Пользователь</a></h3>
     <br>
     <a href="/logout">
         <button>Выйти</button>

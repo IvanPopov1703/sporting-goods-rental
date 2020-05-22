@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.sporting.goods.rental.entities.Items;
+import ru.sporting.goods.rental.entities.TypeOfItem;
 import ru.sporting.goods.rental.entities.User;
 import ru.sporting.goods.rental.repositories.UserRepository;
 
@@ -20,11 +21,6 @@ public class UserService implements UserDetailsService {
     UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 
-    //Получаем текущего залогинненного пользователся
-    public static User getCurrentUser(){
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = getUserByLogin(username);
@@ -32,6 +28,11 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("Пользователь с логином " + username + " не найден!");
         }
         return user;
+    }
+
+    //Получаем текущего залогинненного пользователся
+    public static User getCurrentUser(){
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     //Получение записи по id, иначе null
@@ -57,7 +58,7 @@ public class UserService implements UserDetailsService {
     }
 
     //Получение всех пользователей
-    public List<User> getAllUsers() {
+    public List<User> findAll() {
         return userRepository.findAll();
     }
 
@@ -79,6 +80,16 @@ public class UserService implements UserDetailsService {
             throw new Exception("Запись с номером " + user.getId() + " не найдена!");
         }
         return userRepository.save(user);
+    }
+
+    //Удаление записи
+    public void deleteById(Long id) throws Exception{
+        if (!existsById(id)){
+            throw new Exception("Запись с номером " + id + " не найдена!");
+        }
+        else {
+            userRepository.deleteById(id);
+        }
     }
 
     @Autowired

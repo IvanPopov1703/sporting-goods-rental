@@ -62,7 +62,6 @@
                 <td>Получатель:</td>
                 <td>${user.getFullUserName()}</td>
                 <td><input type="hidden" name="user" value="${user.id}"/></td>
-<#--                <td><input type="text" placeholder="Введите стоимость" name="user"/></td>-->
             </tr>
             <tr>
                 <td>Название товара:</td>
@@ -90,8 +89,7 @@
             </tr>
             <tr>
                 <td>Стоимость одного дня:</td>
-                <td>${items.сostOneHourRental}</td>
-                <td><input type="hidden" name="сostOneHourRental" value="${items.сostOneHourRental}"/></td>
+                <td>${items.сostOneDayRental}</td>
             </tr>
             <tr>
                 <td>Дата взятия товара:</td>
@@ -104,18 +102,10 @@
                     <td><span>${err}</span></td>
                 </#if>
             </tr>
-            <tr>
-                <td>Сумма залога:</td>
-                <td>${items.getAmountOfGuarantee()}</td>
-            </tr>
-            <tr>
-                <td>Стоимость одних суток:</td>
-                <td>${items.сostOneHourRental}</td>
-            </tr>
         </table>
         <br>
         <button type="submit">Оформить заказ</button>&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="/goodsPage">
+        <a href="/">
             <button type="button">Назад к списку</button>
         </a>
     </form>

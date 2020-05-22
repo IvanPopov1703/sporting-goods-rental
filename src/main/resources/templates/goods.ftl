@@ -11,7 +11,7 @@
         <img class="imgHead" src="imege/GoodsHead.png" alt="Зоголовок">
         <div class="login">
             <#if isAut?has_content>
-                <a href="/user/users">
+                <a href="${'/usersOne/' + users.id}">
                     Моя страница
                 </a>&nbsp;&nbsp;&nbsp;&nbsp;
                 <a style="font-size: 20px;">Кошелёк: ${users.purse} руб.</a>
@@ -52,13 +52,10 @@
     <div class="content">
         <#list items as item>
             <div class="containerOneGood">
-                <div class="imageOneGood">
-                    <img class="imgOneGood" src="imege/imageOneGood.jpg" alt="Картинка товара">
-                </div>
                 <div class="textOneGood">
                     <h2><span class="titleOneGood"><a href="${'/goodOnePage/items/' + item.id}">${item.name}</a></span></h2>
                     <p class="descriptGood">${item.description}</p>
-                    <p class="costGood">${item.сostOneHourRental} в час</p>
+                    <p class="costGood">${item.сostOneDayRental} в сутки</p>
                 </div>
             </div>
         </#list>

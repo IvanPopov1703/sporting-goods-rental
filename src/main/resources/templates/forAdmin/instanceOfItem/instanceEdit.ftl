@@ -38,6 +38,10 @@
             font-size: 15px;
         }
 
+        input{
+            width: 250px;
+        }
+
         .error {
             color: red;
             font-size: 18px;
@@ -45,7 +49,7 @@
 
         select {
             font-size: 15px;
-            width: 180px;
+            width: 300px;
         }
     </style>
 </head>
@@ -96,20 +100,20 @@
             <tr>
                 <td>Часы пользования:</td>
                 <#if add = false || err?has_content>
-                    <td><input type="text" placeholder="Введите количество часов" name="hoursOfUse"
+                    <td><input required type="text" placeholder="Введите количество часов" name="hoursOfUse"
                                value="${instance.hoursOfUse}"/></td>
                 <#else>
-                    <td><input type="text" placeholder="Введите количество часов" name="hoursOfUse"/></td>
+                    <td><input required type="text" placeholder="Введите количество часов" name="hoursOfUse"/></td>
                 </#if>
                 <td><span>${(Request['validation.hoursOfUse'])!}</span></td>
             </tr>
             <tr>
                 <td>Закупочная стоимость:</td>
                 <#if add = false || err?has_content>
-                    <td><input type="text" placeholder="Введите стоимость" name="purchasePrice"
+                    <td><input required type="text" placeholder="Введите стоимость" name="purchasePrice"
                                value="${instance.purchasePrice}"/></td>
                 <#else>
-                    <td><input type="text" placeholder="Введите стоимость" name="purchasePrice"/></td>
+                    <td><input required type="text" placeholder="Введите стоимость" name="purchasePrice"/></td>
                 </#if>
                 <td><span>${(Request['validation.purchasePrice'])!}</span></td>
             </tr>

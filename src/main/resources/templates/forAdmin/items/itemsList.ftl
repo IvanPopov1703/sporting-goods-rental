@@ -14,16 +14,14 @@
                 <th>Название товара</th>
                 <th>Вид товара</th>
                 <th>Тип товара</th>
-                <th>Количество экземпляров</th>
-                <th>Стоимость 1 ч</th>
+                <th>Стоимость одного дня:</th>
             </tr>
             <#list items as item>
                 <tr>
                     <td><a href="${'/admin/items/' + item.id}">${item.name}</a></td>
                     <td>${item.viewOfItem.name}</td>
                     <td>${item.typeOfItem.name}</td>
-                    <td>${item.numberOfCopies}</td>
-                    <td>${item.сostOneHourRental}</td>
+                    <td>${item.сostOneDayRental}</td>
                 </tr>
             </#list>
         </table>

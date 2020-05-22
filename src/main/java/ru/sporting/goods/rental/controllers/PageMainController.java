@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import ru.sporting.goods.rental.entities.InstanceOfItem;
 import ru.sporting.goods.rental.entities.Items;
 import ru.sporting.goods.rental.entities.User;
 import ru.sporting.goods.rental.services.*;
@@ -38,7 +39,6 @@ public class PageMainController {
     @GetMapping("/goodOnePage/items/{id}")
     public String getItemById(Model model, @PathVariable Long id) {
         Items items = null;
-        int count = 0;
         try {
             try{
                 User user = userService.getCurrentUser();
@@ -47,7 +47,8 @@ public class PageMainController {
                 model.addAttribute("autoriz", false);
             }
             items = itemService.findItemById(id);
-            items.setNumberOfCopies(instanceOfItemService.getNumberOfCopiesByIdItem(items.getId()));
+            model.addAttribute("numberOfCopies",
+                    instanceOfItemService.getNumberOfCopiesByIdItem(InstanceOfItem.STATUS_ORDER_HAND_OVER, id));
             model.addAttribute("allowDelete", false);
         } catch (Exception ex) {
             model.addAttribute("errorMessage", ex.getMessage());

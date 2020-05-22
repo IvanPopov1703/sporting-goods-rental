@@ -8,8 +8,13 @@
         tr {
             font-size: 19px;
         }
-        button{
+
+        button {
             font-size: 15px;
+        }
+
+        p{
+            font-size: 19px;
         }
     </style>
 </head>
@@ -35,12 +40,12 @@
         <tr>
             <td>Количество</td>
             <td>:</td>
-            <td>${items.numberOfCopies}</td>
+            <td>${numberOfCopies}</td>
         </tr>
         <tr>
-            <td>Цена 1ч</td>
+            <td>Цена за один день</td>
             <td>:</td>
-            <td>${items.сostOneHourRental}</td>
+            <td>${items.сostOneDayRental}</td>
         </tr>
         <tr>
             <td>Описание товара</td>
@@ -49,12 +54,20 @@
         </tr>
     </table>
     <br>
-    <a href="/goodsPage">
-        <button type="submit">Вернуться назад</button>
-    </a>
     <#if autoriz>
-        <a href="${'/user/registOrder/' + items.id}">
-            <button type="button">Оформить заказ</button>
+        <a href="/">
+            <button type="submit">Вернуться назад</button>
+        </a>
+        <#if numberOfCopies!=0>
+            <a href="${'/user/registOrder/' + items.id}">
+                <button type="button">Оформить заказ</button>
+            </a>
+        <#else>
+            <p>Товара нет в наличии</p>
+        </#if>
+    <#else>
+        <a href="/goodsPage">
+            <button type="submit">Вернуться назад</button>
         </a>
     </#if>
 </#if>

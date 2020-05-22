@@ -64,9 +64,9 @@ public class InstanceOfItemService {
         return instanceOfItemRepository.findInstancesOfItemById(id);
     }
 
-    //Получение количества копий товара по id товара
-    public int getNumberOfCopiesByIdItem(Long id){
-        return instanceOfItemRepository.getNumberOfCopiesByIdItem(id);
+    //Получение количества копий товара по id товара и статусу
+    public int getNumberOfCopiesByIdItem(String status, Long id){
+        return instanceOfItemRepository.getNumberOfCopiesByIdItem(status, id);
     }
 
     //Получение всех экземпляров по id товара

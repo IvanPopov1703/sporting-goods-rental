@@ -3,20 +3,42 @@
 <head>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" href="../../../static/adminStyle.css">
-    <title>Список всех типов товара</title>
+    <title>Список всех пользователей</title>
 </head>
 <body>
 <main>
-    <h1>Список видов товара</h1>
+    <h1>Список пользователей</h1>
     <div>
-        <ol>
-            <#list viewOfItem as view>
-                <h4><li class="adminLi"><a href="${'/admin/viewOfItem/' + view.id}">${view.name}</a></li></h4>
+        <table border="1">
+            <tr>
+                <th>ФИО</th>
+                <th>Логин</th>
+                <th>Пароль</th>
+                <th>email</th>
+                <th>Телефон</th>
+                <th>Количество взятого товара</th>
+                <th>Паспорт</th>
+                <th>Кошелёк</th>
+                <th>Роль</th>
+            </tr>
+            <#list users as user>
+                <tr>
+                    <td><a href="${'/usersOne/' + user.id}">${user.getFullUserName()}</a></td>
+                    <td>${user.login}</td>
+                    <td>${user.password}</td>
+                    <td>${user.email}</td>
+                    <td>${user.phoneNumber}</td>
+                    <td>${user.amountOfRentedGoods}</td>
+                    <td>${user.passportData}</td>
+                    <td>${user.purse}</td>
+                    <td>${user.role}</td>
+                </tr>
             </#list>
-        </ol>
+        </table>
     </div>
+    <br>
     <div>
-        <a href="/admin/viewOfItem/add"><button type="submit">Добавить новый вид</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/registr"><button type="submit">Добавить нового пользователя</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="/admin"><button type="submit">Вернуться назад</button></a>
     </div>
 </main>

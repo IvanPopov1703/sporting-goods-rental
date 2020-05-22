@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@ApiModel
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,19 +17,24 @@ import java.util.List;
 @Table(name = "INSTANCE_OF_ITEM")
 public class InstanceOfItem {
 
-    @ApiModelProperty
+    public static final String STATUS_ORDER_PENDING = "PENDING"; //Ожидает выдачи
+    public static final String STATUS_ORDER_ISSUED = "ISSUED"; //Выдан
+    public static final String STATUS_ORDER_EXPIRED = "EXPIRED"; //Просрочен
+    public static final String STATUS_ORDER_HAND_OVER = "HAND_OVER"; //Сдан
+
     @Id
     @GeneratedValue
     @Column(name = "ID_INSTANCE_OF_ITEM", unique = true, nullable = false, updatable = false)
     private Long id;
 
-    @ApiModelProperty
     @Column(name = "HOURS_OF_USE")
     private int hoursOfUse;
 
-    @ApiModelProperty
     @Column(name = "PURCHASE_PRICE")
     private double purchasePrice;
+
+    @Column(name = "ORDER_STATUS")
+    private String order_status;
 
     //Соединение с Items
     @ManyToOne
@@ -42,4 +46,20 @@ public class InstanceOfItem {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "instance")
     @JsonIgnoreProperties("instance")
     private List<Orders>  orders;
+
+    //Получение по статусу, его название
+    public String getStatusOrder(InstanceOfItem instanceOfItem){
+        String str = null;
+        switch (instanceOfItem.getOrder_status()){
+            case "PENDING": str = "Ожидает выдачи";
+                break;
+            case "ISSUED": str = "Выдан";
+                break;
+            case "EXPIRED": str = "Просрочен";
+                break;
+            case "HAND_OVER": str = "Сдан";
+                break;
+        }
+        return str;
+    }
 }

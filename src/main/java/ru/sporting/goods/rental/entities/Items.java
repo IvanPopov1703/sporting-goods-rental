@@ -33,15 +33,10 @@ public class Items {
     @Column(name = "NAME_ITEM")
     private String name;
 
-    @Positive(message = "Не может быть отрицательным!")
-    @ApiModelProperty
-    @Column(name = "NUMBER_OF_COPIES")
-    private int numberOfCopies;
-
     //@Positive(message = "Не может быть отрицательным!")
     @DecimalMin(value = "1", message = "Не может быть пустым или быть < 1")
     @ApiModelProperty
-    @Column(name = "COST_ONE_HOUR_RENTAL")
+    @Column(name = "COST_ONE_Day_RENTAL")
     private double сostOneDayRental;
 
     @NotBlank(message = "Поле не может быть путым!")
@@ -50,7 +45,7 @@ public class Items {
     private String description;
 
     //Соединение с ViewOfItem
-    @ManyToOne//(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "VIEW_OF_ITEM_ID")
     @JsonIgnoreProperties("items")
     private ViewOfItem viewOfItem;

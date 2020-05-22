@@ -68,7 +68,7 @@ public class OrderService {
         LocalDate startDate = LocalDate.parse(orders.getPlannedTimeOfReturningProduct().toString(), formatter);
         LocalDate endDate = LocalDate.parse(orders.getTimeOfReceiptOfItem().toString(), formatter);
         Period period = Period.between(startDate, endDate);
-        double orderCost = period.getDays() * orders.getInstance().getItems().getСostOneHourRental() + Items.AMOUNT_OF_GUARANTEE;
+        double orderCost = period.getDays() * orders.getInstance().getItems().getСostOneDayRental() + Items.AMOUNT_OF_GUARANTEE;
         if (orderCost <= orders.getUser().getPurse()){
             orders.getUser().setPurse(orders.getUser().getPurse() - orderCost);
             orders.setOrderCost(orderCost);

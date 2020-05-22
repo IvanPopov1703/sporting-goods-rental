@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Future;
 import java.sql.Date;
 
 @Data
@@ -20,9 +19,6 @@ public class Orders {
     @GeneratedValue
     @Column(name = "ID_ORDER", unique = true, nullable = false, updatable = false)
     private Long id;
-
-    @Column(name = "COUNT_ITEMS")
-    private int countItems;
 
     @Column(name = "AMOUNT_OF_GUARANTEE")
     private double amountOfGuarantee;
@@ -41,20 +37,20 @@ public class Orders {
 
 
     //Соединение с User
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "ID_USER")
     @JsonIgnoreProperties("orders")
     private User user;
 
     //Соединение с InstanceOfItem
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "ID_INSTANCE_OF_ITEM")
     @JsonIgnoreProperties("orders")
     private InstanceOfItem instance;
 
-    //Соединение с OrderStatus
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ORDER_STATUS_ID")
-    @JsonIgnoreProperties("orders")
-    private OrderStatus orderStatus;
+//    //Соединение с OrderStatus
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "ORDER_STATUS_ID")
+//    @JsonIgnoreProperties("orders")
+//    private OrderStatus orderStatus;
 }
