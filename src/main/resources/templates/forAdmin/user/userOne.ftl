@@ -42,49 +42,69 @@
 <body>
 <main>
     <h1>Описание выбранного товара</h1>
-    <#if items??>
+    <#if users??>
         <table border="0">
             <tr>
-                <td>Название</td>
+                <td>ФИО</td>
                 <td>:</td>
-                <td>${items.name}</td>
+                <td>${users.getFullUserName()}</td>
             </tr>
             <tr>
-                <td>Вид товара</td>
+                <td>Логин</td>
                 <td>:</td>
-                <td>${items.viewOfItem.name}</td>
+                <td>${users.login}</td>
             </tr>
             <tr>
-                <td>Тип товара</td>
+                <td>Пароль</td>
                 <td>:</td>
-                <td>${items.typeOfItem.name}</td>
+                <td>${users.password}</td>
             </tr>
             <tr>
-                <td>Цена одного дня:</td>
+                <td>email</td>
                 <td>:</td>
-                <td>${items.сostOneDayRental}</td>
+                <td>${users.email}</td>
             </tr>
             <tr>
-                <td>Описание товара</td>
+                <td>Телефон</td>
                 <td>:</td>
-                <td>${items.description}</td>
+                <td>${users.phoneNumber}</td>
+            </tr>
+            <tr>
+                <td>Количество взятого товара</td>
+                <td>:</td>
+                <td>${users.amountOfRentedGoods}</td>
+            </tr>
+            <tr>
+                <td>Паспорт</td>
+                <td>:</td>
+                <td>${users.passportData}</td>
+            </tr>
+            <tr>
+                <td>Кошелёк</td>
+                <td>:</td>
+                <td>${users.purse}</td>
+            </tr>
+            <tr>
+                <td>Роль</td>
+                <td>:</td>
+                <td>${users.role}</td>
             </tr>
         </table>
         <br/>
         <#if allowDelete>
-            <form action="${'/admin/items/' + items.id + '/delete'}" method="POST" style="font-size: 18px;">
+            <form action="${'/admin/users/' + users.id + '/delete'}" method="POST" style="font-size: 18px;">
                 Удалить запись? <input style="font-size: 15px;" type="submit" value="Да"/>
             </form>
         <#else>
             <div>
-                <a href="${'/admin/items/' + items.id + '/edit'}">
+                <a href="${'/users/' + users.id + '/edit'}">
                     <button type="submit">Редактировать</button>
                 </a>
                 &nbsp;&nbsp;
-                <a href="${'/admin/items/' + items.id + '/delete'}">
+                <a href="${'/admin/users/' + users.id + '/delete'}">
                     <button type="submit">Удалить</button>
                 </a><br><br>
-                <a href="/admin/items">
+                <a href="/admin/users">
                     <button type="submit" style="width: 210px">Вернуться к списку типов</button>
                 </a>
             </div>

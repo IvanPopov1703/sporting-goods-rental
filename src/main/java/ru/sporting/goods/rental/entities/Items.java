@@ -33,7 +33,6 @@ public class Items {
     @Column(name = "NAME_ITEM")
     private String name;
 
-    //@Positive(message = "Не может быть отрицательным!")
     @DecimalMin(value = "1", message = "Не может быть пустым или быть < 1")
     @ApiModelProperty
     @Column(name = "COST_ONE_Day_RENTAL")

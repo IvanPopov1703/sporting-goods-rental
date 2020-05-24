@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.sporting.goods.rental.entities.Items;
 import ru.sporting.goods.rental.entities.User;
 import ru.sporting.goods.rental.services.UserService;
 
@@ -29,32 +28,25 @@ public class PageUserController extends BaseController {
 
     @GetMapping("/")
     public String test(Model model) {
-        try {
-            User user = userService.getCurrentUser();
-            if (user.getRole().equals(User.ROLE_BUYER)) {
-                model.addAttribute("isAut", true);
-                model.addAttribute("users", user);
-                return "goodsPage";
-            } else {
-                if (user.getRole().equals(User.ROLE_ADMIN)) {
-                    return "redirect:/admin";
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        User user = userService.getCurrentUser();
+        if (user.getRole().equals(User.ROLE_BUYER)) {
+            model.addAttribute("isAut", true);
+            model.addAttribute("users", user);
+            return "goodsPage";
+        } else {
+            return "redirect:/admin";
         }
-        return "authorizationForm";
     }
 
-    @GetMapping("/registr")
+    /*@GetMapping("/registr")
     public String getPageRegist(Model model, @ModelAttribute("users") User user) {
-        if(user.getName() != null){
+        if (user.getName() != null) {
             model.addAttribute("err", "err");
         }
         try {
             userService.getCurrentUser();
             model.addAttribute("admin", true);
-        } catch (Exception ex){
+        } catch (Exception ex) {
             model.addAttribute("admin", false);
         }
         model.addAttribute("reg", true);
@@ -62,7 +54,7 @@ public class PageUserController extends BaseController {
         return "forUser/registration";
     }
 
-    //Добавление нового типа товара
+    //Добавление нового пользователя
     @PostMapping("/registr")
     public String addUser(Model model, @ModelAttribute("users") @Valid User user,
                           BindingResult bindingResult,
@@ -74,7 +66,7 @@ public class PageUserController extends BaseController {
             return "redirect:/registr";
         } else {
             try {
-                if (user.getRole() == null){
+                if (user.getRole() == null) {
                     user.setRole(User.ROLE_BUYER);
                 }
                 userService.registerUser(user);
@@ -84,33 +76,7 @@ public class PageUserController extends BaseController {
                 return "redirect:/registr";
             }
         }
-    }
-
-    //Удаление пользователя
-    @GetMapping("/admin/users/{id}/delete")
-    public String showDeleteUserById(Model model, @PathVariable Long id) {
-        User user = null;
-        try {
-            user = userService.findById(id);
-        } catch (Exception ex) {
-            model.addAttribute("errorMessage", ex.getMessage());
-        }
-        model.addAttribute("allowDelete", true);
-        model.addAttribute("users", user);
-        return "forUser/userOne";
-    }
-
-    //Удаление пользователя
-    @PostMapping("/admin/users/{id}/delete")
-    public String deleteUsersById(Model model, @PathVariable Long id) {
-        try {
-            userService.deleteById(id);
-            return "redirect:/admin/users";
-        } catch (Exception ex) {
-            model.addAttribute("errorMessage", ex.getMessage());
-            return "forUser/userOne";
-        }
-    }
+    }*/
 
     //Личный кабинет пользователя
     @RolesAllowed({"ADMIN", "BUYER"})
@@ -143,13 +109,6 @@ public class PageUserController extends BaseController {
         return "forUser/workWithWallet";
     }
 
-    //Вывод средств
-    @GetMapping("/user/cashWithdrawal")
-    public String getCashWithdrawal(Model model) {
-        model = helpWorkWithWallet(false, model);
-        return "forUser/workWithWallet";
-    }
-
     //Пополнение кошелька
     @PostMapping("/user/upPurse")
     public String postUpPurse(Model model, @ModelAttribute("users") User user) {
@@ -157,7 +116,7 @@ public class PageUserController extends BaseController {
             User newUser = userService.getCurrentUser();
             newUser.setPurse(user.getPurse() + newUser.getPurse());
             userService.update(newUser);
-            return "redirect:/user/usersOne";
+            return "redirect:/usersOne/" + newUser.getId();
         } catch (Exception ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             model.addAttribute("up", true);
@@ -165,9 +124,16 @@ public class PageUserController extends BaseController {
         }
     }
 
+    //Вывод средств
+    @GetMapping("/user/cashWithdrawal")
+    public String getCashWithdrawal(Model model) {
+        model = helpWorkWithWallet(false, model);
+        return "forUser/workWithWallet";
+    }
+
     //Списание с кошелька
     @PostMapping("/user/cashWithdrawal")
-    public String postCashWithdrawal(Model model, User user) {
+    public String postCashWithdrawal(Model model, @Valid User user) {
         try {
             User newUser = userService.getCurrentUser();
             if (user.getPurse() > newUser.getPurse()) {
@@ -178,13 +144,17 @@ public class PageUserController extends BaseController {
             }
             newUser.setPurse(newUser.getPurse() - user.getPurse());
             userService.update(newUser);
-            return "redirect:/user/usersOne";
+            return "redirect:/usersOne/" + newUser.getId();
         } catch (Exception ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             model.addAttribute("up", false);
             return "forUser/userOne";
         }
     }
+
+
+
+
 
     //Список всех пользователей
     @GetMapping("/admin/users")
@@ -193,10 +163,135 @@ public class PageUserController extends BaseController {
         return "forAdmin/user/userList";
     }
 
-    //Страница "Мои заказы"
-    @GetMapping("/user/myOrders")
-    public String getPageMyOrders(Model model) {
-        return "forUser/myOrders";
+    //Переход к определённому товару
+    @GetMapping("/admin/users/{id}")
+    public String getUserById(Model model, @PathVariable Long id) {
+        User user = null;
+        try {
+            user = userService.findById(id);
+            model.addAttribute("allowDelete", false);
+        } catch (Exception ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+        }
+        model.addAttribute("users", user);
+        return "forAdmin/user/userOne";
+    }
+
+    //Добавление нового пользователя
+    @GetMapping("/users/add")
+    public String showAddUser(Model model, @ModelAttribute("users") User user) {
+        if (user.getName() != null) {
+            model.addAttribute("err", "err");
+        }
+        try {
+            userService.getCurrentUser();
+            model.addAttribute("admin", "admin");
+        } catch (Exception ex) {
+        }
+        model.addAttribute("users", user);
+        model.addAttribute("add", true);
+        return "forAdmin/user/userEdit";
+    }
+
+    //Добавление нового типа товара
+    @PostMapping("/users/add")
+    public String addUsers(Model model,
+                           @ModelAttribute("users") @Valid User user,
+                           BindingResult bindingResult,
+                           RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("users", user);
+            addValidationMessage(redirectAttributes, bindingResult);
+            model.addAttribute("add", true);
+            return "redirect:/users/add";
+        } else {
+            boolean checkRole = false;
+            try {
+                if (user.getRole() == null) {
+                    user.setRole(User.ROLE_BUYER);
+                    checkRole = true;
+                }
+                User newUser = userService.save(user);
+                if (checkRole) {
+                    return "redirect:/goodsPage";
+                }
+                return "redirect:/admin/users/" + String.valueOf(newUser.getId());
+            } catch (Exception ex) {
+                model.addAttribute("errorMessage", ex.getMessage());
+                model.addAttribute("add", true);
+                return "forAdmin/user/userEdit";
+            }
+        }
+    }
+
+    //Редактирование пользователя
+    @GetMapping("/users/{id}/edit")
+    public String showEditUser(Model model, @PathVariable Long id) {
+        User user = null;
+        try {
+            user = userService.findById(id);
+        } catch (Exception ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+        }
+        User tmpUser = userService.getCurrentUser();
+        if (tmpUser.getRole().equals(User.ROLE_ADMIN)) {
+            model.addAttribute("admin", "admin");
+        }
+        model.addAttribute("add", false);
+        model.addAttribute("users", user);
+        return "forAdmin/user/userEdit";
+    }
+
+    //Редактирование пользователя
+    @PostMapping("/users/{id}/edit")
+    public String updateUser(Model model, @PathVariable Long id,
+                             @ModelAttribute("users") @Valid User user,
+                             BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("users", user);
+            addValidationMessage(redirectAttributes, bindingResult);
+            model.addAttribute("add", false);
+            return "redirect:/users/" + id + "/edit";
+        } else {
+            try {
+                userService.update(user);
+                User tmpUser = userService.getCurrentUser();
+                if (tmpUser.getRole().equals(User.ROLE_ADMIN)) {
+                    return "redirect:/admin/users/" + String.valueOf(user.getId());
+                }
+                return "redirect:/usersOne/" + user.getId();
+            } catch (Exception ex) {
+                model.addAttribute("errorMessage", ex.getMessage());
+                model.addAttribute("add", false);
+                return "forAdmin/user/userEdit";
+            }
+        }
+    }
+
+    //Удаление пользователя
+    @GetMapping("/admin/users/{id}/delete")
+    public String showDeleteUserById(Model model, @PathVariable Long id) {
+        User user = null;
+        try {
+            user = userService.findById(id);
+        } catch (Exception ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+        }
+        model.addAttribute("allowDelete", true);
+        model.addAttribute("users", user);
+        return "forAdmin/user/userOne";
+    }
+
+    //Удаление пользователя
+    @PostMapping("/admin/users/{id}/delete")
+    public String deleteUsersById(Model model, @PathVariable Long id) {
+        try {
+            userService.deleteById(id);
+            return "redirect:/admin/users";
+        } catch (Exception ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "forAdmin/user/userOne";
+        }
     }
 
     @Autowired

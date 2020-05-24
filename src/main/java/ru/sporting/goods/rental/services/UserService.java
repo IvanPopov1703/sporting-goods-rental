@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import ru.sporting.goods.rental.entities.Items;
 import ru.sporting.goods.rental.entities.TypeOfItem;
 import ru.sporting.goods.rental.entities.User;
+import ru.sporting.goods.rental.exceptions.RecordNotFound;
 import ru.sporting.goods.rental.repositories.UserRepository;
 
+import javax.jws.soap.SOAPBinding;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
@@ -49,6 +51,14 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    //Сохранение пользователя
+    public User save(User user) throws Exception{
+        if (userRepository.getUserByLogin(user.getLogin()) != null){
+            throw new Exception("Пользователь с таким логином уже существует!");
+        }
+        return userRepository.save(user);
+    }
+
     //Получение пользователя по логину
     public User getUserByLogin(String login) throws UsernameNotFoundException{
         if (userRepository.getUserByLogin(login) == null){
@@ -75,11 +85,8 @@ public class UserService implements UserDetailsService {
     }
 
     //Редактирование записи
-    public User update(User user) throws Exception{
-        if (user.getId() != null && !existsById(user.getId())){
-            throw new Exception("Запись с номером " + user.getId() + " не найдена!");
-        }
-        return userRepository.save(user);
+    public void update(User user) {
+        userRepository.save(user);
     }
 
     //Удаление записи

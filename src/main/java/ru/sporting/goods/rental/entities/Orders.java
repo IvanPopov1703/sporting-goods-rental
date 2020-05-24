@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.sql.Date;
 
 @Data
@@ -20,6 +21,7 @@ public class Orders {
     @Column(name = "ID_ORDER", unique = true, nullable = false, updatable = false)
     private Long id;
 
+    @Min(value = 0, message = "Поле не может содержать отрицательное значение")
     @Column(name = "AMOUNT_OF_GUARANTEE")
     private double amountOfGuarantee;
 
@@ -32,9 +34,12 @@ public class Orders {
     @Column(name = "DATE_OF_RECEIPT_OF_ITEM")
     private Date timeOfReceiptOfItem;
 
+    @Min(value = 0, message = "Поле не может содержать отрицательное значение")
     @Column(name = "ORDER_COST")
     private double orderCost;
 
+    @Column(name = "FINE")
+    private double fine;
 
     //Соединение с User
     @ManyToOne
@@ -47,10 +52,4 @@ public class Orders {
     @JoinColumn(name = "ID_INSTANCE_OF_ITEM")
     @JsonIgnoreProperties("orders")
     private InstanceOfItem instance;
-
-//    //Соединение с OrderStatus
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "ORDER_STATUS_ID")
-//    @JsonIgnoreProperties("orders")
-//    private OrderStatus orderStatus;
 }

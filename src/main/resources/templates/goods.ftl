@@ -24,7 +24,7 @@
                     <button>Войти</button>
                 </a>
                 &nbsp;&nbsp;
-                <a href="/registr">
+                <a href="/users/add">
                     <button>Регистрация</button>
                 </a>
             </#if>

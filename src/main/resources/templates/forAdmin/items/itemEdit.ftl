@@ -34,7 +34,7 @@
             padding-top: 7px;
         }
 
-        button, input {
+        button, input required {
             font-size: 15px;
         }
 
@@ -71,9 +71,9 @@
             <tr>
                 <td>Название товара:</td>
                 <#if add = false || err?has_content>
-                    <td><input type="text" placeholder="Введите название" name="name" value="${items.name}"/></td>
+                    <td><input required type="text" placeholder="Введите название" name="name" value="${items.name}"/></td>
                 <#else>
-                    <td><input type="text" placeholder="Введите название" name="name"/></td>
+                    <td><input required type="text" placeholder="Введите название" name="name"/></td>
                 </#if>
                 <td><span>${(Request['validation.name'])!}</span></td>
             </tr>
@@ -110,20 +110,20 @@
             <tr>
                 <td>Стоимость одного дня:</td>
                 <#if add = false || err?has_content>
-                    <td><input type="text" placeholder="Введите стоимость" name="сostOneDayRental"
+                    <td><input required type="text" placeholder="Введите стоимость" name="сostOneDayRental"
                                value="${items.сostOneDayRental}"/></td>
                 <#else>
-                    <td><input type="text" placeholder="Введите стоимость" name="сostOneDayRental"/></td>
+                    <td><input required type="text" placeholder="Введите стоимость" name="сostOneDayRental"/></td>
                 </#if>
                 <td><span>${(Request['validation.сostOneDayRental'])!}</span></td>
             </tr>
             <tr>
                 <td>Описание товара:</td>
                 <#if add = false || err?has_content>
-                    <td><input type="text" placeholder="Введите описание" name="description"
+                    <td><input required type="text" placeholder="Введите описание" name="description"
                                value="${items.description}"/></td>
                 <#else>
-                    <td><input type="text" placeholder="Введите описание" name="description"/></td>
+                    <td><input required type="text" placeholder="Введите описание" name="description"/></td>
                 </#if>
                 <td><span>${(Request['validation.description'])!}</span></td>
             </tr>

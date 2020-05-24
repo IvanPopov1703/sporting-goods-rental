@@ -23,7 +23,7 @@
             </tr>
             <#list users as user>
                 <tr>
-                    <td><a href="${'/usersOne/' + user.id}">${user.getFullUserName()}</a></td>
+                    <td><a href="${'/admin/users/' + user.id}">${user.getFullUserName()}</a></td>
                     <td>${user.login}</td>
                     <td>${user.password}</td>
                     <td>${user.email}</td>
@@ -38,7 +38,7 @@
     </div>
     <br>
     <div>
-        <a href="/registr"><button type="submit">Добавить нового пользователя</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/users/add"><button type="submit">Добавить нового пользователя</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="/admin"><button type="submit">Вернуться назад</button></a>
     </div>
 </main>

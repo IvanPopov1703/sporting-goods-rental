@@ -43,14 +43,11 @@ public class PageInstanceOfItemController extends BaseController {
 
     //Добавление нового экземпляра товара
     @GetMapping("/instance/add")
-    public String showAddInstanceOfItem(Model model, @ModelAttribute InstanceOfItem instance) {
-        if (instance.getPurchasePrice() == 0) {
-            InstanceOfItem instances = null;
-            model.addAttribute("instance", instances);
-        } else {
-            model.addAttribute("instance", instance);
+    public String showAddInstanceOfItem(Model model, @ModelAttribute("instance") InstanceOfItem instance) {
+        if (instance.getOrder_status() != null) {
             model.addAttribute("err", true);
         }
+        model.addAttribute("instance", instance);
         model.addAttribute("add", true);
         model.addAttribute("items", itemService.findAllItemsAndTypeAndView());
         return "forAdmin/instanceOfItem/instanceEdit";
@@ -62,13 +59,13 @@ public class PageInstanceOfItemController extends BaseController {
                                     @ModelAttribute("instance") @Valid InstanceOfItem instance,
                                     BindingResult bindingResult,
                                     RedirectAttributes redirectAttributes) {
+        instance.setOrder_status(InstanceOfItem.STATUS_ORDER_HAND_OVER);
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("instance", instance);
             addValidationMessage(redirectAttributes, bindingResult);
             model.addAttribute("add", true);
             return "redirect:/admin/instance/add";
         } else {
-            instance.setOrder_status(InstanceOfItem.STATUS_ORDER_HAND_OVER);
             InstanceOfItem newInstance = instanceOfItemService.save(instance);
             return "redirect:/admin/instance/" + String.valueOf(newInstance.getId());
         }

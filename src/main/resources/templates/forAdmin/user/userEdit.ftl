@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title><#if reg>Регистрация<#else>Редактирование данных</#if></title>
+    <title><#if add>Регистрация<#else>Редактирование</#if></title>
     <style>
         body {
             margin: 0;
@@ -34,7 +34,7 @@
             padding-top: 7px;
         }
 
-        button, input required {
+        button, input {
             font-size: 15px;
         }
 
@@ -51,12 +51,12 @@
 </head>
 <body>
 <main>
-    <h1><#if reg>Регистрация<#else>Редактирование данных</#if></h1>
-    <#if reg>
-        <#assign urlAction>${'/registr'}</#assign>
+    <h1><#if add>Регистрация<#else>Редактирование</#if></h1>
+    <#if add>
+        <#assign urlAction>${'/users/add'}</#assign>
         <#assign submitTitle>Зарегистрироваться</#assign>
     <#else>
-        <#assign urlAction>${'/admin/items/' + items.id + '/edit'}</#assign>
+        <#assign urlAction>${'/users/' + users.id + '/edit'}</#assign>
         <#assign submitTitle>Сохранить</#assign>
     </#if>
     <form action="${urlAction}" name="items" method="POST">
@@ -70,8 +70,9 @@
             </#if>
             <tr>
                 <td>Фамилия:</td>
-                <#if reg = false || err?has_content>
-                    <td><input required type="text" placeholder="Введите фамилию" name="surname" value="${users.surname}"/></td>
+                <#if add = false || err?has_content>
+                    <td><input required type="text" placeholder="Введите фамилию" name="surname"
+                               value="${users.surname}"/></td>
                 <#else>
                     <td><input required type="text" placeholder="Введите фамилию" name="surname"/></td>
                 </#if>
@@ -79,7 +80,7 @@
             </tr>
             <tr>
                 <td>Имя:</td>
-                <#if reg = false || err?has_content>
+                <#if add = false || err?has_content>
                     <td><input required type="text" placeholder="Введите имя" name="name" value="${users.name}"/></td>
                 <#else>
                     <td><input required type="text" placeholder="Введите имя" name="name"/></td>
@@ -88,8 +89,9 @@
             </tr>
             <tr>
                 <td>Отчество:</td>
-                <#if reg = false || err?has_content>
-                    <td><input required type="text" placeholder="Введите отчество" name="patronymic" value="${users.patronymic}"/></td>
+                <#if add = false || err?has_content>
+                    <td><input required type="text" placeholder="Введите отчество" name="patronymic"
+                               value="${users.patronymic}"/></td>
                 <#else>
                     <td><input required type="text" placeholder="Введите отчество" name="patronymic"/></td>
                 </#if>
@@ -97,8 +99,9 @@
             </tr>
             <tr>
                 <td>Логин:</td>
-                <#if reg = false || err?has_content>
-                    <td><input required type="text" placeholder="Введите логин" name="login" value="${users.login}"/></td>
+                <#if add = false || err?has_content>
+                    <td><input required type="text" placeholder="Введите логин" name="login" value="${users.login}"/>
+                    </td>
                 <#else>
                     <td><input required type="text" placeholder="Введите логин" name="login"/></td>
                 </#if>
@@ -106,8 +109,9 @@
             </tr>
             <tr>
                 <td>Пароль:</td>
-                <#if reg = false || err?has_content>
-                    <td><input required type="text" placeholder="Введите пароль" name="password" value="${users.password}"/></td>
+                <#if add = false || err?has_content>
+                    <td><input required type="text" placeholder="Введите пароль" name="password"
+                               value="${users.password}"/></td>
                 <#else>
                     <td><input required type="text" placeholder="Введите пароль" name="password"/></td>
                 </#if>
@@ -115,8 +119,9 @@
             </tr>
             <tr>
                 <td>email:</td>
-                <#if reg = false || err?has_content>
-                    <td><input required type="email" placeholder="Введите email" name="email" value="${users.email}"/></td>
+                <#if add = false || err?has_content>
+                    <td><input required type="email" placeholder="Введите email" name="email" value="${users.email}"/>
+                    </td>
                 <#else>
                     <td><input required type="email" placeholder="Введите email" name="email"/></td>
                 </#if>
@@ -124,8 +129,9 @@
             </tr>
             <tr>
                 <td>Телефон:</td>
-                <#if reg = false || err?has_content>
-                    <td><input required type="text" placeholder="Введите телефон" name="phoneNumber" value="${users.phoneNumber}"/></td>
+                <#if add = false || err?has_content>
+                    <td><input required type="text" placeholder="Введите телефон" name="phoneNumber"
+                               value="${users.phoneNumber}"/></td>
                 <#else>
                     <td><input required type="text" placeholder="Введите телефон" name="phoneNumber"/></td>
                 </#if>
@@ -133,22 +139,35 @@
             </tr>
             <tr>
                 <td>Паспортные данные:</td>
-                <#if reg = false || err?has_content>
-                    <td><input required required type="text" placeholder="Паспортные данные" name="passportData" value="${users.passportData}"/></td>
+                <#if add = false || err?has_content>
+                    <td><input required type="text" placeholder="Паспортные данные" name="passportData"
+                               value="${users.passportData}"/></td>
                 <#else>
                     <td><input required type="text" placeholder="Паспортные данные" name="passportData"/></td>
                 </#if>
                 <td><span>${(Request['validation.passportData'])!}</span></td>
             </tr>
-            <#if admin>
+            <#if add = false>
+                <tr>
+                    <td>Кошелёк:</td>
+                    <td><input type="text" name="purse" value='${users.purse}'/></td>
+                </tr>
+            </#if>
+            <#if admin?has_content>
                 <p>Выберите роль создаваемого пользователя:</p>
                 <p><input required checked name="role" type="radio" value="BUYER">Пользователь</p>
                 <p><input required name="role" type="radio" value="ADMIN">Админ</p>
             </#if>
+            <#if add = false>
+                <td><input type="hidden" name="role" value="${users.role}"/></td>
+            </#if>
+            <#if add = false>
+                <input type="hidden" name="amountOfRentedGoods" value="${users.amountOfRentedGoods}"/>
+            </#if>
         </table>
         <br>
         <button type="submit">${submitTitle}</button>&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="/goodsPage">
+        <a href="/admin/users">
             <button type="button">Назад к списку</button>
         </a>
     </form>

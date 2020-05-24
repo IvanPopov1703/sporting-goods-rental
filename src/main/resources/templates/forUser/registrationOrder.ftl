@@ -54,10 +54,6 @@
     <h1>Регистрация заказа</h1>
     <form action="/user/registOrder/add" name="orders" method="POST">
         <table border="0">
-            <#--<tr>
-                <td>Номер заказа:</td>
-                <td>${orders.id}</td>
-            </tr>-->
             <tr>
                 <td>Получатель:</td>
                 <td>${user.getFullUserName()}</td>
@@ -97,7 +93,9 @@
             </tr>
             <tr>
                 <td>Дата возврата товара:</td>
-                <td><input type="date" required name="plannedTimeOfReturningProduct" /></td>
+                <td><input type="date" required name="plannedTimeOfReturningProduct"/></td>
+            </tr>
+            <tr>
                 <#if err?has_content>
                     <td><span>${err}</span></td>
                 </#if>

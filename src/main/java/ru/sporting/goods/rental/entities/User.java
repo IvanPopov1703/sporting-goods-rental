@@ -125,4 +125,16 @@ public class User implements UserDetails {
         return surname + " " + name + " " + patronymic;
     }
 
+    //Получение по роли, ее название
+    public String getRoleUser(User user){
+        String str = null;
+        switch (user.getRole()){
+            case "ADMIN": str = "Админ";
+                break;
+            case "BUYER": str = "Пользователь";
+                break;
+        }
+        return str;
+    }
+
 }

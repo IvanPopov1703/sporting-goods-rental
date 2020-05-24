@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Data
@@ -21,15 +23,18 @@ public class InstanceOfItem {
     public static final String STATUS_ORDER_ISSUED = "ISSUED"; //Выдан
     public static final String STATUS_ORDER_EXPIRED = "EXPIRED"; //Просрочен
     public static final String STATUS_ORDER_HAND_OVER = "HAND_OVER"; //Сдан
+    public static final int DAY_RENTAL = 24; //Один день проката
 
     @Id
     @GeneratedValue
     @Column(name = "ID_INSTANCE_OF_ITEM", unique = true, nullable = false, updatable = false)
     private Long id;
 
+    @Min(value = 0, message = "Поле не может содержать отрицательное значение")
     @Column(name = "HOURS_OF_USE")
     private int hoursOfUse;
 
+    @Min(value = 0, message = "Поле не может содержать отрицательное значение")
     @Column(name = "PURCHASE_PRICE")
     private double purchasePrice;
 

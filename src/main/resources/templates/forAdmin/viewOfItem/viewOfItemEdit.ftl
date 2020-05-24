@@ -54,9 +54,9 @@
             <tr>
                 <td>Название вида:</td>
                 <#if add == false>
-                    <td><input type="text" placeholder="Введите название" name="name" value="${viewOfItem.name}"/></td>
+                    <td><input required type="text" placeholder="Введите название" name="name" value="${viewOfItem.name}"/></td>
                 <#else>
-                    <td><input type="text" placeholder="Введите название" name="name" /></td>
+                    <td><input required type="text" placeholder="Введите название" name="name" /></td>
                 </#if>
                 <td><span>${(Request['validation.name'])!}</span>
                     <#if errorMessage?has_content>

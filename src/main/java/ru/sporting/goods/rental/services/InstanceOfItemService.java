@@ -37,11 +37,8 @@ public class InstanceOfItemService {
     }
 
     //Редактирование записи
-    public InstanceOfItem update(InstanceOfItem item) throws Exception{
-        if (item.getId() != null && !existsById(item.getId())){
-            throw new Exception("Запись с номером " + item.getId() + " не найдена!");
-        }
-        return instanceOfItemRepository.save(item);
+    public void update(InstanceOfItem item) {
+        instanceOfItemRepository.save(item);
     }
 
     //Удаление записи
@@ -72,6 +69,11 @@ public class InstanceOfItemService {
     //Получение всех экземпляров по id товара
     public List<InstanceOfItem> findInstancesOfItemByIdItems(Long id){
         return instanceOfItemRepository.findInstancesOfItemByIdItems(id);
+    }
+
+    //Получение списка экземпляров товара по id товара и статусу
+    public List<InstanceOfItem> getListOfCopiesByIdItemAndStatus(Long id, String status){
+        return instanceOfItemRepository.getListOfCopiesByIdItemAndStatus(status, id);
     }
 
     @Autowired

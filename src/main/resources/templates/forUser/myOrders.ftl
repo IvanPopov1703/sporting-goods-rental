@@ -7,110 +7,122 @@
 </head>
 <body>
 <main>
-    <#if orders??>
-    <h1>Мои заказы</h1>
-    <br>
-    <h3>Ожидают выдачи</h3>
-    <div>
-        <table border="1">
-            <tr>
-                <th>Название товара</th>
-                <th>Вид товара</th>
-                <th>Тип товара</th>
-                <th>Количество арендованных экземпляров</th>
-                <th>Стоимость 1 ч проката</th>
-                <th>Общая стоимость аренды</th>
-                <th>Сумма залога</th>
-                <th>Дата аренды</th>
-                <th>Планируемая дата сдачи</th>
-                <th>Действие</th>
-            </tr>
-            <#list orders as order>
+    <#if ordersPending??>
+        <h1>Мои заказы</h1>
+        <br>
+        <h3>Ожидают выдачи</h3>
+        <div>
+            <table border="1">
                 <tr>
-                    <td><a href="${'/admin/items/' + order.id}">${order.name}</a></td>
-                    <td>${order.viewOfItem.name}</td>
-                    <td>${order.typeOfItem.name}</td>
-                    <td>${order.item.numberOfCopies}</td>
-                    <td>${order.item.сostOneHourRental}</td>
-                    <td>${order.orderCost}</td>
-                    <td>${order.amountOfGuarantee}</td>
-                    <td>Дата</td>
-                    <td>Дата</td>
-                    <td><a href="/">Забрать товар</a></td>
+                    <th>Номер заказа</th>
+                    <th>Название товара</th>
+                    <th>Вид товара</th>
+                    <th>Тип товара</th>
+                    <th>Инвентарный номер экземпляра</th>
+                    <th>Стоимость 1 дня проката</th>
+                    <th>Сумма залога</th>
+                    <th>Общая стоимость аренды</th>
+                    <th>Дата аренды</th>
+                    <th>Планируемая дата сдачи</th>
+                    <th>Действие</th>
                 </tr>
-            </#list>
-        </table>
-    </div>
-    <br>
-    <h3>Выданные товары</h3>
-    <div>
-        <table border="1">
-            <tr>
-                <th>Название товара</th>
-                <th>Вид товара</th>
-                <th>Тип товара</th>
-                <th>Количество арендованных экземпляров</th>
-                <th>Стоимость 1 ч проката</th>
-                <th>Общая стоимость аренды</th>
-                <th>Сумма залога</th>
-                <th>Дата аренды</th>
-                <th>Планируемая дата сдачи</th>
-                <th>Действие</th>
-            </tr>
-            <#list orders as order>
+                <#list ordersPending as order>
+                    <tr>
+                        <td>${order.id}</td>
+                        <td>${order.instance.items.name}</td>
+                        <td>${order.instance.items.viewOfItem.name}</td>
+                        <td>${order.instance.items.typeOfItem.name}</td>
+                        <td>${order.instance.id}</td>
+                        <td>${order.instance.items.сostOneDayRental}</td>
+                        <td>${order.amountOfGuarantee}</td>
+                        <td>${order.orderCost}</td>
+                        <td>${order.timeOfReceiptOfItem}</td>
+                        <td>${order.plannedTimeOfReturningProduct}</td>
+                        <td><a href="${'/user/pickUpOrder/' + order.id}">
+                                <button type="button">Забрать товар</button>
+                            </a></td>
+                    </tr>
+                </#list>
+            </table>
+        </div>
+        <br>
+        <h3>Выданные товары</h3>
+        <div>
+            <table border="1">
                 <tr>
-                    <td><a href="${'/admin/items/' + order.id}">${order.name}</a></td>
-                    <td>${order.viewOfItem.name}</td>
-                    <td>${order.typeOfItem.name}</td>
-                    <td>${order.item.numberOfCopies}</td>
-                    <td>${order.item.сostOneHourRental}</td>
-                    <td>${order.orderCost}</td>
-                    <td>${order.amountOfGuarantee}</td>
-                    <td>Дата</td>
-                    <td>Дата</td>
-                    <td><a href="/">Сдать товар</a></td>
+                    <th>Номер заказа</th>
+                    <th>Название товара</th>
+                    <th>Вид товара</th>
+                    <th>Тип товара</th>
+                    <th>Инвентарный номер экземпляра</th>
+                    <th>Стоимость 1 дня проката</th>
+                    <th>Сумма залога</th>
+                    <th>Общая стоимость аренды</th>
+                    <th>Дата аренды</th>
+                    <th>Планируемая дата сдачи</th>
+                    <th>Действие</th>
                 </tr>
-            </#list>
-        </table>
-    </div>
-    <br>
-    <h3>Просроченные товары</h3>
-    <div>
-        <table border="1">
-            <tr>
-                <th>Название товара</th>
-                <th>Вид товара</th>
-                <th>Тип товара</th>
-                <th>Количество арендованных экземпляров</th>
-                <th>Стоимость 1 ч проката</th>
-                <th>Общая стоимость аренды</th>
-                <th>Сумма залога</th>
-                <th>Дата аренды</th>
-                <th>Планируемая дата сдачи</th>
-                <th>Действие</th>
-            </tr>
-            <#list orders as order>
+                <#list ordersIssued as order>
+                    <tr>
+                        <td>${order.id}</td>
+                        <td>${order.instance.items.name}</td>
+                        <td>${order.instance.items.viewOfItem.name}</td>
+                        <td>${order.instance.items.typeOfItem.name}</td>
+                        <td>${order.instance.id}</td>
+                        <td>${order.instance.items.сostOneDayRental}</td>
+                        <td>${order.amountOfGuarantee}</td>
+                        <td>${order.orderCost}</td>
+                        <td>${order.timeOfReceiptOfItem}</td>
+                        <td>${order.plannedTimeOfReturningProduct}</td>
+                        <td><a href="${'/user/returnWithIssuedStatus/' + order.id}">
+                                <button type="button">Сдать товар</button>
+                            </a></td>
+                    </tr>
+                </#list>
+            </table>
+        </div>
+        <br>
+        <h3>Просроченные товары</h3>
+        <div>
+            <table border="1">
                 <tr>
-                    <td><a href="${'/admin/items/' + order.id}">${order.name}</a></td>
-                    <td>${order.viewOfItem.name}</td>
-                    <td>${order.typeOfItem.name}</td>
-                    <td>${order.item.numberOfCopies}</td>
-                    <td>${order.item.сostOneHourRental}</td>
-                    <td>${order.orderCost}</td>
-                    <td>${order.amountOfGuarantee}</td>
-                    <td>Дата</td>
-                    <td>Дата</td>
-                    <td><a href="/">Сдать товар</a></td>
+                    <th>Номер заказа</th>
+                    <th>Название товара</th>
+                    <th>Вид товара</th>
+                    <th>Тип товара</th>
+                    <th>Инвентарный номер экземпляра</th>
+                    <th>Стоимость 1 дня проката</th>
+                    <th>Сумма залога</th>
+                    <th>Общая стоимость аренды</th>
+                    <th>Штраф</th>
+                    <th>Дата аренды</th>
+                    <th>Планируемая дата сдачи</th>
+                    <th>Действие</th>
                 </tr>
-            </#list>
-        </table>
-    </div>
+                <#list ordersExpired as order>
+                    <tr>
+                        <td>${order.id}</td>
+                        <td>${order.instance.items.name}</td>
+                        <td>${order.instance.items.viewOfItem.name}</td>
+                        <td>${order.instance.items.typeOfItem.name}</td>
+                        <td>${order.instance.id}</td>
+                        <td>${order.instance.items.сostOneDayRental}</td>
+                        <td>${order.amountOfGuarantee}</td>
+                        <td>${order.orderCost}</td>
+                        <td>${order.fine}</td>
+                        <td>${order.timeOfReceiptOfItem}</td>
+                        <td>${order.plannedTimeOfReturningProduct}</td>
+                        <td><a href="${'/user/returnWithExpiredStatus/' + order.id}">
+                                <button type="button">Сдать товар</button>
+                            </a></td>
+                    </tr>
+                </#list>
+            </table>
+        </div>
     </#if>
     <div>
-        <a href="/admin/items/add">
-            <button type="submit">Добавить новый товар</button>
-        </a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="/admin">
+        <a href="/">
+            <br>
             <button type="submit">Вернуться назад</button>
         </a>
     </div>
