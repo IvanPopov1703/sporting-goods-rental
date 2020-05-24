@@ -59,15 +59,11 @@
         <#assign urlAction>${'/users/' + users.id + '/edit'}</#assign>
         <#assign submitTitle>Сохранить</#assign>
     </#if>
+    <#if errorMessage?has_content>
+        <div class="error">${errorMessage}</div>
+    </#if>
     <form action="${urlAction}" name="items" method="POST">
         <table border="0">
-            <#if errorMessage?has_content>
-                <tr>
-                    <td>
-                        <div class="error">${errorMessage}</div>
-                    </td>
-                </tr>
-            </#if>
             <tr>
                 <td>Фамилия:</td>
                 <#if add = false || err?has_content>

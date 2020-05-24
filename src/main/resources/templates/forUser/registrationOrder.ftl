@@ -38,20 +38,23 @@
             font-size: 15px;
         }
 
-        .error {
-            color: red;
-            font-size: 18px;
-        }
-
         select {
             font-size: 15px;
             width: 280px;
+        }
+
+        span{
+            color: red;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
 <main>
     <h1>Регистрация заказа</h1>
+    <#if err?has_content>
+        <td><span>${err}</span></td>
+    </#if>
     <form action="/user/registOrder/add" name="orders" method="POST">
         <table border="0">
             <tr>
@@ -94,11 +97,6 @@
             <tr>
                 <td>Дата возврата товара:</td>
                 <td><input type="date" required name="plannedTimeOfReturningProduct"/></td>
-            </tr>
-            <tr>
-                <#if err?has_content>
-                    <td><span>${err}</span></td>
-                </#if>
             </tr>
         </table>
         <br>

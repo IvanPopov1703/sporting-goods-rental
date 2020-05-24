@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title><#if add>Добавить товар<#else>Редактировать товар</#if></title>
+    <title><#if add>Добавить заказ<#else>Редактировать заказ</#if></title>
     <style>
         body {
             margin: 0;
@@ -51,7 +51,7 @@
 </head>
 <body>
 <main>
-    <h1><#if add>Создать новый товар<#else>Изменить товар</#if></h1>
+    <h1><#if add>Создать новый заказ<#else>Изменить заказ</#if></h1>
     <#if add>
         <#assign urlAction>${'/admin/items/add'}</#assign>
         <#assign submitTitle>Создать</#assign>

@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 @Controller
-@RequestMapping("/user")
 public class PageOrdersController extends BaseController {
 
     private ItemService itemService;
@@ -28,7 +27,7 @@ public class PageOrdersController extends BaseController {
     private InstanceOfItemService instanceOfItemService;
     private OrderService orderService;
 
-    @GetMapping("/registOrder/{id}")
+    @GetMapping("/user/registOrder/{id}")
     public String showPageRegistrOrder(Model model, @ModelAttribute("orders") Orders orders,
                                        @PathVariable Long id) {
         if (orders.getTimeOfReceiptOfItem() != null) {
@@ -47,7 +46,7 @@ public class PageOrdersController extends BaseController {
     }
 
     //Добавление нового заказа
-    @PostMapping("/registOrder/add")
+    @PostMapping("/user/registOrder/add")
     public String addOrders(Model model,
                             @ModelAttribute("orders") Orders orders,
                             BindingResult bindingResult,
@@ -63,26 +62,36 @@ public class PageOrdersController extends BaseController {
         orders.getInstance().setOrder_status(InstanceOfItem.STATUS_ORDER_PENDING);
         orders.setAmountOfGuarantee(Items.AMOUNT_OF_GUARANTEE);
         orderService.save(orders);
-        return "redirect:/user/myOrders";
+        return "redirect:/user/myOrders/" + orders.getUser().getId();
     }
 
-    //Страница "Мои заказы"
-    @GetMapping("/myOrders/{id}")
-    public String getPageMyOrders(Model model, @PathVariable Long id) {
+    //Вспомогательная функция для контроллера "Мои заказы"
+    private Model helpPageMyOrders(Model model, Long id){
         User user = userService.findById(id);
         model.addAttribute("ordersPending",
                 orderService.checkOrdersPending(user));
         model.addAttribute("ordersIssued",
                 orderService.checkOrdersIssued(user));
         model.addAttribute("ordersExpired",
-                orderService.getOrdersByIdUserAndStatusInstance(userService.getCurrentUser().getId(),
+                orderService.getOrdersByIdUserAndStatusInstance(user.getId(),
                         InstanceOfItem.STATUS_ORDER_EXPIRED));
+        model.addAttribute("ordersHistory",
+                orderService.getOrdersByIdUserAndStatusInstance(user.getId(),
+                        InstanceOfItem.STATUS_ORDER_HAND_OVER));
         userService.update(user);
+        return model;
+    }
+
+
+    //Страница "Мои заказы"
+    @GetMapping("/user/myOrders/{id}")
+    public String getPageMyOrders(Model model, @PathVariable Long id) {
+        model = helpPageMyOrders(model, id);
         return "forUser/myOrders";
     }
 
     //Забрать заказ
-    @GetMapping("/pickUpOrder/{id}")
+    @GetMapping("/user/pickUpOrder/{id}")
     public String pickUpOrder(@PathVariable Long id){
         Orders orders = orderService.findById(id);
         orders.getInstance().setOrder_status(InstanceOfItem.STATUS_ORDER_ISSUED);
@@ -91,7 +100,7 @@ public class PageOrdersController extends BaseController {
     }
 
     //Вернуть заказ (статус Issued)
-    @GetMapping("/returnWithIssuedStatus/{id}")
+    @GetMapping("/user/returnWithIssuedStatus/{id}")
     public String returnGoodsWithIssuedStatus(@PathVariable Long id){
         Orders orders = orderService.findById(id);
         InstanceOfItem instance = instanceOfItemService.findById(orders.getInstance().getId());
@@ -117,9 +126,40 @@ public class PageOrdersController extends BaseController {
     }
 
     //Вернуть заказ (статус Expired)
-    @GetMapping("/returnWithExpiredStatus/{id}")
-    public String returnGoodsWithExpiredStatus(@PathVariable Long id){
-        return null;
+    @GetMapping("/user/returnWithExpiredStatus/{id}")
+    public String returnGoodsWithExpiredStatus(Model model, @PathVariable Long id){
+        Orders orders = orderService.findById(id);
+        InstanceOfItem instance = instanceOfItemService.findById(orders.getInstance().getId());
+        User user = userService.findById(orders.getUser().getId());
+        if (orders.getFine() <= (user.getPurse() + Items.AMOUNT_OF_GUARANTEE)){
+            //Установка реального времени сдачи
+            orders.setRealTimeOfReturningProduct(Date.valueOf(LocalDate.now()));
+            //Установка статуса Сдан экземпляру
+            instance.setOrder_status(InstanceOfItem.STATUS_ORDER_HAND_OVER);
+            user.setPurse((user.getPurse() + Items.AMOUNT_OF_GUARANTEE) - orders.getFine());
+            //Обновление данных в таблицах
+            orderService.update(orders);
+            userService.update(user);
+            instanceOfItemService.update(instance);
+            return "redirect:/user/myOrders/" + user.getId();
+        }
+        model = helpPageMyOrders(model, user.getId());
+        model.addAttribute("err", "Для возврата товара и оплаты штрафа, у Вас недостаточно денег! Пополните счёт!");
+        return "forUser/myOrders";
+    }
+
+    //Переход к выбранному заказу
+    @GetMapping("/admin/orders/{id}")
+    public String getOrderById(Model model, @PathVariable Long id) {
+        Orders orders = null;
+        try {
+            orders = orderService.findById(id);
+            model.addAttribute("allowDelete", false);
+        } catch (Exception ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+        }
+        model.addAttribute("orders", orders);
+        return "forAdmin/orders/orderOne";
     }
 
     @Autowired

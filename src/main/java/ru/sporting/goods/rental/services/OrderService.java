@@ -20,6 +20,7 @@ public class OrderService {
 
     private OrderRepository orderRepository;
     private UserService userService;
+    private InstanceOfItemService instanceOfItemService;
 
     //Проверка наличия записи в базе
     private boolean existsById(Long id) {
@@ -91,7 +92,9 @@ public class OrderService {
         for (Orders order : ordersList) {
             if (order.getPlannedTimeOfReturningProduct().getTime() < Date.valueOf(LocalDate.now()).getTime()){
                 user.setPurse(user.getPurse() + Items.AMOUNT_OF_GUARANTEE);
+                order.setRealTimeOfReturningProduct(order.getPlannedTimeOfReturningProduct());
                 order.getInstance().setOrder_status(InstanceOfItem.STATUS_ORDER_HAND_OVER);
+                instanceOfItemService.update(order.getInstance());
             }
             else {
                 resultList.add(order);
@@ -108,9 +111,9 @@ public class OrderService {
         for (Orders order : ordersList) {
             if (order.getPlannedTimeOfReturningProduct().getTime() < Date.valueOf(LocalDate.now()).getTime()){
                 order.getInstance().setOrder_status(InstanceOfItem.STATUS_ORDER_EXPIRED);
-                /*user.setFine(user.getFine() + (getCountDayByDate(order.getTimeOfReceiptOfItem(),
-                        order.getPlannedTimeOfReturningProduct()) *
-                        order.getInstance().getItems().getСostOneDayRental()));*/
+                order.setFine(order.getFine() + getCountDayByDate(order.getPlannedTimeOfReturningProduct(), Date.valueOf(LocalDate.now())) *
+                        order.getInstance().getItems().getСostOneDayRental());
+                instanceOfItemService.update(order.getInstance());
             }
             else {
                 resultList.add(order);
@@ -127,5 +130,10 @@ public class OrderService {
     @Autowired
     public void setUserService(UserService userService){
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setInstanceOfItemService(InstanceOfItemService instanceOfItemService){
+        this.instanceOfItemService = instanceOfItemService;
     }
 }

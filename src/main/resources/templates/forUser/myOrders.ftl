@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>Мои заказы</title>
     <link rel="stylesheet" href="adminStyle.css">
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <main>
@@ -45,7 +50,9 @@
                 </#list>
             </table>
         </div>
-        <br>
+    </#if>
+    <br>
+    <#if ordersIssued??>
         <h3>Выданные товары</h3>
         <div>
             <table border="1">
@@ -81,7 +88,9 @@
                 </#list>
             </table>
         </div>
-        <br>
+    </#if>
+    <br>
+    <#if ordersExpired??>
         <h3>Просроченные товары</h3>
         <div>
             <table border="1">
@@ -120,12 +129,61 @@
             </table>
         </div>
     </#if>
+    <#if err?has_content>
+        <br>
+        <tr>
+            <td>
+                <div class="error">${err}</div>
+            </td>
+        </tr>
+        <br>
+    </#if>
+    <br>
+    <#if ordersHistory??>
+        <h3>Сданные товары</h3>
+        <div>
+            <table border="1">
+                <tr>
+                    <th>Номер заказа</th>
+                    <th>Название товара</th>
+                    <th>Вид товара</th>
+                    <th>Тип товара</th>
+                    <th>Инвентарный номер экземпляра</th>
+                    <th>Стоимость 1 дня проката</th>
+                    <th>Сумма залога</th>
+                    <th>Общая стоимость аренды</th>
+                    <th>Штраф</th>
+                    <th>Дата аренды</th>
+                    <th>Планируемая дата сдачи</th>
+                    <th>Реальная дата сдачи</th>
+                </tr>
+                <#list ordersHistory as order>
+                    <tr>
+                        <td>${order.id}</td>
+                        <td>${order.instance.items.name}</td>
+                        <td>${order.instance.items.viewOfItem.name}</td>
+                        <td>${order.instance.items.typeOfItem.name}</td>
+                        <td>${order.instance.id}</td>
+                        <td>${order.instance.items.сostOneDayRental}</td>
+                        <td>${order.amountOfGuarantee}</td>
+                        <td>${order.orderCost}</td>
+                        <td>${order.fine}</td>
+                        <td>${order.timeOfReceiptOfItem}</td>
+                        <td>${order.plannedTimeOfReturningProduct}</td>
+                        <td>${order.realTimeOfReturningProduct}</td>
+                    </tr>
+                </#list>
+            </table>
+        </div>
+    </#if>
+    <br>
     <div>
         <a href="/">
             <br>
             <button type="submit">Вернуться назад</button>
         </a>
     </div>
+    <br>
 </main>
 </body>
 </html>
