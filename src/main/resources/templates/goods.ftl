@@ -36,24 +36,30 @@
         </div>
         <div class="leftHeadOneFilter">
             <h3>Вид товара</h3>
-            <#list viewItem as view>
-                <p><input type="checkbox" name="checkViewOfItem" value="${view.id}">${view.name}</p>
-            </#list>
-            <h3>Тип товара</h3>
-            <#list typeItem as type>
-                <!-- name - для идентификации на форме, value - значение которое будет отправлено на сервер -->
-                <p><input type="checkbox" name="checkTypeOfItem" value="Test">${type.name}</p>
-            </#list>
-            <div class="leftButtonSort">
-                <p><input class="leftButton" type="submit" value="Сортировать"></p>
-            </div>
+            <form method="get" action="${'/sort/'}">
+                <#list viewItem as view>
+                    <p><input type="radio" name="viewItem" value="${view.id}">${view.name}</p>
+                </#list>
+                <h3>Тип товара</h3>
+                <#list typeItem as type>
+                    <p><input type="radio" name="typeItem" value="${type.id}">${type.name}</p>
+                </#list>
+                <div class="leftButtonSort">
+                    <#--                <a href="${'/sort/' + view.id + '/' + type.id}">-->
+                    <#--                    <a href="${'/sort'}">-->
+                    <#--                        <button type="submit">Сортировать</button>-->
+                    <#--                    </a>-->
+                    <button type="submit">Сортировать</button>
+                </div>
+            </form>
         </div>
     </div>
     <div class="content">
         <#list items as item>
             <div class="containerOneGood">
                 <div class="textOneGood">
-                    <h2><span class="titleOneGood"><a href="${'/goodOnePage/items/' + item.id}">${item.name}</a></span></h2>
+                    <h2><span class="titleOneGood"><a href="${'/goodOnePage/items/' + item.id}">${item.name}</a></span>
+                    </h2>
                     <p class="descriptGood">${item.description}</p>
                     <p class="costGood">${item.сostOneDayRental} в сутки</p>
                 </div>

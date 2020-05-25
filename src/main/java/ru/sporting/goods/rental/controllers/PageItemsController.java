@@ -48,8 +48,12 @@ public class PageItemsController extends BaseController {
     public String showAddItem(Model model, @ModelAttribute("items") Items items) {
         if (items.getName() != null) {
             model.addAttribute("err", "err");
+            model.addAttribute("items", items);
         }
-        model.addAttribute("items", items);
+        else {
+            Items item = null;
+            model.addAttribute("items", item);
+        }
         model.addAttribute("add", true);
         model.addAttribute("typeOfItem", typeOfItemService.findAll());
         model.addAttribute("viewOfItem", viewOfItemService.findAll());
@@ -58,8 +62,7 @@ public class PageItemsController extends BaseController {
 
     //Добавление нового типа товара
     @PostMapping("/items/add")
-    public String addItem(Model model,
-                          @ModelAttribute("items") @Valid Items items,
+    public String addItem(Model model, @ModelAttribute("items") @Valid Items items,
                           BindingResult bindingResult,
                           RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {

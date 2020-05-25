@@ -24,4 +24,11 @@ public interface ItemRepository extends JpaRepository<Items, Long> {
             "ON item.type_of_item_id = type_of_item.id_type_of_item INNER JOIN view_of_item " +
             "ON item.view_of_item_id = view_of_item.id_view_of_item WHERE item.id_item = :id", nativeQuery = true)
     Items findItemById(@Param("id") Long id);
+
+    //Сортировка товара по виду и типу
+    @Query(value = "SELECT i.*, v.*, t.* FROM item AS i INNER JOIN view_of_item AS v " +
+            "ON v.id_view_of_item = i.view_of_item_id INNER JOIN type_of_item AS t " +
+            "ON t.id_type_of_item = i.type_of_item_id WHERE i.view_of_item_id = :idView " +
+            "AND i.type_of_item_id = :idType", nativeQuery = true)
+    List<Items> sortItemByIdViewAndType(@Param("idView") Long idView, @Param("idType") Long idType);
 }

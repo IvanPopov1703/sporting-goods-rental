@@ -62,6 +62,11 @@ public class ItemService {
         return itemRepository.findItemById(id);
     }
 
+    //Сортировка товара по виду и типу
+    public List<Items> sortItemByIdViewAndType(Long idView, Long idType){
+        return itemRepository.sortItemByIdViewAndType(idView, idType);
+    }
+
     @Autowired
     public void setItemRepository(ItemRepository itemRepository){
         this.itemRepository = itemRepository;

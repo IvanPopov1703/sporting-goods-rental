@@ -32,7 +32,7 @@ public class PageUserController extends BaseController {
         if (user.getRole().equals(User.ROLE_BUYER)) {
             model.addAttribute("isAut", true);
             model.addAttribute("users", user);
-            return "goodsPage";
+            return "forward:/goodsPage";
         } else {
             return "redirect:/admin";
         }

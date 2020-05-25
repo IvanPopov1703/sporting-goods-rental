@@ -10,7 +10,7 @@
 
         main {
             /*border: 1px red solid;*/
-            width: 500px;
+            width: 700px;
             height: 500px;
             margin: 10px;
         }
@@ -41,7 +41,7 @@
 </head>
 <body>
 <main>
-    <h1>Описание выбранного товара</h1>
+    <h1>Информация о выбранном пользователе</h1>
     <#if users??>
         <table border="0">
             <tr>
@@ -108,7 +108,7 @@
                     <button type="submit" style="width: 210px">Заказы пользователя</button>
                 </a>
                 <a href="/admin/users">
-                    <button type="submit" style="width: 210px">Вернуться к списку типов</button>
+                    <button type="submit" style="width: 290px">Вернуться к списку пользователей</button>
                 </a>
             </div>
         </#if>

@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import ru.sporting.goods.rental.entities.InstanceOfItem;
-import ru.sporting.goods.rental.entities.Items;
-import ru.sporting.goods.rental.entities.User;
+import ru.sporting.goods.rental.entities.*;
 import ru.sporting.goods.rental.services.*;
+
+import java.util.List;
 
 @Controller
 public class PageMainController {
@@ -19,10 +20,15 @@ public class PageMainController {
     private InstanceOfItemService instanceOfItemService;
     private UserService userService;
 
-    @GetMapping("/goodsPage")
-    public String initTypeItem(Model model) {
+    private Model helpLoadMainPage(Model model){
         model.addAttribute("viewItem", viewOfItemService.findAll());
         model.addAttribute("typeItem", typeOfItemService.findAll());
+        return model;
+    }
+
+    @GetMapping("/goodsPage")
+    public String startMainPage(Model model) {
+        model = helpLoadMainPage(model);
         model.addAttribute("items", itemService.findAll());
         return "goods";
     }
@@ -53,6 +59,15 @@ public class PageMainController {
         }
         model.addAttribute("items", items);
         return "oneGood";
+    }
+
+    //Контроллер сортировки
+    @GetMapping("/sort/")
+    public String getSortRecord(Model model, @ModelAttribute("typeItem") TypeOfItem typeOfItem,
+                                @ModelAttribute("viewItem")ViewOfItem viewOfItem){
+        model = helpLoadMainPage(model);
+        model.addAttribute("items", itemService.sortItemByIdViewAndType(viewOfItem.getId(), typeOfItem.getId()));
+        return "forward:/goodsPage";
     }
 
     @Autowired
