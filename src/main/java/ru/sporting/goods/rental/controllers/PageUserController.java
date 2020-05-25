@@ -38,46 +38,6 @@ public class PageUserController extends BaseController {
         }
     }
 
-    /*@GetMapping("/registr")
-    public String getPageRegist(Model model, @ModelAttribute("users") User user) {
-        if (user.getName() != null) {
-            model.addAttribute("err", "err");
-        }
-        try {
-            userService.getCurrentUser();
-            model.addAttribute("admin", true);
-        } catch (Exception ex) {
-            model.addAttribute("admin", false);
-        }
-        model.addAttribute("reg", true);
-        model.addAttribute("users", user);
-        return "forUser/registration";
-    }
-
-    //Добавление нового пользователя
-    @PostMapping("/registr")
-    public String addUser(Model model, @ModelAttribute("users") @Valid User user,
-                          BindingResult bindingResult,
-                          RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("users", user);
-            addValidationMessage(redirectAttributes, bindingResult);
-            model.addAttribute("reg", true);
-            return "redirect:/registr";
-        } else {
-            try {
-                if (user.getRole() == null) {
-                    user.setRole(User.ROLE_BUYER);
-                }
-                userService.registerUser(user);
-                return "redirect:/goodsPage";
-            } catch (Exception ex) {
-                model.addAttribute("errorMessage", ex.getMessage());
-                return "redirect:/registr";
-            }
-        }
-    }*/
-
     //Личный кабинет пользователя
     @RolesAllowed({"ADMIN", "BUYER"})
     @GetMapping("/usersOne/{id}")

@@ -10,8 +10,6 @@ import ru.sporting.goods.rental.entities.Items;
 import ru.sporting.goods.rental.entities.User;
 import ru.sporting.goods.rental.services.*;
 
-import javax.annotation.security.RolesAllowed;
-
 @Controller
 public class PageMainController {
 
@@ -22,7 +20,7 @@ public class PageMainController {
     private UserService userService;
 
     @GetMapping("/goodsPage")
-    public String initTypeItem(Model model){
+    public String initTypeItem(Model model) {
         model.addAttribute("viewItem", viewOfItemService.findAll());
         model.addAttribute("typeItem", typeOfItemService.findAll());
         model.addAttribute("items", itemService.findAll());
@@ -31,7 +29,7 @@ public class PageMainController {
 
     //Запуск страницы одного товара
     @GetMapping("/goodOnePage")
-    public String goodsOnePage(){
+    public String goodsOnePage() {
         return "oneGood";
     }
 
@@ -40,10 +38,10 @@ public class PageMainController {
     public String getItemById(Model model, @PathVariable Long id) {
         Items items = null;
         try {
-            try{
+            try {
                 User user = userService.getCurrentUser();
                 model.addAttribute("autoriz", true);
-            }catch (Exception ex) {
+            } catch (Exception ex) {
                 model.addAttribute("autoriz", false);
             }
             items = itemService.findItemById(id);
@@ -58,27 +56,27 @@ public class PageMainController {
     }
 
     @Autowired
-    public void setTypeOfItemService(TypeOfItemService typeOfItemService){
+    public void setTypeOfItemService(TypeOfItemService typeOfItemService) {
         this.typeOfItemService = typeOfItemService;
     }
 
     @Autowired
-    public void setViewOfItemService(ViewOfItemService viewOfItemService){
+    public void setViewOfItemService(ViewOfItemService viewOfItemService) {
         this.viewOfItemService = viewOfItemService;
     }
 
     @Autowired
-    public void setItemService(ItemService itemService){
+    public void setItemService(ItemService itemService) {
         this.itemService = itemService;
     }
 
     @Autowired
-    public void setInstanceOfItemService(InstanceOfItemService instanceOfItemService){
+    public void setInstanceOfItemService(InstanceOfItemService instanceOfItemService) {
         this.instanceOfItemService = instanceOfItemService;
     }
 
     @Autowired
-    public void setUserService(UserService userService){
+    public void setUserService(UserService userService) {
         this.userService = userService;
     }
 }

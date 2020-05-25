@@ -5,7 +5,7 @@
     <title>Мои заказы</title>
     <link rel="stylesheet" href="adminStyle.css">
     <style>
-        .error{
+        .error {
             color: red;
         }
     </style>
@@ -43,9 +43,17 @@
                         <td>${order.orderCost}</td>
                         <td>${order.timeOfReceiptOfItem}</td>
                         <td>${order.plannedTimeOfReturningProduct}</td>
-                        <td><a href="${'/user/pickUpOrder/' + order.id}">
-                                <button type="button">Забрать товар</button>
-                            </a></td>
+                        <td>
+                            <#if admin?has_content>
+                                <a href="${'/admin/orders/' + order.id}">
+                                    <button type="button">К заказу</button>
+                                </a>
+                            <#else>
+                                <a href="${'/user/pickUpOrder/' + order.id}">
+                                    <button type="button">Забрать товар</button>
+                                </a>
+                            </#if>
+                        </td>
                     </tr>
                 </#list>
             </table>
@@ -81,9 +89,17 @@
                         <td>${order.orderCost}</td>
                         <td>${order.timeOfReceiptOfItem}</td>
                         <td>${order.plannedTimeOfReturningProduct}</td>
-                        <td><a href="${'/user/returnWithIssuedStatus/' + order.id}">
-                                <button type="button">Сдать товар</button>
-                            </a></td>
+                        <td>
+                            <#if admin?has_content>
+                                <a href="${'/admin/orders/' + order.id}">
+                                    <button type="button">К заказу</button>
+                                </a>
+                            <#else>
+                                <a href="${'/user/returnWithIssuedStatus/' + order.id}">
+                                    <button type="button">Сдать товар</button>
+                                </a>
+                            </#if>
+                        </td>
                     </tr>
                 </#list>
             </table>
@@ -121,9 +137,17 @@
                         <td>${order.fine}</td>
                         <td>${order.timeOfReceiptOfItem}</td>
                         <td>${order.plannedTimeOfReturningProduct}</td>
-                        <td><a href="${'/user/returnWithExpiredStatus/' + order.id}">
-                                <button type="button">Сдать товар</button>
-                            </a></td>
+                        <td>
+                            <#if admin?has_content>
+                                <a href="${'/admin/orders/' + order.id}">
+                                    <button type="button">К заказу</button>
+                                </a>
+                            <#else>
+                                <a href="${'/user/returnWithExpiredStatus/' + order.id}">
+                                    <button type="button">Сдать товар</button>
+                                </a>
+                            </#if>
+                        </td>
                     </tr>
                 </#list>
             </table>
@@ -156,6 +180,9 @@
                     <th>Дата аренды</th>
                     <th>Планируемая дата сдачи</th>
                     <th>Реальная дата сдачи</th>
+                    <#if admin?has_content>
+                        <th>Действие</th>
+                    </#if>
                 </tr>
                 <#list ordersHistory as order>
                     <tr>
@@ -171,6 +198,13 @@
                         <td>${order.timeOfReceiptOfItem}</td>
                         <td>${order.plannedTimeOfReturningProduct}</td>
                         <td>${order.realTimeOfReturningProduct}</td>
+                        <td>
+                            <#if admin?has_content>
+                                <a href="${'/admin/orders/' + order.id}">
+                                    <button type="button">К заказу</button>
+                                </a>
+                            </#if>
+                        </td>
                     </tr>
                 </#list>
             </table>

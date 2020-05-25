@@ -56,27 +56,3 @@ public class TypeOfItemService {
         this.typeOfItemRepository = typeOfItemRepository;
     }
 }
-
-
-/*//Редактирование записи
-    public TypeOfItem update(TypeOfItem typeOfItem) throws Exception{
-        if (StringUtils.isEmpty(typeOfItem.getName())){
-            throw new Exception("Обязательное поле");
-        }
-        if (typeOfItem.getId() != null && !existsById(typeOfItem.getId())){
-            throw new Exception("Записи с номером " + typeOfItem.getId() + " не найдена!");
-        }
-        return typeOfItemRepository.save(typeOfItem);
-    }*/
-
-
-    /*//Добавление новой записи
-    public TypeOfItem save(TypeOfItem typeOfItem) throws Exception{
-        if(StringUtils.isEmpty(typeOfItem.getName()) || typeOfItem.getName().equals("")){
-            throw new Exception("Обязательное поле!");
-        }
-        if (typeOfItem.getId() != null && existsById(typeOfItem.getId())){
-            throw new Exception("Тип товара с номером " + typeOfItem.getId() + " уже сущевствует!");
-        }
-        return typeOfItemRepository.save(typeOfItem);
-    }*/

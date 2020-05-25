@@ -10,6 +10,7 @@ import ru.sporting.goods.rental.entities.TypeOfItem;
 import ru.sporting.goods.rental.services.TypeOfItemService;
 
 import javax.validation.Valid;
+import java.lang.reflect.Type;
 
 @Controller
 @RequestMapping("/admin")
@@ -58,11 +59,9 @@ public class PageTypeOfItemController extends BaseController {
             addValidationMessage(redirectAttributes, bindingResult);
             model.addAttribute("add", true);
             return "redirect:/admin/typeOfItem/add";
-        } else {
-
-            TypeOfItem newTypeOfItem = typeOfItemService.save(typeOfItem);
-            return "redirect:/admin/typeOfItem/" + String.valueOf(newTypeOfItem.getId());
         }
+        TypeOfItem newTypeOfItem = typeOfItemService.save(typeOfItem);
+        return "redirect:/admin/typeOfItem/" + String.valueOf(newTypeOfItem.getId());
     }
 
     //Редактирование типа товара
@@ -132,38 +131,3 @@ public class PageTypeOfItemController extends BaseController {
         this.typeOfItemService = typeOfItemService;
     }
 }
-
-/*//Добавление нового типа товара
-    @PostMapping("/typeOfItem/add")
-    public String addTypeOfItem(Model model,
-                                @ModelAttribute("typeOfItem") @Valid TypeOfItem typeOfItem,
-                                BindingResult bindingResult) {
-
-        try {
-            //typeOfItem.setId((long) 15);
-            Long k = typeOfItem.getId();
-            String n = typeOfItem.getName();
-            TypeOfItem newTypeOfItem = serviceTypeOfItem.save(typeOfItem);
-            return "redirect:/typeOfItem/" + String.valueOf(newTypeOfItem.getId());
-        } catch (Exception ex) {
-            model.addAttribute("errorMessage", ex.getMessage());
-            model.addAttribute("add", true);
-            return "forAdmin/typeOfItem/typeOfItemEdit";
-        }
-    }*/
-
-/*//Редактирование товара
-    @PostMapping("/typeOfItem/{id}/edit")
-    public String updateTypeOfItem(Model model,
-                                   @PathVariable Long id,
-                                   @ModelAttribute("typeOfItem") TypeOfItem typeOfItem) {
-        try {
-            typeOfItem.setId(id);
-            serviceTypeOfItem.update(typeOfItem);
-            return "redirect:/typeOfItem/" + String.valueOf(typeOfItem.getId());
-        } catch (Exception ex) {
-            model.addAttribute("errorMessage", ex.getMessage());
-            model.addAttribute("add", false);
-            return "forAdmin/typeOfItem/typeOfItemEdit";
-        }
-    }*/

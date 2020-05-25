@@ -15,6 +15,7 @@ import ru.sporting.goods.rental.services.ItemService;
 import ru.sporting.goods.rental.services.OrderService;
 import ru.sporting.goods.rental.services.UserService;
 
+import javax.annotation.security.RolesAllowed;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -84,7 +85,8 @@ public class PageOrdersController extends BaseController {
 
 
     //Страница "Мои заказы"
-    @GetMapping("/user/myOrders/{id}")
+    @RolesAllowed({"ADMIN", "BUYER"})
+    @GetMapping("/myOrders/{id}")
     public String getPageMyOrders(Model model, @PathVariable Long id) {
         model = helpPageMyOrders(model, id);
         return "forUser/myOrders";
@@ -96,7 +98,7 @@ public class PageOrdersController extends BaseController {
         Orders orders = orderService.findById(id);
         orders.getInstance().setOrder_status(InstanceOfItem.STATUS_ORDER_ISSUED);
         instanceOfItemService.update(orders.getInstance());
-        return "redirect:/user/myOrders/" + orders.getUser().getId();
+        return "redirect:/myOrders/" + orders.getUser().getId();
     }
 
     //Вернуть заказ (статус Issued)
@@ -122,7 +124,7 @@ public class PageOrdersController extends BaseController {
         orderService.update(orders);
         userService.update(user);
         instanceOfItemService.update(instance);
-        return "redirect:/user/myOrders/" + user.getId();
+        return "redirect:/myOrders/" + user.getId();
     }
 
     //Вернуть заказ (статус Expired)
@@ -141,10 +143,18 @@ public class PageOrdersController extends BaseController {
             orderService.update(orders);
             userService.update(user);
             instanceOfItemService.update(instance);
-            return "redirect:/user/myOrders/" + user.getId();
+            return "redirect:/myOrders/" + user.getId();
         }
         model = helpPageMyOrders(model, user.getId());
         model.addAttribute("err", "Для возврата товара и оплаты штрафа, у Вас недостаточно денег! Пополните счёт!");
+        return "forUser/myOrders";
+    }
+
+    //Открывает старницу заказов со стороны админа
+    @GetMapping("/admin/ordersAll/{id}")
+    public String getPageMyOrdersAdmin(Model model, @PathVariable Long id) {
+        model = helpPageMyOrders(model, id);
+        model.addAttribute("admin", "admin");
         return "forUser/myOrders";
     }
 
@@ -160,6 +170,32 @@ public class PageOrdersController extends BaseController {
         }
         model.addAttribute("orders", orders);
         return "forAdmin/orders/orderOne";
+    }
+
+    //Удаление заказа
+    @GetMapping("/admin/orders/{id}/delete")
+    public String showDeleteOrderById(Model model, @PathVariable Long id) {
+        Orders orders = null;
+        try {
+            orders = orderService.findById(id);
+        } catch (Exception ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+        }
+        model.addAttribute("allowDelete", true);
+        model.addAttribute("orders", orders);
+        return "forAdmin/orders/orderOne";
+    }
+
+    //Удаление товара
+    @PostMapping("/admin/orders/{id}/delete")
+    public String deleteOrdersId(Model model, @PathVariable Long id) {
+        try {
+            orderService.deleteById(id);
+            return "redirect:/admin/items";
+        } catch (Exception ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "forAdmin/orders/orderOne";
+        }
     }
 
     @Autowired

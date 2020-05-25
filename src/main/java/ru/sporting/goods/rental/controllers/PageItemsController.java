@@ -43,17 +43,13 @@ public class PageItemsController extends BaseController {
     }
 
 
-
     //Добавление нового товара
     @GetMapping("/items/add")
-    public String showAddItem(Model model, @ModelAttribute Items items) {
-        if(items.getName() == null){
-            Items item = null;
-            model.addAttribute("items", item);
-        } else {
-            model.addAttribute("items", items);
-            model.addAttribute("err", true);
+    public String showAddItem(Model model, @ModelAttribute("items") Items items) {
+        if (items.getName() != null) {
+            model.addAttribute("err", "err");
         }
+        model.addAttribute("items", items);
         model.addAttribute("add", true);
         model.addAttribute("typeOfItem", typeOfItemService.findAll());
         model.addAttribute("viewOfItem", viewOfItemService.findAll());
@@ -63,16 +59,15 @@ public class PageItemsController extends BaseController {
     //Добавление нового типа товара
     @PostMapping("/items/add")
     public String addItem(Model model,
-                                @ModelAttribute("items") @Valid Items items,
-                                BindingResult bindingResult,
-                                RedirectAttributes redirectAttributes) {
-        if(bindingResult.hasErrors()){
+                          @ModelAttribute("items") @Valid Items items,
+                          BindingResult bindingResult,
+                          RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("items", items);
             addValidationMessage(redirectAttributes, bindingResult);
             model.addAttribute("add", true);
             return "redirect:/admin/items/add";
-        }
-        else{
+        } else {
             Items newItem = itemService.save(items);
             return "redirect:/admin/items/" + String.valueOf(newItem.getId());
         }
@@ -97,8 +92,8 @@ public class PageItemsController extends BaseController {
     //Редактирование товара
     @PostMapping("/items/{id}/edit")
     public String updateItem(Model model, @PathVariable Long id,
-                                   @ModelAttribute("items") @Valid Items items,
-                                   BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+                             @ModelAttribute("items") @Valid Items items,
+                             BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("items", items);
             addValidationMessage(redirectAttributes, bindingResult);
@@ -132,7 +127,7 @@ public class PageItemsController extends BaseController {
 
     //Удаление товара
     @PostMapping("/items/{id}/delete")
-    public String deleteTypeOfItemById(Model model, @PathVariable Long id) {
+    public String deleteItemsById(Model model, @PathVariable Long id) {
         try {
             itemService.deleteById(id);
             return "redirect:/admin/items";
@@ -144,17 +139,17 @@ public class PageItemsController extends BaseController {
 
 
     @Autowired
-    public void setItemService(ItemService itemService){
+    public void setItemService(ItemService itemService) {
         this.itemService = itemService;
     }
 
     @Autowired
-    public void setTypeOfItemService(TypeOfItemService typeOfItemService){
+    public void setTypeOfItemService(TypeOfItemService typeOfItemService) {
         this.typeOfItemService = typeOfItemService;
     }
 
     @Autowired
-    public void setViewOfItemService(ViewOfItemService viewOfItemService){
+    public void setViewOfItemService(ViewOfItemService viewOfItemService) {
         this.viewOfItemService = viewOfItemService;
     }
 }

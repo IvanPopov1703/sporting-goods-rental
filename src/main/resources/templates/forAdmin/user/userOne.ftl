@@ -104,6 +104,9 @@
                 <a href="${'/admin/users/' + users.id + '/delete'}">
                     <button type="submit">Удалить</button>
                 </a><br><br>
+                <a href="${'/admin/ordersAll/' + users.id}">
+                    <button type="submit" style="width: 210px">Заказы пользователя</button>
+                </a>
                 <a href="/admin/users">
                     <button type="submit" style="width: 210px">Вернуться к списку типов</button>
                 </a>

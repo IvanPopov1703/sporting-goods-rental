@@ -81,7 +81,7 @@
                 <button type="submit" style="width: 210px">Вернуться к списку товаров</button>
                 <br><br>
             </a>
-            <a href="${'/user/myOrders/' + users.id}">
+            <a href="${'/myOrders/' + users.id}">
                 <button type="submit" style="width: 210px">Мои заказы</button>
                 <br><br>
             </a>
