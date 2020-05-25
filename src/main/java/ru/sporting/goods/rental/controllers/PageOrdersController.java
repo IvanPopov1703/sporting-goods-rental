@@ -63,7 +63,7 @@ public class PageOrdersController extends BaseController {
         orders.getInstance().setOrder_status(InstanceOfItem.STATUS_ORDER_PENDING);
         orders.setAmountOfGuarantee(Items.AMOUNT_OF_GUARANTEE);
         orderService.save(orders);
-        return "redirect:/user/myOrders/" + orders.getUser().getId();
+        return "redirect:/myOrders/" + orders.getUser().getId();
     }
 
     //Вспомогательная функция для контроллера "Мои заказы"
@@ -104,27 +104,7 @@ public class PageOrdersController extends BaseController {
     //Вернуть заказ (статус Issued)
     @GetMapping("/user/returnWithIssuedStatus/{id}")
     public String returnGoodsWithIssuedStatus(@PathVariable Long id){
-        Orders orders = orderService.findById(id);
-        InstanceOfItem instance = instanceOfItemService.findById(orders.getInstance().getId());
-        User user = userService.findById(orders.getUser().getId());
-        //Установка реального времени сдачи
-        orders.setRealTimeOfReturningProduct(Date.valueOf(LocalDate.now()));
-        //Установка статуса Сдан экземпляру
-        instance.setOrder_status(InstanceOfItem.STATUS_ORDER_HAND_OVER);
-        //Возмещение пользователю денежных средств
-        user.setPurse(user.getPurse() +
-                (orderService.getCountDayByDate(Date.valueOf(LocalDate.now()),
-                orders.getPlannedTimeOfReturningProduct()) *
-                        instance.getItems().getСostOneDayRental())
-                + Items.AMOUNT_OF_GUARANTEE);
-        //Добавление к экземпляру часов пользования
-        instance.setHoursOfUse(instance.getHoursOfUse() + orderService.getCountDayByDate(orders.getTimeOfReceiptOfItem(),
-                Date.valueOf(LocalDate.now())) * InstanceOfItem.DAY_RENTAL);
-        //Обновление данных в таблицах
-        orderService.update(orders);
-        userService.update(user);
-        instanceOfItemService.update(instance);
-        return "redirect:/myOrders/" + user.getId();
+        return "redirect:/myOrders/" + orderService.returnGoodWithIssuedStatus(id);
     }
 
     //Вернуть заказ (статус Expired)

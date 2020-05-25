@@ -2,12 +2,14 @@ package ru.sporting.goods.rental.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import ru.sporting.goods.rental.entities.InstanceOfItem;
 import ru.sporting.goods.rental.entities.Items;
 import ru.sporting.goods.rental.entities.Orders;
 import ru.sporting.goods.rental.entities.User;
 import ru.sporting.goods.rental.repositories.OrderRepository;
 
+import javax.jws.soap.SOAPBinding;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Period;
@@ -120,6 +122,31 @@ public class OrderService {
             }
         }
         return resultList;
+    }
+
+    //Вернуть заказ (статус Issued)
+    public Long returnGoodWithIssuedStatus(Long id) {
+        Orders orders = findById(id);
+        InstanceOfItem instance = instanceOfItemService.findById(orders.getInstance().getId());
+        User user = userService.findById(orders.getUser().getId());
+        //Установка реального времени сдачи
+        orders.setRealTimeOfReturningProduct(Date.valueOf(LocalDate.now()));
+        //Установка статуса Сдан экземпляру
+        instance.setOrder_status(InstanceOfItem.STATUS_ORDER_HAND_OVER);
+        //Возмещение пользователю денежных средств
+        user.setPurse(user.getPurse() +
+                (getCountDayByDate(Date.valueOf(LocalDate.now()),
+                        orders.getPlannedTimeOfReturningProduct()) *
+                        instance.getItems().getСostOneDayRental())
+                + Items.AMOUNT_OF_GUARANTEE);
+        //Добавление к экземпляру часов пользования
+        instance.setHoursOfUse(instance.getHoursOfUse() + getCountDayByDate(orders.getTimeOfReceiptOfItem(),
+                Date.valueOf(LocalDate.now())) * InstanceOfItem.DAY_RENTAL);
+        //Обновление данных в таблицах
+        update(orders);
+        userService.update(user);
+        instanceOfItemService.update(instance);
+        return user.getId();
     }
 
     @Autowired

@@ -1,9 +1,7 @@
 package ru.sporting.goods.rental.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
-import ru.sporting.goods.rental.entities.InstanceOfItem;
 import ru.sporting.goods.rental.entities.InstanceOfItem;
 import ru.sporting.goods.rental.exceptions.RecordNotFound;
 import ru.sporting.goods.rental.repositories.InstanceOfItemRepository;
@@ -26,9 +24,9 @@ public class InstanceOfItemService {
     }
 
     //Получение товара по id
-    public InstanceOfItem findById(Long id){
+    public InstanceOfItem findById(Long id) {
         return instanceOfItemRepository.findById(id)
-                .orElseThrow(()-> new RecordNotFound(id));
+                .orElse(null);
     }
 
     //Добавление товара

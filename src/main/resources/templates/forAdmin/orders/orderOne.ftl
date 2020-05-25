@@ -52,7 +52,7 @@
             <tr>
                 <td>Название товара</td>
                 <td>:</td>
-                <td>$${orders.instance.items.name}</td>
+                <td>${orders.instance.items.name}</td>
             </tr>
             <tr>
                 <td>Вид товара</td>
@@ -99,11 +99,6 @@
                 <td>:</td>
                 <td>${orders.plannedTimeOfReturningProduct}</td>
             </tr>
-            <tr>
-                <td>Реальная дата сдачи</td>
-                <td>:</td>
-                <td>${orders.realTimeOfReturningProduct}</td>
-            </tr>
         </table>
         <br/>
         <#if allowDelete>
@@ -112,15 +107,11 @@
             </form>
         <#else>
             <div>
-                <a href="${'/admin/orders/' + orders.id + '/edit'}">
-                    <button type="submit">Редактировать</button>
-                </a>
-                &nbsp;&nbsp;
                 <a href="${'/admin/orders/' + orders.id + '/delete'}">
                     <button type="submit">Удалить</button>
-                </a><br><br>
-                <a href="/admin/orders">
-                    <button type="submit" style="width: 210px">Вернуться к списку типов</button>
+                </a>&nbsp;&nbsp;
+                <a href="${'/admin/ordersAll/' + orders.user.id}">
+                    <button type="button" style="width: 210px">Вернуться к списку заказов</button>
                 </a>
             </div>
         </#if>
