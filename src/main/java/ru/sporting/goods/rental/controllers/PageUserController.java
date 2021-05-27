@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.sporting.goods.rental.entities.User;
+import ru.sporting.goods.rental.exceptions.RecordNotFound;
 import ru.sporting.goods.rental.services.UserService;
 
 import javax.annotation.security.RolesAllowed;
@@ -26,17 +27,6 @@ public class PageUserController extends BaseController {
         return "forAdmin/allAdmin";
     }
 
-    @GetMapping("/")
-    public String test(Model model) {
-        User user = userService.getCurrentUser();
-        if (user.getRole().equals(User.ROLE_BUYER)) {
-            model.addAttribute("isAut", true);
-            model.addAttribute("users", user);
-            return "forward:/goodsPage";
-        } else {
-            return "redirect:/admin";
-        }
-    }
 
     //Личный кабинет пользователя
     @RolesAllowed({"ADMIN", "BUYER"})
@@ -47,7 +37,7 @@ public class PageUserController extends BaseController {
             user = userService.findById(id);
             model.addAttribute("checkRole", user.getRole().equals(User.ROLE_BUYER));
             model.addAttribute("allowDelete", false);
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         model.addAttribute("users", user);
@@ -113,9 +103,6 @@ public class PageUserController extends BaseController {
     }
 
 
-
-
-
     //Список всех пользователей
     @GetMapping("/admin/users")
     public String getViewOfItem(Model model) {
@@ -130,7 +117,7 @@ public class PageUserController extends BaseController {
         try {
             user = userService.findById(id);
             model.addAttribute("allowDelete", false);
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         model.addAttribute("users", user);
@@ -234,7 +221,7 @@ public class PageUserController extends BaseController {
         User user = null;
         try {
             user = userService.findById(id);
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         model.addAttribute("allowDelete", true);
@@ -248,7 +235,7 @@ public class PageUserController extends BaseController {
         try {
             userService.deleteById(id);
             return "redirect:/admin/users";
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "forAdmin/user/userOne";
         }

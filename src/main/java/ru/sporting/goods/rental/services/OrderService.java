@@ -7,6 +7,7 @@ import ru.sporting.goods.rental.entities.InstanceOfItem;
 import ru.sporting.goods.rental.entities.Items;
 import ru.sporting.goods.rental.entities.Orders;
 import ru.sporting.goods.rental.entities.User;
+import ru.sporting.goods.rental.exceptions.RecordNotFound;
 import ru.sporting.goods.rental.repositories.OrderRepository;
 
 import javax.jws.soap.SOAPBinding;
@@ -32,7 +33,7 @@ public class OrderService {
     //Получение записи по id, иначе null
     public Orders findById(Long id) {
         return orderRepository.findById(id)
-                .orElse(null);
+                .orElseThrow(() -> new RecordNotFound(id));
     }
 
     //Получение всех записей
@@ -46,21 +47,23 @@ public class OrderService {
     }
 
     //Редактирование записи
-    public void update(Orders orders) {
+    public void update(Orders orders) throws RecordNotFound {
+        if (!existsById(orders.getId())) {
+            throw new RecordNotFound(orders.getId());
+        }
         orderRepository.save(orders);
     }
 
     //Удаление записи
-    public void deleteById(Long id) throws Exception {
+    public void deleteById(Long id) throws RecordNotFound {
         if (!existsById(id)) {
-            throw new Exception("Запись с номером " + id + " не найдена!");
-        } else {
-            orderRepository.deleteById(id);
+            throw new RecordNotFound(id);
         }
+        orderRepository.deleteById(id);
     }
 
     //Функция для вычисления количества дней
-    public int getCountDayByDate(Date dateStart, Date dateEnd){
+    public int getCountDayByDate(Date dateStart, Date dateEnd) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate startDate = LocalDate.parse(dateStart.toString(), formatter);
         LocalDate endDate = LocalDate.parse(dateEnd.toString(), formatter);
@@ -87,18 +90,17 @@ public class OrderService {
     }
 
     //Перебор всех товаров со статусом Pending
-    public List<Orders> checkOrdersPending(User user){
+    public List<Orders> checkOrdersPending(User user) {
         List<Orders> ordersList = getOrdersByIdUserAndStatusInstance(user.getId(),
                 InstanceOfItem.STATUS_ORDER_PENDING);
         List<Orders> resultList = new ArrayList<Orders>();
         for (Orders order : ordersList) {
-            if (order.getPlannedTimeOfReturningProduct().getTime() < Date.valueOf(LocalDate.now()).getTime()){
+            if (order.getPlannedTimeOfReturningProduct().getTime() < Date.valueOf(LocalDate.now()).getTime()) {
                 user.setPurse(user.getPurse() + Items.AMOUNT_OF_GUARANTEE);
                 order.setRealTimeOfReturningProduct(order.getPlannedTimeOfReturningProduct());
                 order.getInstance().setOrder_status(InstanceOfItem.STATUS_ORDER_HAND_OVER);
                 instanceOfItemService.update(order.getInstance());
-            }
-            else {
+            } else {
                 resultList.add(order);
             }
         }
@@ -106,18 +108,17 @@ public class OrderService {
     }
 
     //Перебор всех товаров со статусом Issued
-    public List<Orders> checkOrdersIssued(User user){
+    public List<Orders> checkOrdersIssued(User user) {
         List<Orders> ordersList = getOrdersByIdUserAndStatusInstance(user.getId(),
                 InstanceOfItem.STATUS_ORDER_ISSUED);
         List<Orders> resultList = new ArrayList<Orders>();
         for (Orders order : ordersList) {
-            if (order.getPlannedTimeOfReturningProduct().getTime() < Date.valueOf(LocalDate.now()).getTime()){
+            if (order.getPlannedTimeOfReturningProduct().getTime() < Date.valueOf(LocalDate.now()).getTime()) {
                 order.getInstance().setOrder_status(InstanceOfItem.STATUS_ORDER_EXPIRED);
                 order.setFine(order.getFine() + getCountDayByDate(order.getPlannedTimeOfReturningProduct(), Date.valueOf(LocalDate.now())) *
                         order.getInstance().getItems().getСostOneDayRental());
                 instanceOfItemService.update(order.getInstance());
-            }
-            else {
+            } else {
                 resultList.add(order);
             }
         }
@@ -155,12 +156,12 @@ public class OrderService {
     }
 
     @Autowired
-    public void setUserService(UserService userService){
+    public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
     @Autowired
-    public void setInstanceOfItemService(InstanceOfItemService instanceOfItemService){
+    public void setInstanceOfItemService(InstanceOfItemService instanceOfItemService) {
         this.instanceOfItemService = instanceOfItemService;
     }
 }

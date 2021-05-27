@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.sporting.goods.rental.entities.InstanceOfItem;
+import ru.sporting.goods.rental.exceptions.RecordNotFound;
 import ru.sporting.goods.rental.services.InstanceOfItemService;
 import ru.sporting.goods.rental.services.ItemService;
 
@@ -77,7 +78,7 @@ public class PageInstanceOfItemController extends BaseController {
         InstanceOfItem instance = null;
         try {
             instance = instanceOfItemService.findById(id);
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         model.addAttribute("add", false);
@@ -100,7 +101,7 @@ public class PageInstanceOfItemController extends BaseController {
             try {
                 instanceOfItemService.update(instance);
                 return "redirect:/admin/instance/" + String.valueOf(instance.getId());
-            } catch (Exception ex) {
+            } catch (RecordNotFound ex) {
                 model.addAttribute("errorMessage", ex.getMessage());
                 model.addAttribute("add", false);
                 return "forAdmin/instanceOfItem/instanceEdit";
@@ -114,7 +115,7 @@ public class PageInstanceOfItemController extends BaseController {
         InstanceOfItem instance = null;
         try {
             instance = instanceOfItemService.findById(id);
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         model.addAttribute("allowDelete", true);
@@ -128,7 +129,7 @@ public class PageInstanceOfItemController extends BaseController {
         try {
             instanceOfItemService.deleteById(id);
             return "redirect:/admin/instance";
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "forAdmin/instanceOfItem/instanceOne";
         }

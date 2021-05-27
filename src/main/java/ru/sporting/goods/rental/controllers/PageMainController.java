@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import ru.sporting.goods.rental.entities.*;
 import ru.sporting.goods.rental.services.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @Controller
@@ -61,13 +62,31 @@ public class PageMainController {
         return "oneGood";
     }
 
+    @GetMapping("/")
+    public String test(Model model) {
+        try {
+            User user = userService.getCurrentUser();
+            if (user.getRole().equals(User.ROLE_BUYER)) {
+                model.addAttribute("isAut", true);
+                model.addAttribute("users", user);
+                return "forward:/goodsPage";
+            } else {
+                if (user.getRole().equals(User.ROLE_ADMIN))
+                    return "redirect:/admin";
+            }
+        }catch (Exception ex){
+            return "redirect:/goodsPage";
+        }
+        return null;
+    }
+
     //Контроллер сортировки
     @GetMapping("/sort/")
     public String getSortRecord(Model model, @ModelAttribute("typeItem") TypeOfItem typeOfItem,
                                 @ModelAttribute("viewItem")ViewOfItem viewOfItem){
         model = helpLoadMainPage(model);
         model.addAttribute("items", itemService.sortItemByIdViewAndType(viewOfItem.getId(), typeOfItem.getId()));
-        return "forward:/goodsPage";
+        return "sort";
     }
 
     @Autowired

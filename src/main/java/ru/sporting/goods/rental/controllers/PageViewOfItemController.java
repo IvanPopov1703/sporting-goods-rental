@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.sporting.goods.rental.entities.ViewOfItem;
+import ru.sporting.goods.rental.exceptions.RecordNotFound;
 import ru.sporting.goods.rental.services.ViewOfItemService;
 
 import javax.validation.Valid;
@@ -31,7 +32,7 @@ public class PageViewOfItemController extends BaseController {
         try {
             viewOfItem = viewOfItemService.findById(id);
             model.addAttribute("allowDelete", false);
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         model.addAttribute("viewOfItem", viewOfItem);
@@ -71,7 +72,7 @@ public class PageViewOfItemController extends BaseController {
         ViewOfItem viewOfItem = null;
         try {
             viewOfItem = viewOfItemService.findById(id);
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         model.addAttribute("add", false);
@@ -93,7 +94,7 @@ public class PageViewOfItemController extends BaseController {
             try {
                 viewOfItemService.update(viewOfItem);
                 return "redirect:/admin/viewOfItem/" + String.valueOf(viewOfItem.getId());
-            } catch (Exception ex) {
+            } catch (RecordNotFound ex) {
                 model.addAttribute("errorMessage", ex.getMessage());
                 model.addAttribute("add", false);
                 return "forAdmin/viewOfItem/viewOfItemEdit";
@@ -107,7 +108,7 @@ public class PageViewOfItemController extends BaseController {
         ViewOfItem viewOfItem = null;
         try {
             viewOfItem = viewOfItemService.findById(id);
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         model.addAttribute("allowDelete", true);
@@ -121,7 +122,7 @@ public class PageViewOfItemController extends BaseController {
         try {
             viewOfItemService.deleteById(id);
             return "redirect:/admin/viewOfItem";
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "forAdmin/viewOfItem/viewOfItemOne";
         }

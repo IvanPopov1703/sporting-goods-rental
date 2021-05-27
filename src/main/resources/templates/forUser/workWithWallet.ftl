@@ -18,7 +18,7 @@
     </#if>
     <h3>Текущий баланс: ${users.purse}</h3>
     <form name="upPurse" method="POST" action="${urlAction}">
-        <input required type="text" placeholder="Введите сумму" name="purse"/>
+        <input required type="number" placeholder="Введите сумму" name="purse"/>
         <br><br><button type="submit">${submitTitle}</button>&nbsp;&nbsp;&nbsp;
         <a href="/user/usersOne"><button type="button">Вернуться назад</button></a>
     </form>

@@ -28,7 +28,7 @@ public class Items {
     @Column(name = "ID_ITEM", unique = true, nullable = false, updatable = false)
     private Long id;
 
-    @NotBlank(message = "Поле не может быть путым!")
+    @Size(min = 3, max = 40, message = "Название должно содержать минимум 3 символа")
     @ApiModelProperty
     @Column(name = "NAME_ITEM")
     private String name;
@@ -38,7 +38,7 @@ public class Items {
     @Column(name = "COST_ONE_Day_RENTAL")
     private double сostOneDayRental;
 
-    @NotBlank(message = "Поле не может быть путым!")
+    @Size(min = 3, message = "Название должно содержать минимум 3 символа")
     @ApiModelProperty
     @Column(name = "DESCRIPTION")
     private String description;

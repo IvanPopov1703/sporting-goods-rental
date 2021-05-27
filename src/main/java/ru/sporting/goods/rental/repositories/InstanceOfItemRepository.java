@@ -23,7 +23,7 @@ public interface InstanceOfItemRepository extends JpaRepository<InstanceOfItem, 
             "ON instance_of_item.id_item = item.id_item", nativeQuery = true)
     List<InstanceOfItem> findAllInstanceAndItemsAndTypeAndView();
 
-    //Получение получение экземпляра по id
+    //Получение экземпляра по id
     @Query(value = "SELECT instance_of_item.id_instance_of_item, instance_of_item.id_item, instance_of_item.order_status, " +
             "instance_of_item.purchase_price, instance_of_item.hours_of_use, item.id_item, " +
             "item.description, item.type_of_item_id, item.view_of_item_id, item.name_item, " +

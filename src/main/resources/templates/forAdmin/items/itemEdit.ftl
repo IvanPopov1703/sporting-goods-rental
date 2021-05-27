@@ -110,7 +110,7 @@
                     <td><input required type="text" placeholder="Введите стоимость" name="сostOneDayRental"
                                value="${items.сostOneDayRental}"/></td>
                 <#else>
-                    <td><input required type="text" placeholder="Введите стоимость" name="сostOneDayRental"/></td>
+                    <td><input required type="number" placeholder="Введите стоимость" name="сostOneDayRental"/></td>
                 </#if>
                 <td><span>${(Request['validation.сostOneDayRental'])!}</span></td>
             </tr>

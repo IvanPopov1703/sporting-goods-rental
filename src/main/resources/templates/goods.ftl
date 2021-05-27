@@ -38,17 +38,13 @@
             <h3>Вид товара</h3>
             <form method="get" action="${'/sort/'}">
                 <#list viewItem as view>
-                    <p><input type="radio" name="viewItem" value="${view.id}">${view.name}</p>
+                    <p><input checked type="radio" name="viewItem" value="${view.id}">${view.name}</p>
                 </#list>
                 <h3>Тип товара</h3>
                 <#list typeItem as type>
-                    <p><input type="radio" name="typeItem" value="${type.id}">${type.name}</p>
+                    <p><input checked type="radio" name="typeItem" value="${type.id}">${type.name}</p>
                 </#list>
                 <div class="leftButtonSort">
-                    <#--                <a href="${'/sort/' + view.id + '/' + type.id}">-->
-                    <#--                    <a href="${'/sort'}">-->
-                    <#--                        <button type="submit">Сортировать</button>-->
-                    <#--                    </a>-->
                     <button type="submit">Сортировать</button>
                 </div>
             </form>

@@ -26,7 +26,7 @@ public class TypeOfItem {
     @Column(name = "ID_TYPE_OF_ITEM", unique = true, nullable = false, updatable = false)
     private Long id;
 
-    @NotBlank(message = "Поле не может быть путым!")
+    @Size(min = 3, max = 30, message = "Название должно содержать минимум 3 символа")
     @ApiModelProperty
     @Column(name = "NAME")
     private String name;

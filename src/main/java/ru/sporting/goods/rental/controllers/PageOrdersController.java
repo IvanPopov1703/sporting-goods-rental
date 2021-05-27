@@ -10,6 +10,7 @@ import ru.sporting.goods.rental.entities.InstanceOfItem;
 import ru.sporting.goods.rental.entities.Items;
 import ru.sporting.goods.rental.entities.Orders;
 import ru.sporting.goods.rental.entities.User;
+import ru.sporting.goods.rental.exceptions.RecordNotFound;
 import ru.sporting.goods.rental.services.InstanceOfItemService;
 import ru.sporting.goods.rental.services.ItemService;
 import ru.sporting.goods.rental.services.OrderService;
@@ -145,7 +146,7 @@ public class PageOrdersController extends BaseController {
         try {
             orders = orderService.findById(id);
             model.addAttribute("allowDelete", false);
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         model.addAttribute("orders", orders);
@@ -158,7 +159,7 @@ public class PageOrdersController extends BaseController {
         Orders orders = null;
         try {
             orders = orderService.findById(id);
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         model.addAttribute("allowDelete", true);
@@ -172,7 +173,7 @@ public class PageOrdersController extends BaseController {
         try {
             orderService.deleteById(id);
             return "redirect:/admin/items";
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "forAdmin/orders/orderOne";
         }

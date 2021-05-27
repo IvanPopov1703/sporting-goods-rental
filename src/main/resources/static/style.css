@@ -1,0 +1,168 @@
+body{
+    margin: 0;
+}
+
+/*Вся страница*/
+main{
+    /*border: black solid 1px;*/
+    /*height: 600px;*/
+    min-height: 600px;
+    max-height: 5000px;
+    /*background: ghostwhite;*/
+}
+
+/*Шапка*/
+header{
+    /*border: red solid 1px;*/
+    width: 1450px;
+    height: 200px;
+    border-radius: 10px;
+    margin: auto;
+}
+
+/*Картинка в шапке*/
+.imgHead{
+    border-radius: 10px;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.leftButton
+{
+    font-size: 17px;
+}
+
+.login{
+    //border: 1px solid green;
+    width: 420px;
+    height: 20px;
+    margin-left: 1040px;
+    margin-top: 7px;
+}
+
+a{
+    font-size: 20px;
+}
+
+button{
+    font-size: 15px;
+}
+/**************************************Описание блока сортировок НАЧАЛО***************************************/
+/*Левый контейнер для сортировки */
+.leftSort{
+    /*border: 1px solid blue;*/
+    width: 300px;
+    /*height: 700px;*/
+    min-height: 300px;
+    max-height: 600px;
+    float: left;
+    margin-left: 32px;
+    margin-top: 30px;
+    border-radius: 10px;
+    background: rgba(219, 219, 219, 0.74);
+}
+
+.leftHead{
+    border-radius: 10px;
+    height: 35px;
+    margin-top: -20px;
+    background: rgba(199, 199, 199, 0.74);
+    text-align: center;
+}
+
+.leftHeadOneFilter{
+    padding-left: 10px;
+}
+
+p{
+    font-size: 20px;
+}
+
+.leftButtonSort{
+    //border: 1px solid darkorange;
+    margin-left: 75px;
+    margin-top: 40px;
+}
+
+/**************************************Описание блока сортировок КОНЕЦ***************************************/
+
+/*Контент*/
+.content{
+    /*border: green 1px solid;*/
+    /*height: 220px;*/
+    min-height: 220px;
+    max-height: 2000px;
+    width: 1130px;
+    float: left;
+    margin-left: 20px;
+    margin-top: 40px;
+    border-radius: 10px;
+    background: rgba(219, 219, 219, 0.74);
+}
+
+/**************************************Описание блока контейнера с товаром начало********************************/
+.containerOneGood{
+    /*border: 1px solid black;*/
+    height: 200px;
+    /*background: rgba(219, 219, 219, 0.74);*/
+    background: rgba(199, 199, 199, 0.74);
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.titleOneGood{
+    color: red;
+}
+
+.imageOneGood{
+    /*border: 1px red solid;*/
+    width: 250px;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.imgOneGood{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.textOneGood{
+    /*border: blue 1px solid;*/
+    height: 172px;
+    width: 850px;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.costGood{
+    color: #b46d3e;
+}
+/**************************************Описание блока контейнера с товаром конец*********************************/
+
+
+/**************************************Описание подвала начало*********************************/
+footer{
+    /*border: 1px solid red;*/
+    height: 50px;
+    width: 1130px;
+    float: left;
+    margin-left: 350px;
+    margin-top: 10px;
+    border-radius: 10px;
+    background: rgba(219, 219, 219, 0.74);
+    text-align: center;
+}
+
+/**************************************Описание подвала конец*********************************/
+
+/**************************************Описание страницы авторизации НАЧАЛО*********************************/
+.contentAuthor{
+    //border: 1px solid red;
+    width: 500px;
+    height: 500px;
+    margin-left: 20px;
+}
+/**************************************Описание страницы авторизации КОНЕЦ*********************************/

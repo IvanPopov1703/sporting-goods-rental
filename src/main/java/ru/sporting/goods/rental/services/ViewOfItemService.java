@@ -21,9 +21,9 @@ public class ViewOfItemService {
     }
 
     //Получение записи по id, иначе null
-    public ViewOfItem findById(Long id){
+    public ViewOfItem findById(Long id) throws RecordNotFound{
         return viewOfItemRepository.findById(id)
-                .orElse(null);
+                .orElseThrow(()->new RecordNotFound(id));
     }
 
     //Получение всех записей
@@ -37,17 +37,17 @@ public class ViewOfItemService {
     }
 
     //Редактирование записи
-    public ViewOfItem update(ViewOfItem viewOfItem) throws Exception{
+    public ViewOfItem update(ViewOfItem viewOfItem) throws RecordNotFound{
         if (viewOfItem.getId() != null && !existsById(viewOfItem.getId())){
-            throw new Exception("Записи с номером " + viewOfItem.getId() + " не найдена!");
+            throw new RecordNotFound( viewOfItem.getId());
         }
         return viewOfItemRepository.save(viewOfItem);
     }
 
     //Удаление записи
-    public void deleteById(Long id) throws Exception{
+    public void deleteById(Long id) throws RecordNotFound{
         if (!existsById(id)){
-            throw new Exception("Запись с номером " + id + " не найдена!");
+            throw new RecordNotFound(id);
         }
         else {
             viewOfItemRepository.deleteById(id);

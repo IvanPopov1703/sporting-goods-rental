@@ -21,7 +21,6 @@ import java.util.List;
 public class UserService implements UserDetailsService {
 
     UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -40,15 +39,6 @@ public class UserService implements UserDetailsService {
     //Получение записи по id, иначе null
     public User findById(Long id){
         return userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    }
-
-    //Регистрация пользователя
-    public void registerUser(User user) throws Exception{
-        if (userRepository.getUserByLogin(user.getLogin()) != null){
-            throw new Exception("Пользователь с таким логином уже существует!");
-        }
-        //user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
     }
 
     //Сохранение пользователя
@@ -72,13 +62,6 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    
-    public void changePassword(Long id, String password){
-        User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        user.setPassword(passwordEncoder.encode(password));
-        userRepository.save(user);
-    }
-
     //Проверка наличия записи в базе
     private boolean existsById(Long id){
         return userRepository.existsById(id);
@@ -90,9 +73,9 @@ public class UserService implements UserDetailsService {
     }
 
     //Удаление записи
-    public void deleteById(Long id) throws Exception{
+    public void deleteById(Long id) throws RecordNotFound{
         if (!existsById(id)){
-            throw new Exception("Запись с номером " + id + " не найдена!");
+            throw new RecordNotFound(id);
         }
         else {
             userRepository.deleteById(id);

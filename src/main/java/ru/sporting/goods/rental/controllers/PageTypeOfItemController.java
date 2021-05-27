@@ -7,10 +7,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.sporting.goods.rental.entities.TypeOfItem;
+import ru.sporting.goods.rental.exceptions.RecordNotFound;
 import ru.sporting.goods.rental.services.TypeOfItemService;
 
 import javax.validation.Valid;
-import java.lang.reflect.Type;
 
 @Controller
 @RequestMapping("/admin")
@@ -32,7 +32,7 @@ public class PageTypeOfItemController extends BaseController {
         try {
             typeOfItem = typeOfItemService.findById(id);
             model.addAttribute("allowDelete", false);
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         model.addAttribute("typeOfItem", typeOfItem);
@@ -70,7 +70,7 @@ public class PageTypeOfItemController extends BaseController {
         TypeOfItem typeOfItem = null;
         try {
             typeOfItem = typeOfItemService.findById(id);
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         model.addAttribute("add", false);
@@ -92,7 +92,7 @@ public class PageTypeOfItemController extends BaseController {
             try {
                 typeOfItemService.update(typeOfItem);
                 return "redirect:/admin/typeOfItem/" + String.valueOf(typeOfItem.getId());
-            } catch (Exception ex) {
+            } catch (RecordNotFound ex) {
                 model.addAttribute("errorMessage", ex.getMessage());
                 model.addAttribute("add", false);
                 return "forAdmin/typeOfItem/typeOfItemEdit";
@@ -106,7 +106,7 @@ public class PageTypeOfItemController extends BaseController {
         TypeOfItem typeOfItem = null;
         try {
             typeOfItem = typeOfItemService.findById(id);
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         model.addAttribute("allowDelete", true);
@@ -120,7 +120,7 @@ public class PageTypeOfItemController extends BaseController {
         try {
             typeOfItemService.deleteById(id);
             return "redirect:/admin/typeOfItem";
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "forAdmin/typeOfItem/typeOfItemOne";
         }

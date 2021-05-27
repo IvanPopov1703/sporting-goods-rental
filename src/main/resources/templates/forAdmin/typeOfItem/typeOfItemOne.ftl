@@ -26,11 +26,11 @@
             padding: 3px;
         }
 
-        table{
+        table {
             font-size: 18px;
         }
 
-        td{
+        td {
             padding-top: 7px;
         }
 
@@ -57,12 +57,22 @@
             </form>
         <#else>
             <div>
-                <a href="${'/admin/typeOfItem/' + typeOfItem.id + '/edit'}"><button type="submit">Редактировать</button></a>
+                <a href="${'/admin/typeOfItem/' + typeOfItem.id + '/edit'}">
+                    <button type="submit">Редактировать</button>
+                </a>
                 &nbsp;&nbsp;
-                <a href="${'/admin/typeOfItem/' + typeOfItem.id + '/delete'}"><button type="submit">Удалить</button></a><br><br>
-                <a href="/admin/typeOfItem"><button type="submit" style="width: 210px">Вернуться к списку типов</button></a>
+                <a href="${'/admin/typeOfItem/' + typeOfItem.id + '/delete'}">
+                    <button type="submit">Удалить</button>
+                </a><br><br>
+                <a href="/admin/typeOfItem">
+                    <button type="submit" style="width: 210px">Вернуться к списку типов</button>
+                </a>
             </div>
         </#if>
+    <#else >
+        <a href="/admin/typeOfItem">
+            <button type="submit" style="width: 210px">Вернуться к списку типов</button>
+        </a>
     </#if>
     <#if errorMessage?has_content>
         <div class="error">${errorMessage}</div>

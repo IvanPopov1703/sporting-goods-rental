@@ -129,7 +129,7 @@
                     <td><input required type="text" placeholder="Введите телефон" name="phoneNumber"
                                value="${users.phoneNumber}"/></td>
                 <#else>
-                    <td><input required type="text" placeholder="Введите телефон" name="phoneNumber"/></td>
+                    <td><input required type="number" placeholder="Введите телефон" name="phoneNumber"/></td>
                 </#if>
                 <td><span>${(Request['validation.phoneNumber'])!}</span></td>
             </tr>
@@ -146,7 +146,7 @@
             <#if add = false>
                 <tr>
                     <td>Кошелёк:</td>
-                    <td><input type="text" name="purse" value='${users.purse}'/></td>
+                    <td><input type="text+" name="purse" value='${users.purse}'/></td>
                 </tr>
             </#if>
             <#if admin?has_content>

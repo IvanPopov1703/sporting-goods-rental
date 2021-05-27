@@ -35,17 +35,17 @@ public class ItemService {
     }
 
     //Редактирование записи
-    public Items update(Items item) throws Exception{
+    public Items update(Items item) throws RecordNotFound{
         if (item.getId() != null && !existsById(item.getId())){
-            throw new Exception("Запись с номером " + item.getId() + " не найдена!");
+            throw new RecordNotFound(item.getId());
         }
         return itemRepository.save(item);
     }
 
     //Удаление записи
-    public void deleteById(Long id) throws Exception{
+    public void deleteById(Long id) throws RecordNotFound{
         if (!existsById(id)){
-            throw new Exception("Запись с номером " + id + " не найдена!");
+            throw new RecordNotFound(id);
         }
         else {
             itemRepository.deleteById(id);

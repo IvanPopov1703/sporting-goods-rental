@@ -1,8 +1,10 @@
 package ru.sporting.goods.rental.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import ru.sporting.goods.rental.entities.InstanceOfItem;
+import ru.sporting.goods.rental.entities.Items;
 import ru.sporting.goods.rental.exceptions.RecordNotFound;
 import ru.sporting.goods.rental.repositories.InstanceOfItemRepository;
 
@@ -26,7 +28,7 @@ public class InstanceOfItemService {
     //Получение товара по id
     public InstanceOfItem findById(Long id) {
         return instanceOfItemRepository.findById(id)
-                .orElse(null);
+                .orElseThrow(()-> new RecordNotFound(id));
     }
 
     //Добавление товара
@@ -35,14 +37,17 @@ public class InstanceOfItemService {
     }
 
     //Редактирование записи
-    public void update(InstanceOfItem item) {
-        instanceOfItemRepository.save(item);
+    public void update(InstanceOfItem instance) {
+        if (instance.getId() != null && !existsById(instance.getId())){
+            throw new RecordNotFound(instance.getId());
+        }
+        instanceOfItemRepository.save(instance);
     }
 
     //Удаление записи
-    public void deleteById(Long id) throws Exception{
+    public void deleteById(Long id) throws RecordNotFound{
         if (!existsById(id)){
-            throw new Exception("Запись с номером " + id + " не найдена!");
+            throw new RecordNotFound(id);
         }
         else {
             instanceOfItemRepository.deleteById(id);

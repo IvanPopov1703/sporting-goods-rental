@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.sporting.goods.rental.entities.Items;
+import ru.sporting.goods.rental.exceptions.RecordNotFound;
 import ru.sporting.goods.rental.services.ItemService;
 import ru.sporting.goods.rental.services.TypeOfItemService;
 import ru.sporting.goods.rental.services.ViewOfItemService;
@@ -35,7 +36,7 @@ public class PageItemsController extends BaseController {
         try {
             items = itemService.findItemById(id);
             model.addAttribute("allowDelete", false);
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         model.addAttribute("items", items);
@@ -82,7 +83,7 @@ public class PageItemsController extends BaseController {
         Items items = null;
         try {
             items = itemService.findById(id);
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         model.addAttribute("add", false);
@@ -106,7 +107,7 @@ public class PageItemsController extends BaseController {
             try {
                 itemService.update(items);
                 return "redirect:/admin/items/" + String.valueOf(items.getId());
-            } catch (Exception ex) {
+            } catch (RecordNotFound ex) {
                 model.addAttribute("errorMessage", ex.getMessage());
                 model.addAttribute("add", false);
                 return "forAdmin/items/itemEdit";
@@ -120,7 +121,7 @@ public class PageItemsController extends BaseController {
         Items items = null;
         try {
             items = itemService.findById(id);
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
         }
         model.addAttribute("allowDelete", true);
@@ -134,7 +135,7 @@ public class PageItemsController extends BaseController {
         try {
             itemService.deleteById(id);
             return "redirect:/admin/items";
-        } catch (Exception ex) {
+        } catch (RecordNotFound ex) {
             model.addAttribute("errorMessage", ex.getMessage());
             return "forAdmin/items/itemOne";
         }

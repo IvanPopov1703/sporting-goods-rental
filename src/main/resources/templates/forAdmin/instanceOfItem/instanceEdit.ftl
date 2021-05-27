@@ -103,7 +103,7 @@
                     <td><input required type="text" placeholder="Введите количество часов" name="hoursOfUse"
                                value="${instance.hoursOfUse}"/></td>
                 <#else>
-                    <td><input required type="text" placeholder="Введите количество часов" name="hoursOfUse"/></td>
+                    <td><input required type="number" placeholder="Введите количество часов" name="hoursOfUse"/></td>
                 </#if>
                 <td><span>${(Request['validation.hoursOfUse'])!}</span></td>
             </tr>
@@ -113,7 +113,7 @@
                     <td><input required type="text" placeholder="Введите стоимость" name="purchasePrice"
                                value="${instance.purchasePrice}"/></td>
                 <#else>
-                    <td><input required type="text" placeholder="Введите стоимость" name="purchasePrice"/></td>
+                    <td><input required type="number" placeholder="Введите стоимость" name="purchasePrice"/></td>
                 </#if>
                 <td><span>${(Request['validation.purchasePrice'])!}</span></td>
             </tr>
